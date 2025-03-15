@@ -4,7 +4,7 @@ from app.models.user import UserRole
 
 
 class TokenData(BaseModel):
-    id: str
+    id: int
 
 
 class Token(BaseModel):

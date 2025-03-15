@@ -29,7 +29,7 @@ def verify_token(token: str):
         id: str | None = payload.get("id")
         if id is None:
             return None
-        token_data = TokenData(id=id)
+        token_data = TokenData(id=int(id))
         return token_data
     except JWTError:
         return None

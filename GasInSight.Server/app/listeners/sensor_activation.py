@@ -38,7 +38,7 @@ async def handle_sensor_activation(message_body: dict[str, Any]):
             pass
 
 
-async def create_sensor_activation_listener():
+def create_sensor_activation_listener():
     from app.config import settings
     
     listener = ServiceBusListener(

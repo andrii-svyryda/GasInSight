@@ -23,7 +23,7 @@ async def handle_facility_setup(message_body: dict[str, Any]) -> None:
                 latitude=facility_message.latitude
             )
             
-            facility_create = FacilityCreate(
+            fac_create = FacilityCreate(
                 id=facility_message.facility_id,
                 name=facility_message.facility_name,
                 status="Active",
@@ -31,12 +31,12 @@ async def handle_facility_setup(message_body: dict[str, Any]) -> None:
                 location=loc_create
             )
             
-            _ = await facility.create(db, facility_create)
+            await facility.create(db, fac_create)
         except Exception:
             pass
 
 
-async def create_facility_setup_listener():
+def create_facility_setup_listener():
     from app.config import settings
     
     listener = ServiceBusListener(

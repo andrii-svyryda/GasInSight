@@ -1,0 +1,27 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "GasInSight API",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": [
+        "app.main:app",
+        "--reload",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8000"
+      ],
+      "jinja": true,
+      "justMyCode": false,
+      "python": "${workspaceFolder}\\GasInSight.Server\\.venv\\Scripts\\python.exe",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}\\GasInSight.Server"
+      },
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}\\GasInSight.Server"
+    }
+  ]
+}

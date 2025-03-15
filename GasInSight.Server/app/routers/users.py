@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=User)
+@router.post("", response_model=User)
 async def create_user(
     user_create: UserCreate,
     db: AsyncSession = Depends(get_db),
@@ -28,7 +28,7 @@ async def create_user(
     return await user.create(db, user_create)
 
 
-@router.get("/", response_model=list[User])
+@router.get("", response_model=list[User])
 async def read_users(
     skip: int = 0,
     limit: int = 100,

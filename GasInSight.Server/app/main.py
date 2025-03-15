@@ -3,14 +3,21 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets
 from app.listeners import facility_setup, sensor_activation, sensor_deactivation, sensor_data
+from app.services.servicebus import setup_queues
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    facility_listener = await facility_setup.create_facility_setup_listener()
-    sensor_activation_listener = await sensor_activation.create_sensor_activation_listener()
-    sensor_deactivation_listener = await sensor_deactivation.create_sensor_deactivation_listener()
-    sensor_data_listener = await sensor_data.create_sensor_data_listener()
+    await setup_queues()
+    
+    facility_listener = facility_setup.create_facility_setup_listener()
+    sensor_activation_listener = sensor_activation.create_sensor_activation_listener()
+    sensor_deactivation_listener = sensor_deactivation.create_sensor_deactivation_listener()
+    sensor_data_listener = sensor_data.create_sensor_data_listener()
+    
+    for listener in [facility_listener, sensor_activation_listener, 
+                    sensor_deactivation_listener, sensor_data_listener]:
+        listener.start()
     
     app.state.listeners = {
         "facility_listener": facility_listener,

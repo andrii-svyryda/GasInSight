@@ -8,10 +8,10 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 300
     REFRESH_TOKEN_EXPIRE_DAYS: int = 30
     SERVICEBUS_CONNECTION_STRING: str | None = None
-    FACILITY_SETUP_QUEUE: str = "facility-setup"
-    SENSOR_ACTIVATION_QUEUE: str = "sensor-activation"
-    SENSOR_DATA_QUEUE: str = "sensor-data"
-    SENSOR_DEACTIVATION_QUEUE: str = "sensor-deactivation"
+    FACILITY_SETUP_QUEUE: str = "facility-setup-queue"
+    SENSOR_ACTIVATION_QUEUE: str = "sensor-activation-queue"
+    SENSOR_DATA_QUEUE: str = "sensor-data-queue"
+    SENSOR_DEACTIVATION_QUEUE: str = "sensor-deactivation-queue"
 
     class Config:
         env_file: str = ".env"

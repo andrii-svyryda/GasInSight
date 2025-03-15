@@ -28,12 +28,12 @@ async def login_for_access_token(
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user_obj.username, "role": user_obj.role.value},
+        data={"sub": user_obj.username, "id": user_obj.id},
         expires_delta=access_token_expires
     )
     
     refresh_token = create_refresh_token(
-        data={"sub": user_obj.username, "role": user_obj.role.value}
+        data={"sub": user_obj.username, "id": user_obj.id}
     )
     
     _ = await user.update_refresh_token(db, user_obj.id, refresh_token)
@@ -68,12 +68,12 @@ async def refresh_access_token(
     
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": user_obj.username, "role": user_obj.role.value},
+        data={"sub": user_obj.username, "id": user_obj.id},
         expires_delta=access_token_expires
     )
     
     new_refresh_token = create_refresh_token(
-        data={"sub": user_obj.username, "role": user_obj.role.value}
+        data={"sub": user_obj.username, "id": user_obj.id}
     )
     
     _ = await user.update_refresh_token(db, user_obj.id, new_refresh_token)

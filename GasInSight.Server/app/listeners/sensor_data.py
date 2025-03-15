@@ -30,11 +30,12 @@ async def handle_sensor_data(message_body: dict[str, Any]):
         )
 
 
-async def create_sensor_data_listener():
+def create_sensor_data_listener():
     from app.config import settings
+    
     listener = ServiceBusListener(
         queue_name=settings.SENSOR_DATA_QUEUE,
         message_handler=handle_sensor_data
     )
-    await listener.start()
+    
     return listener

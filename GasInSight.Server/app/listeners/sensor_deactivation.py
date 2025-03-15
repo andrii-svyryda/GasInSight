@@ -22,7 +22,7 @@ async def handle_sensor_deactivation(message_body: dict[str, Any]):
             pass
 
 
-async def create_sensor_deactivation_listener():
+def create_sensor_deactivation_listener():
     from app.config import settings
     
     listener = ServiceBusListener(

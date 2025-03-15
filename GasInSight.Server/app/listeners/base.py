@@ -1,5 +1,5 @@
 from collections.abc import Awaitable
-from azure.servicebus import ServiceBusClient
+from azure.servicebus.aio import ServiceBusClient
 from azure.servicebus.exceptions import ServiceBusError
 from app.config import settings
 import json
@@ -15,7 +15,7 @@ class ServiceBusListener:
         self.receiver = None
         self.is_running = False
 
-    async def start(self):
+    def start(self):
         if not settings.SERVICEBUS_CONNECTION_STRING:
             return
 
@@ -34,22 +34,22 @@ class ServiceBusListener:
             return
         while self.is_running:
             try:
-                messages = self.receiver.receive_messages(max_message_count=10, max_wait_time=5)
+                messages = await self.receiver.receive_messages(max_message_count=10, max_wait_time=5)
                 for message in messages:
                     try:
                         message_body: dict[str, Any] = json.loads(str(message))
                         await self.message_handler(message_body)
-                        message.complete()  # Fix: await the async operation
+                        await message.complete()
                     except Exception:
-                        message.abandon()  # Fix: await the async operation
+                        await message.abandon()
             except ServiceBusError:
                 await asyncio.sleep(5)
             except Exception:
                 await asyncio.sleep(5)
 
-    def stop(self):
+    async def stop(self):
         self.is_running = False
         if self.receiver:
-            self.receiver.close()
+            await self.receiver.close()
         if self.servicebus_client:
-            self.servicebus_client.close()
+            await self.servicebus_client.close()
