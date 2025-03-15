@@ -1,0 +1,12 @@
+General rules:
+    Don't write any comments
+
+GasInSight.App (typescript)
+    Use rules in GasInSight.App/.windsurfrules
+
+GasInSight.Hub (python)
+    Use rules in GasInSight.Hub/.windsurfrules
+
+GasInSight.Server (python)
+    Use rules in GasInSight.Server/.windsurfrules
+

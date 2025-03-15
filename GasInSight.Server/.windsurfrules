@@ -1,0 +1,18 @@
+FastApi application
+
+For database use sqlalchemy and alembic for migrations
+Use pydantic for every model
+Everything should be typed, but don't use deprecated typing module. Use list, dict instead of List, Dict
+
+Project files should follow following structure:
+    /alembic* - all related to alembic files
+    /app/settings.ts - all configs from env should be here in pydantic class, exported as settings
+    /app/routers/ - all routers, separate route for each model
+    /app/cruds/ - all db operations should be here, for each model represented in separate Crud class. There should be CrudBase class that contains basic logic, and all specific Crud classes should be inherited from it.
+    /app/schemas/ - all pydantic schemas that are used by Cruds or endpoints should be here
+    /app/models/ - all db models. all columns should be defined using mapped_column and be typed
+    /app/services/ - all bussiness logic should be there, Such as calculations, data aggregations, queue listener integration
+    /app/main.py - root of the application.
+
+
+    
