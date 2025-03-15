@@ -15,4 +15,4 @@ class CrudLocation(CrudBase[Location, LocationCreate, LocationUpdate]):
         return result.scalars().first()
 
 
-location = CrudLocation(Location)
+location_crud = CrudLocation(Location)

@@ -10,8 +10,8 @@ from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.sql import table, column
-from sqlalchemy import String, Integer, Enum, DateTime
-from datetime import datetime
+from sqlalchemy import String, Integer, DateTime
+from datetime import datetime, timezone
 from passlib.context import CryptContext
 
 
@@ -44,7 +44,7 @@ def upgrade() -> None:
                 'username': 'admin',
                 'email': 'admin@gasinisight.com',
                 'password_hash': pwd_context.hash('Admin123!'),
-                'created_at': datetime.utcnow(),
+                'created_at': datetime.now(timezone.utc),
                 'refresh_token': None,
                 'last_login': None,
                 'role': 'Admin'

@@ -3,8 +3,8 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.services.auth import verify_token
-from app.cruds.user import user
-from app.cruds.user_facility_permission import user_facility_permission
+from app.cruds.user import user_crud
+from app.cruds.user_facility_permission import user_facility_permission_crud
 from app.models.user import User, UserRole
 from app.models.user_facility_permission import PermissionType
 
@@ -24,7 +24,7 @@ async def get_current_user(
     if token_data is None:
         raise credentials_exception
     
-    user_obj = await user.get(db, token_data.id)
+    user_obj = await user_crud.get(db, token_data.id)
     if user_obj is None:
         raise credentials_exception
     
@@ -45,22 +45,33 @@ async def get_current_active_admin(
 async def check_facility_permission(
     facility_id: str,
     permission_type: PermissionType,
-    current_user: User = Depends(get_current_user),
-    db: AsyncSession = Depends(get_db),
+    current_user: User,
+    db: AsyncSession,
 ) -> bool:
     if current_user.role == UserRole.Admin:
         return True
     
-    permission = await user_facility_permission.get_by_user_and_facility(
+    permission = await user_facility_permission_crud.get_by_user_and_facility(
         db, current_user.id, facility_id
     )
     
     if permission is None:
-        return False
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Not enough permissions",
+        )
     
     if permission_type == PermissionType.View:
-        return permission.permission_type in [PermissionType.View, PermissionType.Edit]
+        if permission.permission_type not in [PermissionType.View, PermissionType.Edit]:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Not enough permissions",
+            )
     elif permission_type == PermissionType.Edit:
-        return permission.permission_type in [PermissionType.Edit]
+        if permission.permission_type != PermissionType.Edit:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Not enough permissions",
+            )
     
-    return False
+    return True

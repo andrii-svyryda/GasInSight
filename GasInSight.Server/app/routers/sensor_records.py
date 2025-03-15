@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from app.database import get_db
-from app.cruds.sensor_record import sensor_record
-from app.cruds.sensor import sensor
+from app.cruds.sensor_record import sensor_record_crud
+from app.cruds.sensor import sensor_crud
 from app.schemas.sensor_record import SensorRecord
 from app.routers.dependencies import get_current_user, check_facility_permission
 from app.models.user import User as UserModel
@@ -23,7 +23,7 @@ async def read_sensor_records(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_sensor = await sensor.get_by_id(db, sensor_id)
+    db_sensor = await sensor_crud.get_by_id(db, sensor_id)
     if db_sensor is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -32,7 +32,7 @@ async def read_sensor_records(
     
     await check_facility_permission(db_sensor.facility_id, PermissionType.View, current_user, db)
     
-    records = sensor_record.get_by_sensor_id_and_date_range(
+    records = sensor_record_crud.get_by_sensor_id_and_date_range(
         db, sensor_id, start_date, end_date
     )
     

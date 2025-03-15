@@ -17,4 +17,4 @@ class CrudSensor(CrudBase[Sensor, SensorCreate, SensorUpdate]):
         return list(result.scalars().all())
 
 
-sensor = CrudSensor(Sensor)
+sensor_crud = CrudSensor(Sensor)

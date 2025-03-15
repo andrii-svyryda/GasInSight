@@ -23,4 +23,4 @@ class CrudFacility(CrudBase[Facility, FacilityCreate, FacilityUpdate]):
         return list(result.scalars().all())
 
 
-facility = CrudFacility(Facility)
+facility_crud = CrudFacility(Facility)

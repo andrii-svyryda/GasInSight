@@ -1,6 +1,6 @@
 from app.listeners.base import ServiceBusListener
 from app.schemas.service_bus_messages import SensorDataMessage
-from app.cruds.sensor_record import sensor_record
+from app.cruds.sensor_record import sensor_record_crud
 from app.schemas.sensor_record import SensorRecordCreate
 from app.database import SessionLocal
 from app.websockets.manager import manager
@@ -17,7 +17,7 @@ async def handle_sensor_data(message_body: dict[str, Any]):
             data=sensor_message.data
         )
         
-        _ = await sensor_record.create(db, record_create)
+        _ = await sensor_record_crud.create(db, record_create)
         
         await manager.broadcast(
             sensor_message.sensor_id,

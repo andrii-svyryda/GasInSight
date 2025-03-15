@@ -34,4 +34,4 @@ class CrudSensorRecord(CrudBase[SensorRecord, SensorRecordCreate, SensorRecordBa
         return list(result.scalars().all())
 
 
-sensor_record = CrudSensorRecord(SensorRecord)
+sensor_record_crud = CrudSensorRecord(SensorRecord)

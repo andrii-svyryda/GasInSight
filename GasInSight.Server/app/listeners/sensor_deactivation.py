@@ -1,6 +1,6 @@
 from app.listeners.base import ServiceBusListener
 from app.schemas.service_bus_messages import SensorDeactivationMessage
-from app.cruds.sensor import sensor
+from app.cruds.sensor import sensor_crud
 from app.models.sensor import SensorStatus
 from app.database import SessionLocal
 from app.schemas.sensor import SensorUpdate
@@ -12,12 +12,12 @@ async def handle_sensor_deactivation(message_body: dict[str, Any]):
         try:
             sensor_message = SensorDeactivationMessage(**message_body)
             
-            existing_sensor = await sensor.get_by_id(db, sensor_message.sensor_id)
+            existing_sensor = await sensor_crud.get_by_id(db, sensor_message.sensor_id)
             if not existing_sensor:
                 return
             
             sensor_update = SensorUpdate(status=SensorStatus.Inactive)
-            _ = await sensor.update(db, existing_sensor, sensor_update)
+            _ = await sensor_crud.update(db, existing_sensor, sensor_update)
         except Exception:
             pass
 

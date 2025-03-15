@@ -29,4 +29,4 @@ class CrudUserFacilityPermission(CrudBase[UserFacilityPermission, UserFacilityPe
         return list(result.scalars().all())
 
 
-user_facility_permission = CrudUserFacilityPermission(UserFacilityPermission)
+user_facility_permission_crud = CrudUserFacilityPermission(UserFacilityPermission)

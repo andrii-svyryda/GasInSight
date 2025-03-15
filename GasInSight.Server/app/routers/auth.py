@@ -3,7 +3,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta
 from app.database import get_db
-from app.cruds.user import user
+from app.cruds.user import user_crud
 from app.services.auth import create_access_token, create_refresh_token, verify_token
 from app.schemas.user import Token
 from app.config import settings
@@ -18,7 +18,7 @@ async def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(), 
     db: AsyncSession = Depends(get_db)
 ):
-    user_obj = await user.authenticate(db, form_data.username, form_data.password)
+    user_obj = await user_crud.authenticate(db, form_data.username, form_data.password)
     if not user_obj:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -36,7 +36,7 @@ async def login_for_access_token(
         data={"sub": user_obj.username, "id": user_obj.id}
     )
     
-    _ = await user.update_refresh_token(db, user_obj.id, refresh_token)
+    _ = await user_crud.update_refresh_token(db, user_obj.id, refresh_token)
     
     return {
         "access_token": access_token,
@@ -58,7 +58,7 @@ async def refresh_access_token(
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    user_obj = await user.get(db, token_data.id)
+    user_obj = await user_crud.get(db, token_data.id)
     if not user_obj or user_obj.refresh_token != refresh_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -76,7 +76,7 @@ async def refresh_access_token(
         data={"sub": user_obj.username, "id": user_obj.id}
     )
     
-    _ = await user.update_refresh_token(db, user_obj.id, new_refresh_token)
+    _ = await user_crud.update_refresh_token(db, user_obj.id, new_refresh_token)
     
     return {
         "access_token": access_token,

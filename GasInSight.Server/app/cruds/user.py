@@ -57,4 +57,4 @@ class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
         return None
 
 
-user = CrudUser(User)
+user_crud = CrudUser(User)

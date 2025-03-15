@@ -1,6 +1,6 @@
 from app.listeners.base import ServiceBusListener
 from app.schemas.service_bus_messages import SensorActivationMessage
-from app.cruds.sensor import sensor
+from app.cruds.sensor import sensor_crud
 from app.schemas.sensor import SensorCreate
 from app.schemas.location import LocationCreate
 from app.models.sensor import SensorType, SensorStatus
@@ -13,7 +13,7 @@ async def handle_sensor_activation(message_body: dict[str, Any]):
         try:
             sensor_message = SensorActivationMessage(**message_body)
             
-            existing_sensor = await sensor.get_by_id(db, sensor_message.sensor_id)
+            existing_sensor = await sensor_crud.get_by_id(db, sensor_message.sensor_id)
             if existing_sensor:
                 return
             
@@ -33,7 +33,7 @@ async def handle_sensor_activation(message_body: dict[str, Any]):
                 location=loc_create
             )
             
-            _ = await sensor.create(db, sensor_create)
+            _ = await sensor_crud.create(db, sensor_create)
         except Exception:
             pass
 

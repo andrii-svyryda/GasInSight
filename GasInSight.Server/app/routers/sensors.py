@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
-from app.cruds.sensor import sensor
+from app.cruds.sensor import sensor_crud
 from app.schemas.sensor import Sensor, SensorUpdate
 from app.routers.dependencies import get_current_user, check_facility_permission
 from app.models.user import User as UserModel
@@ -13,7 +13,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=list[Sensor])
+@router.get("", response_model=list[Sensor])
 async def read_sensors(
     facility_id: str,
     skip: int = 0,
@@ -21,11 +21,10 @@ async def read_sensors(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    if facility_id:
-        await check_facility_permission(facility_id, PermissionType.View, current_user, db)
-        sensors = sensor.get_by_facility_id(db, facility_id, skip=skip, limit=limit)
-    else:
-        sensors = sensor.get_multi(db, skip=skip, limit=limit)
+    await check_facility_permission(facility_id, PermissionType.View, current_user, db)
+
+    sensors = await sensor_crud.get_by_facility_id(db, facility_id, skip=skip, limit=limit)
+
     return sensors
 
 
@@ -35,7 +34,7 @@ async def read_sensor(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_sensor = await sensor.get_by_id(db, sensor_id)
+    db_sensor = await sensor_crud.get_by_id(db, sensor_id)
     if db_sensor is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -54,7 +53,7 @@ async def update_sensor(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_sensor = await sensor.get_by_id(db, sensor_id)
+    db_sensor = await sensor_crud.get_by_id(db, sensor_id)
     if db_sensor is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -63,4 +62,4 @@ async def update_sensor(
     
     await check_facility_permission(db_sensor.facility_id, PermissionType.Edit, current_user, db)
     
-    return await sensor.update(db, db_sensor, sensor_update)
+    return await sensor_crud.update(db, db_sensor, sensor_update)
