@@ -14,5 +14,5 @@ Project files should follow following structure:
     /app/services/ - all bussiness logic should be there, Such as calculations, data aggregations, queue listener integration
     /app/main.py - root of the application.
 
-
+Domain models definition is located in .modelsrules
     
