@@ -1,0 +1,35 @@
+Application should be capable to collect data from sensors and save it to database.
+All the data will be passed through Azure servicebus.
+
+Types of messages:
+
+FacilitySetup
+- facility_id
+- facility_name
+- address
+- longitude
+- latitude
+- facility_type
+- tracked_at (utc datetime)
+
+SensorActivation
+- sensor_id
+- facility_id
+- address
+- longitude
+- latitude
+- sensor_type
+- tracked_at (utc datetime)
+
+SensorData
+- sensor_id
+- facility_id
+- tracked_at (utc datetime)
+- data
+
+SensorDeactivation
+- sensor_id
+- facility_id
+- tracked_at (utc datetime)
+
+Every message should be in a separate queue and have separate handler.

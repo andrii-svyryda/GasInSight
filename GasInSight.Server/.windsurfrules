@@ -5,14 +5,17 @@ Use pydantic for every model
 Everything should be typed, but don't use deprecated typing module. Use list, dict instead of List, Dict
 
 Project files should follow following structure:
-    /alembic* - all related to alembic files
-    /app/settings.ts - all configs from env should be here in pydantic class, exported as settings
-    /app/routers/ - all routers, separate route for each model
-    /app/cruds/ - all db operations should be here, for each model represented in separate Crud class. There should be CrudBase class that contains basic logic, and all specific Crud classes should be inherited from it.
-    /app/schemas/ - all pydantic schemas that are used by Cruds or endpoints should be here
-    /app/models/ - all db models. all columns should be defined using mapped_column and be typed
-    /app/services/ - all bussiness logic should be there, Such as calculations, data aggregations, queue listener integration
-    /app/main.py - root of the application.
+    ./alembic* - all related to alembic files
+    ./app/main.py - root of the application.
+    ./app/database.py - database connection and session management
+    ./app/config.py - all configs from env should be here in pydantic class, exported as settings
+    ./app/models/ - all db models. all columns should be defined using mapped_column and be typed
+    ./app/cruds/ - all db operations should be here, for each model represented in separate Crud class. There should be CrudBase class that contains basic logic, and all specific Crud classes should be inherited from it.
+    ./app/schemas/ - all pydantic schemas that are used by Cruds or endpoints should be here
+    ./app/services/ - all business logic should be there, Such as calculations, data aggregations, queue listener integration
+    ./app/routers/ - all routers, separate route for each model
 
-Domain models definition is located in .modelsrules
+Domain models definition is located in ./rules/models.rules
+Features description is located in ./rules/features.rules
+Servicebus messages description is located in /GlobalRules/servicebus.rules
     

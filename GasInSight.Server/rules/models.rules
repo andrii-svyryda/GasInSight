@@ -1,5 +1,4 @@
 User
-
 - id
 - username
 - email
@@ -9,17 +8,21 @@ User
 - last_login
 - role (Admin, User)
 
-Facility
+Location
+- id
+- address?
+- longitude
+- latitude
 
+Facility
 - id
 - name
-- location
+- location_id (references Location)
 - created_at
 - status
 - type enum(DrillingRig, Pipelines, TankFarm, UndergroundStorage, ProcessingPlant, Import Terminal, ExportTerminal)
 
 UserFacilityPermission
-
 - id
 - user_id (references User)
 - facility_id (references Facility)
@@ -27,17 +30,15 @@ UserFacilityPermission
 - granted_at
 
 Sensor
-
 - id
 - name
 - facility_id (references Facility)
-- location
+- location_id (references Location)
 - status enum(Enabled, Disabled, Removed)
 - installed_at
 - type enum(Temperature, Humidity, Pressure, Flow, Volume, GasComposition, LiquidComposition, Vibration, Noise, Corrosion, GasDetection, FlameDetection, LevelIndicator, ValveStatus, PumpStatus, CompressorStatus, PowerConsumption, WaterContent, OxygenContent, HydrogenSulfideContent, CarbonDioxideContent, ParticulateMatter, LeakDetection)
 
 SensorRecord (sensor_id + tracked_at is primary key)
-
 - sensor_id (references Sensor)
 - tracked_at (utc datetime)
 - data
