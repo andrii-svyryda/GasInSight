@@ -20,21 +20,21 @@ async def create_permission(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
-    db_user = user_crud.get(db, permission_create.user_id)
+    db_user = await user_crud.get(db, permission_create.user_id)
     if db_user is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
     
-    db_facility = facility_crud.get_by_id(db, permission_create.facility_id)
+    db_facility = await facility_crud.get(db, permission_create.facility_id)
     if db_facility is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Facility not found"
         )
     
-    existing_permission = user_facility_permission_crud.get_by_user_and_facility(
+    existing_permission = await user_facility_permission_crud.get_by_user_and_facility(
         db, permission_create.user_id, permission_create.facility_id
     )
     
@@ -55,11 +55,11 @@ async def read_permissions(
     current_user: UserModel = Depends(get_current_active_admin)
 ):
     if user_id:
-        permissions = user_facility_permission_crud.get_by_user_id(db, user_id)
+        permissions = await user_facility_permission_crud.get_by_user_id(db, user_id)
     elif facility_id:
-        permissions = user_facility_permission_crud.get_by_facility_id(db, facility_id)
+        permissions = await user_facility_permission_crud.get_by_facility_id(db, facility_id)
     else:
-        permissions = user_facility_permission_crud.get_multi(db)
+        permissions = await user_facility_permission_crud.get_multi(db)
     
     return permissions
 
@@ -70,11 +70,11 @@ async def delete_permission(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
-    db_permission = user_facility_permission_crud.get(db, permission_id)
+    db_permission = await user_facility_permission_crud.get(db, permission_id)
     if db_permission is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Permission not found"
         )
     
-    return user_facility_permission_crud.remove(db, permission_id)
+    return await user_facility_permission_crud.remove(db, permission_id)

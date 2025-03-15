@@ -13,20 +13,19 @@ Every api schema in snake_case should be translated on frontend to camelCase whe
 
 Project files should follow following structure:
 ./src/
-./store/
-./index.ts
-./middleware.ts
-./slices/
-./api/
-./pages/{page_name}/ - every component related to specific feature (screen)
-./page.tsx
-./components/
-./components/ - separate components
-./layout/ - all components related to layout
-./hooks/ - separate file for each custom hook
-./types/ - separate file for each model schemas
-./utils/ - some additional utils
-./App.tsx - main component with router and required wrappers like providers, layout
-./index.ts - app entry point
+    ./store/
+        ./index.ts
+        ./slices/
+        ./api/
+    ./pages/{page_name}/ - every component related to specific feature (screen)
+        ./page.tsx
+        ./components/
+    ./components/ - separate components
+        ./layout/ - all components related to layout
+    ./hooks/ - separate file for each custom hook
+    ./types/ - separate file for each model schemas
+    ./utils/ - some additional utils
+    ./App.tsx - main component with router and required wrappers like providers, layout
+    ./index.ts - app entry point
 
 Features description is located in ./rules/features.rules
