@@ -6,7 +6,7 @@ User
 - created_at
 - refresh_token
 - last_login
-- role (Admin, User)
+- role enum(Admin, User)
 
 Location
 - id
