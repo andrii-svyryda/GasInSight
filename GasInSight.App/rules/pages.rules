@@ -1,0 +1,22 @@
+1. / - Main landing page
+2. /login - Login page 
+3. /dashboard - Dashboard page
+    When user clicks "Go to app", he will be redirected to dashboard page.
+
+    On the dashboard page user will be able to see a list of facilities accessible to him on the left side and a map with all facilities on the right side.
+    User will be able to click on some facility on the left and it will be focused on the map, click on the map on the tooltip to open facility details.
+    There should be a button on facility block on left side to view details of this facility.
+4. /dashboard/users - Users page
+    When user clicks "Users" in navigation, he will be redirected to this page.
+
+    On this page admin will see paginatable table with users.
+5. /dashboard/facilities/{facilityId} - Facility details page
+    On this page admin will see a list of facility sensors on the left side and a map with all sensors on the right side.
+    When sensor is displayed on the map, it should be colored based on his status.
+    User will be able to click on some sensor on the left and it will be focused on the map, click on the map on the tooltip to open sensor details.
+    There should be a button on sensor block on left side to view details of this sensor.
+6. /dashboard/facilities/{facilityId}/sensors/{sensorId} - Sensor details page
+    On this page admin will see sensor details.
+    In the middle of the screen there will be a chart with sensor data. Above this chart there should be 2 date pickers, one for start date and one for end date.
+
+    
