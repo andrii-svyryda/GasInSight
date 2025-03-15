@@ -30,6 +30,7 @@ async def handle_sensor_activation(message_body: dict[str, Any]):
                 type=SensorType(sensor_message.sensor_type),
                 facility_id=sensor_message.facility_id,
                 installed_at=sensor_message.tracked_at,
+                expected_freq=sensor_message.expected_freq,
                 location=loc_create
             )
             

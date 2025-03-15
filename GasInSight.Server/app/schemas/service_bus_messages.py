@@ -17,6 +17,7 @@ class SensorActivationMessage(BaseModel):
     latitude: float
     sensor_type: str
     tracked_at: datetime
+    expected_freq: str 
 
 
 class SensorDeactivationMessage(BaseModel):

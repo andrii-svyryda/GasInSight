@@ -13,7 +13,7 @@ class Facility(BaseModel):
     sensors: list = Field(default_factory=list)
 
     def get_sensors(self) -> list:
-        return self.sensors
+        return self.sensors 
 
     def add_sensor(self, sensor: Sensor) -> None:
         self.sensors.append(sensor)

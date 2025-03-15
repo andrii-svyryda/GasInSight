@@ -1,5 +1,6 @@
 {
   "extraPaths": [],
   "reportUnusedCallResult": false,
-  "reportCallInDefaultInitializer": false
+  "reportCallInDefaultInitializer": false,
+  "reportUnknownMemberType": false
 }

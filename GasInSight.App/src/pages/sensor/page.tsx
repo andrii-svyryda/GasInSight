@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Button, CircularProgress, Grid, Typography } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { sensorApi } from "../../store/api/sensorApi";
@@ -19,6 +19,7 @@ export const SensorPage = () => {
     return yesterday.format("YYYY-MM-DDTHH:mm:ss");
   });
   const [endDate, setEndDate] = useState<string | null>(null);
+  const [frequency, setFrequency] = useState<string>("15T");
 
   const { data: sensor, isLoading: isSensorLoading } =
     sensorApi.useGetSensorByIdQuery(
@@ -26,12 +27,19 @@ export const SensorPage = () => {
       { skip: !facilityId || !sensorId }
     );
 
+  useEffect(() => {
+    if (sensor?.expectedFreq) {
+      setFrequency(sensor.expectedFreq);
+    }
+  }, [sensor]);
+
   const { data: records, isLoading: isRecordsLoading } =
     sensorApi.useGetSensorRecordsQuery(
       {
         sensorId: sensorId as string,
         startDate,
         endDate,
+        freq: frequency,
       },
       { skip: !sensorId }
     );
@@ -145,6 +153,9 @@ export const SensorPage = () => {
             <strong>Installed:</strong>{" "}
             {new Date(sensor.installedAt).toLocaleDateString()}
           </Typography>
+          <Typography variant="body1">
+            <strong>Expected Frequency:</strong> {sensor.expectedFreq || "1H"}
+          </Typography>
         </Grid>
         {sensor.location && (
           <Grid item xs={12} md={6}>
@@ -171,8 +182,11 @@ export const SensorPage = () => {
       <DateRangePicker
         startDate={startDate}
         endDate={endDate}
+        frequency={frequency}
         onStartDateChange={setStartDate}
         onEndDateChange={setEndDate}
+        onFrequencyChange={setFrequency}
+        expectedFreq={sensor?.expectedFreq}
       />
 
       <SensorChart

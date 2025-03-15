@@ -53,5 +53,6 @@ class Sensor(Base):
     status: Mapped[SensorStatus] = mapped_column(Enum(SensorStatus))
     installed_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     type: Mapped[SensorType] = mapped_column(Enum(SensorType))
+    expected_freq: Mapped[str] = mapped_column(String, default="1H")
 
     location: Mapped["Location | None"] = relationship("Location")

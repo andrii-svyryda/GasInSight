@@ -8,6 +8,7 @@ class SensorBase(BaseModel):
     name: str
     status: SensorStatus
     type: SensorType
+    expected_freq: str = "1H"
 
 
 class SensorCreate(SensorBase):
@@ -20,6 +21,7 @@ class SensorCreate(SensorBase):
 class SensorUpdate(BaseModel):
     name: str | None = None
     status: SensorStatus | None = None
+    expected_freq: str | None = None
 
 
 class Sensor(SensorBase):

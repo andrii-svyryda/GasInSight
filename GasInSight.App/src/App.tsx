@@ -23,6 +23,15 @@ const theme = createTheme({
       main: "#dc004e",
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: "none",
+        },
+      },
+    },
+  },
 })
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {

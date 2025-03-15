@@ -39,6 +39,7 @@ export interface Sensor {
   status: SensorStatus;
   installedAt: string;
   type: SensorType;
+  expectedFreq: string;
   location?: {
     id: number;
     address?: string;

@@ -5,6 +5,7 @@ interface GetSensorRecordsParams {
   sensorId: string;
   startDate: string;
   endDate?: string | null;
+  freq?: string;
 }
 
 export const sensorApi = baseApi.injectEndpoints({
@@ -32,16 +33,13 @@ export const sensorApi = baseApi.injectEndpoints({
     }),
 
     getSensorRecords: builder.query<SensorRecord[], GetSensorRecordsParams>({
-      query: ({ sensorId, startDate, endDate }) => ({
+      query: ({ sensorId, startDate, endDate, freq }) => ({
         url: `/sensor-records/${sensorId}`,
-        params: endDate
-          ? {
-              start_date: startDate,
-              end_date: endDate,
-            }
-          : {
-              start_date: startDate,
-            },
+        params: {
+          start_date: startDate,
+          ...(endDate && { end_date: endDate }),
+          ...(freq && { freq }),
+        },
       }),
       providesTags: (_, __, { sensorId }) => [
         { type: "SensorRecord", id: sensorId },
