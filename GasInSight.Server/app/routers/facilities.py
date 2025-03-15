@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from typing import List
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.cruds.facility import facility
 from app.schemas.facility import Facility, FacilityUpdate
@@ -14,27 +13,27 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[Facility])
+@router.get("/", response_model=list[Facility])
 async def read_facilities(
     skip: int = 0,
     limit: int = 100,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
     if current_user.role.value == "Admin":
-        facilities = facility.get_multi(db, skip=skip, limit=limit)
+        facilities = await facility.get_multi(db, skip=skip, limit=limit)
     else:
-        facilities = facility.get_all_by_user_id(db, current_user.id, skip=skip, limit=limit)
+        facilities = await facility.get_all_by_user_id(db, current_user.id, skip=skip, limit=limit)
     return facilities
 
 
 @router.get("/{facility_id}", response_model=Facility)
 async def read_facility(
     facility_id: str,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_facility = facility.get_by_id(db, facility_id)
+    db_facility = await facility.get_by_id(db, facility_id)
     if db_facility is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -50,16 +49,16 @@ async def read_facility(
 async def update_facility(
     facility_id: str,
     facility_update: FacilityUpdate,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_facility = facility.get_by_id(db, facility_id)
+    db_facility = await facility.get_by_id(db, facility_id)
     if db_facility is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Facility not found"
         )
     
-    await check_facility_permission(facility_id, PermissionType.Modify, current_user, db)
+    await check_facility_permission(facility_id, PermissionType.Edit, current_user, db)
     
-    return facility.update(db, db_facility, facility_update)
+    return await facility.update(db, db_facility, facility_update)

@@ -18,4 +18,4 @@ class UserFacilityPermission(UserFacilityPermissionBase):
     granted_at: datetime
 
     class Config:
-        from_attributes = True
+        from_attributes: bool = True

@@ -8,7 +8,7 @@ from app.database import Base
 
 class PermissionType(enum.Enum):
     View = "View"
-    Modify = "Modify"
+    Edit = "Edit"
 
 
 class UserFacilityPermission(Base):

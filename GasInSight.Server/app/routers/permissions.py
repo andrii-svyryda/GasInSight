@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import List
+from typing import list
 from app.database import get_db
 from app.cruds.user_facility_permission import user_facility_permission
 from app.cruds.user import user
@@ -48,7 +48,7 @@ async def create_permission(
     return user_facility_permission.create(db, permission_create)
 
 
-@router.get("/", response_model=List[UserFacilityPermission])
+@router.get("/", response_model=list[UserFacilityPermission])
 async def read_permissions(
     user_id: int = None,
     facility_id: str = None,

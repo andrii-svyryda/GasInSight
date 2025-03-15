@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import List
+from typing import list
 from app.database import get_db
 from app.cruds.sensor import sensor
 from app.schemas.sensor import Sensor, SensorUpdate
@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_model=List[Sensor])
+@router.get("/", response_model=list[Sensor])
 async def read_sensors(
     skip: int = 0,
     limit: int = 100,

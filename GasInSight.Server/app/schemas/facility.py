@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
 from app.models.facility import FacilityType
 from app.schemas.location import Location, LocationCreate
 
@@ -17,7 +16,7 @@ class FacilityCreate(FacilityBase):
 
 
 class FacilityUpdate(BaseModel):
-    name: Optional[str] = None
+    name: str | None = None
 
 
 class Facility(FacilityBase):
@@ -27,4 +26,4 @@ class Facility(FacilityBase):
     location: Location
 
     class Config:
-        from_attributes = True
+        from_attributes: bool = True

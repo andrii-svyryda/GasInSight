@@ -30,5 +30,5 @@ In the application should be routers that cover next functionality that include 
  - CRUD users
  - Grant permissions to users
  - Update facilities and sensors names 
- - List facilities and sensors
- - List sensors data by sensor_id and datetime range
+ - list facilities and sensors
+ - list sensors data by sensor_id and datetime range

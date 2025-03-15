@@ -1,21 +1,27 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.cruds.base import CrudBase
-from app.models.models import User
-from app.schemas.schemas import UserCreate, UserUpdate
-from typing import Optional
+from app.models.user import User
+from app.schemas import UserCreate, UserUpdate
 from passlib.context import CryptContext
+from typing import override
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
-    def get_by_username(self, db: Session, username: str) -> Optional[User]:
-        return db.query(User).filter(User.username == username).first()
+    async def get_by_username(self, db: AsyncSession, username: str) -> User | None:
+        stmt = select(User).where(User.username == username)
+        result = await db.execute(stmt)
+        return result.scalars().first()
     
-    def get_by_email(self, db: Session, email: str) -> Optional[User]:
-        return db.query(User).filter(User.email == email).first()
+    async def get_by_email(self, db: AsyncSession, email: str) -> User | None:
+        stmt = select(User).where(User.email == email)
+        result = await db.execute(stmt)
+        return result.scalars().first()
     
-    def create(self, db: Session, obj_in: UserCreate) -> User:
+    @override
+    async def create(self, db: AsyncSession, obj_in: UserCreate) -> User:
         db_obj = User(
             username=obj_in.username,
             email=obj_in.email,
@@ -23,33 +29,37 @@ class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
             role=obj_in.role
         )
         db.add(db_obj)
-        db.commit()
-        db.refresh(db_obj)
+        await db.commit()
+        await db.refresh(db_obj)
         return db_obj
     
-    def update(self, db: Session, db_obj: User, obj_in: UserUpdate) -> User:
+    @override
+    async def update(self, db: AsyncSession, db_obj: User, obj_in: UserUpdate) -> User:
         update_data = obj_in.model_dump(exclude_unset=True)
-        if update_data.get("password"):
-            hashed_password = pwd_context.hash(update_data["password"])
+        password: str | None = update_data.get("password")
+        if password:
+            hashed_password = pwd_context.hash(password)
             del update_data["password"]
             update_data["password_hash"] = hashed_password
-        return super().update(db, db_obj, UserUpdate(**update_data))
+        return await super().update(db, db_obj, UserUpdate(**update_data))
     
-    def authenticate(self, db: Session, username: str, password: str) -> Optional[User]:
-        user = self.get_by_username(db, username)
+    async def authenticate(self, db: AsyncSession, username: str, password: str) -> User | None:
+        user = await self.get_by_username(db, username)
         if not user:
             return None
         if not pwd_context.verify(password, user.password_hash):
             return None
         return user
     
-    def update_refresh_token(self, db: Session, user_id: int, refresh_token: Optional[str]) -> User:
-        user = self.get(db, user_id)
-        user.refresh_token = refresh_token
-        db.add(user)
-        db.commit()
-        db.refresh(user)
-        return user
+    async def update_refresh_token(self, db: AsyncSession, user_id: int, refresh_token: str | None) -> User | None:
+        user = await self.get(db, user_id)
+        if user:
+            user.refresh_token = refresh_token
+            db.add(user)
+            await db.commit()
+            await db.refresh(user)
+            return user
+        return None
 
 
 user = CrudUser(User)

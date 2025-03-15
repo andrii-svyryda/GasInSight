@@ -1,15 +1,18 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.cruds.base import CrudBase
-from app.models.models import Location
-from app.schemas.schemas import LocationCreate, LocationUpdate
+from app.models import Location
+from app.schemas import LocationCreate, LocationUpdate
 
 
 class CrudLocation(CrudBase[Location, LocationCreate, LocationUpdate]):
-    def get_by_coordinates(self, db: Session, longitude: float, latitude: float) -> Location:
-        return db.query(Location).filter(
+    async def get_by_coordinates(self, db: AsyncSession, longitude: float, latitude: float) -> Location | None:
+        stmt = select(Location).where(
             Location.longitude == longitude,
             Location.latitude == latitude
-        ).first()
+        )
+        result = await db.execute(stmt)
+        return result.scalars().first()
 
 
 location = CrudLocation(Location)

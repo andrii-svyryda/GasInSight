@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 from datetime import datetime
-from typing import Optional
 
 
 class SensorDataMessage(BaseModel):
@@ -13,7 +12,7 @@ class SensorDataMessage(BaseModel):
 class SensorActivationMessage(BaseModel):
     sensor_id: str
     facility_id: str
-    address: Optional[str] = None
+    address: str | None = None
     longitude: float
     latitude: float
     sensor_type: str
@@ -29,7 +28,7 @@ class SensorDeactivationMessage(BaseModel):
 class FacilitySetupMessage(BaseModel):
     facility_id: str
     facility_name: str
-    address: Optional[str] = None
+    address: str | None = None
     longitude: float
     latitude: float
     facility_type: str

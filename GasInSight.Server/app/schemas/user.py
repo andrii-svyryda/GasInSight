@@ -1,12 +1,10 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
 from app.models.user import UserRole
 
 
 class TokenData(BaseModel):
-    username: str
-    role: UserRole
+    id: str
 
 
 class Token(BaseModel):
@@ -26,17 +24,17 @@ class UserCreate(UserBase):
 
 
 class UserUpdate(BaseModel):
-    username: Optional[str] = None
-    email: Optional[EmailStr] = None
-    password: Optional[str] = None
-    role: Optional[UserRole] = None
+    username: str | None = None
+    email: EmailStr | None = None
+    password: str | None = None
+    role: UserRole | None = None
 
 
 class User(UserBase):
     id: int
     created_at: datetime
-    last_login: Optional[datetime] = None
+    last_login: datetime | None = None
     role: UserRole
 
     class Config:
-        from_attributes = True
+        from_attributes: bool = True

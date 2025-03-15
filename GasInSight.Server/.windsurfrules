@@ -2,7 +2,7 @@ FastApi application
 
 For database use sqlalchemy and alembic for migrations
 Use pydantic for every model
-Everything should be typed, but don't use deprecated typing module. Use list, dict instead of List, Dict
+Everything should be typed, but don't use deprecated typing module. Use list, dict instead of list, dict
 
 Project files should follow following structure:
     ./alembic* - all related to alembic files

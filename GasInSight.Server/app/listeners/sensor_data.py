@@ -2,18 +2,13 @@ from app.listeners.base import ServiceBusListener
 from app.schemas.service_bus_messages import SensorDataMessage
 from app.cruds.sensor_record import sensor_record
 from app.schemas.sensor_record import SensorRecordCreate
-from sqlalchemy.orm import Session
-from app.database import get_db
+from app.database import SessionLocal
 from app.websockets.manager import manager
-from typing import Dict, Any
+from typing import Any
 
 
-async def handle_sensor_data(message_body: Dict[str, Any], db: Session = None):
-    if db is None:
-        db_generator = get_db()
-        db = next(db_generator)
-    
-    try:
+async def handle_sensor_data(message_body: dict[str, Any]):
+    async with SessionLocal() as db:
         sensor_message = SensorDataMessage(**message_body)
         
         record_create = SensorRecordCreate(
@@ -22,7 +17,7 @@ async def handle_sensor_data(message_body: Dict[str, Any], db: Session = None):
             data=sensor_message.data
         )
         
-        sensor_record.create(db, record_create)
+        _ = await sensor_record.create(db, record_create)
         
         await manager.broadcast(
             sensor_message.sensor_id,
@@ -33,8 +28,6 @@ async def handle_sensor_data(message_body: Dict[str, Any], db: Session = None):
                 "data": sensor_message.data
             }
         )
-    finally:
-        db.close()
 
 
 async def create_sensor_data_listener():

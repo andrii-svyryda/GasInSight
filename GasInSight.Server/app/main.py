@@ -1,13 +1,34 @@
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from contextlib import asynccontextmanager
 from app.database import engine, Base
 from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets
 from app.listeners import facility_setup, sensor_activation, sensor_deactivation, sensor_data
-import asyncio
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=engine) 
 
-app = FastAPI(title="GasInSight API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    facility_listener = await facility_setup.create_facility_setup_listener()
+    sensor_activation_listener = await sensor_activation.create_sensor_activation_listener()
+    sensor_deactivation_listener = await sensor_deactivation.create_sensor_deactivation_listener()
+    sensor_data_listener = await sensor_data.create_sensor_data_listener()
+    
+    app.state.listeners = {
+        "facility_listener": facility_listener,
+        "sensor_activation_listener": sensor_activation_listener,
+        "sensor_deactivation_listener": sensor_deactivation_listener,
+        "sensor_data_listener": sensor_data_listener
+    }
+    
+    yield
+    
+    for listener in app.state.listeners.values():
+        listener.stop()
+
+
+app = FastAPI(title="GasInSight API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,27 +45,6 @@ app.include_router(sensors.router)
 app.include_router(sensor_records.router)
 app.include_router(permissions.router)
 app.include_router(websockets.router)
-
-
-@app.on_event("startup")
-async def startup_event():
-    facility_listener = await facility_setup.create_facility_setup_listener()
-    sensor_activation_listener = await sensor_activation.create_sensor_activation_listener()
-    sensor_deactivation_listener = await sensor_deactivation.create_sensor_deactivation_listener()
-    sensor_data_listener = await sensor_data.create_sensor_data_listener()
-    
-    app.state.listeners = {
-        "facility_listener": facility_listener,
-        "sensor_activation_listener": sensor_activation_listener,
-        "sensor_deactivation_listener": sensor_deactivation_listener,
-        "sensor_data_listener": sensor_data_listener
-    }
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    for listener in app.state.listeners.values():
-        await listener.stop()
 
 
 @app.get("/")

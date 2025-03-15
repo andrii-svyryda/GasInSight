@@ -1,12 +1,11 @@
+import datetime
 from fastapi import WebSocket
-from typing import Dict, List
-import asyncio
 import json
 
 
 class ConnectionManager:
     def __init__(self):
-        self.active_connections: Dict[str, List[WebSocket]] = {}
+        self.active_connections: dict[str, list[WebSocket]] = {}
 
     async def connect(self, websocket: WebSocket, sensor_id: str):
         await websocket.accept()
@@ -24,7 +23,7 @@ class ConnectionManager:
     async def send_personal_message(self, message: str, websocket: WebSocket):
         await websocket.send_text(message)
 
-    async def broadcast(self, sensor_id: str, message: dict):
+    async def broadcast(self, sensor_id: str, message: dict[str, str | int | float | datetime.datetime]):
         if sensor_id in self.active_connections:
             message_str = json.dumps(message)
             for connection in self.active_connections[sensor_id]:

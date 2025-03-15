@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import timedelta
 from app.database import get_db
 from app.cruds.user import user
@@ -15,9 +15,10 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(
-    form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)
+    form_data: OAuth2PasswordRequestForm = Depends(), 
+    db: AsyncSession = Depends(get_db)
 ):
-    user_obj = user.authenticate(db, form_data.username, form_data.password)
+    user_obj = await user.authenticate(db, form_data.username, form_data.password)
     if not user_obj:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -35,7 +36,7 @@ async def login_for_access_token(
         data={"sub": user_obj.username, "role": user_obj.role.value}
     )
     
-    user.update_refresh_token(db, user_obj.id, refresh_token)
+    _ = await user.update_refresh_token(db, user_obj.id, refresh_token)
     
     return {
         "access_token": access_token,
@@ -46,7 +47,8 @@ async def login_for_access_token(
 
 @router.post("/refresh-token", response_model=Token)
 async def refresh_access_token(
-    refresh_token: str, db: Session = Depends(get_db)
+    refresh_token: str, 
+    db: AsyncSession = Depends(get_db)
 ):
     token_data = verify_token(refresh_token)
     if not token_data:
@@ -56,7 +58,7 @@ async def refresh_access_token(
             headers={"WWW-Authenticate": "Bearer"},
         )
     
-    user_obj = user.get_by_username(db, token_data.username)
+    user_obj = await user.get(db, token_data.id)
     if not user_obj or user_obj.refresh_token != refresh_token:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -74,7 +76,7 @@ async def refresh_access_token(
         data={"sub": user_obj.username, "role": user_obj.role.value}
     )
     
-    user.update_refresh_token(db, user_obj.id, new_refresh_token)
+    _ = await user.update_refresh_token(db, user_obj.id, new_refresh_token)
     
     return {
         "access_token": access_token,

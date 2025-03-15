@@ -1,16 +1,20 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 from app.cruds.base import CrudBase
-from app.models.models import Sensor
-from app.schemas.schemas import SensorCreate, SensorUpdate
-from typing import List
+from app.models import Sensor
+from app.schemas import SensorCreate, SensorUpdate
 
 
 class CrudSensor(CrudBase[Sensor, SensorCreate, SensorUpdate]):
-    def get_by_id(self, db: Session, id: str):
-        return db.query(Sensor).filter(Sensor.id == id).first()
+    async def get_by_id(self, db: AsyncSession, id: str) -> Sensor | None:
+        stmt = select(Sensor).where(Sensor.id == id)
+        result = await db.execute(stmt)
+        return result.scalars().first()
     
-    def get_by_facility_id(self, db: Session, facility_id: str, skip: int = 0, limit: int = 100) -> List[Sensor]:
-        return db.query(Sensor).filter(Sensor.facility_id == facility_id).offset(skip).limit(limit).all()
+    async def get_by_facility_id(self, db: AsyncSession, facility_id: str, skip: int = 0, limit: int = 100) -> list[Sensor]:
+        stmt = select(Sensor).where(Sensor.facility_id == facility_id).offset(skip).limit(limit)
+        result = await db.execute(stmt)
+        return list(result.scalars().all())
 
 
 sensor = CrudSensor(Sensor)

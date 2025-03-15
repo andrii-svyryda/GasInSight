@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from typing import List
+from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from app.database import get_db
 from app.cruds.sensor_record import sensor_record
@@ -16,15 +15,15 @@ router = APIRouter(
 )
 
 
-@router.get("/{sensor_id}", response_model=List[SensorRecord])
+@router.get("/{sensor_id}", response_model=list[SensorRecord])
 async def read_sensor_records(
     sensor_id: str,
     start_date: datetime,
     end_date: datetime,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_sensor = sensor.get_by_id(db, sensor_id)
+    db_sensor = await sensor.get_by_id(db, sensor_id)
     if db_sensor is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
