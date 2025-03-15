@@ -13,7 +13,7 @@ async def handle_facility_setup(message_body: dict[str, Any]) -> None:
         try:
             facility_message = FacilitySetupMessage(**message_body)
             
-            existing_facility = await facility_crud.get_by_id(db, facility_message.facility_id)
+            existing_facility = await facility_crud.get(db, facility_message.facility_id)
             if existing_facility:
                 return
             

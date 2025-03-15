@@ -12,7 +12,7 @@ async def handle_sensor_deactivation(message_body: dict[str, Any]):
         try:
             sensor_message = SensorDeactivationMessage(**message_body)
             
-            existing_sensor = await sensor_crud.get_by_id(db, sensor_message.sensor_id)
+            existing_sensor = await sensor_crud.get(db, sensor_message.sensor_id)
             if not existing_sensor:
                 return
             

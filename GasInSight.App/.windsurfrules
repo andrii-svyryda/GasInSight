@@ -1,3 +1,31 @@
 React application
 
-    
+Use Vite to create startup application.
+For REST api interactions use only redux toolkit createApi, for app level stores use Slices.
+Everything should have typescript type.
+Use mui as UI library.
+All charts should be done with recharts.
+All maps should be done with leaflet.
+Components shouldn't be big, should have memoization where applicable.
+
+Use backend models for api schemas.
+Every api schema in snake_case should be translated on frontend to camelCase when getting something from backend, and vise versa, when sending something to backend convert from camelCase to snake_case.
+
+Project files should follow following structure:
+./src/
+    ./store/
+        ./index.ts
+        ./slices/
+        ./api/
+    ./pages/{page_name}/ - every component related to specific feature (screen)
+        ./page.tsx
+        ./components/
+    ./components/ - separate components
+        ./layout/ - all components related to layout
+    ./hooks/ - separate file for each custom hook
+    ./types/ - separate file for each model schemas
+    ./utils/ - some additional utils
+    ./App.tsx - main component with router and required wrappers like providers, layout
+    ./index.ts - app entry point
+
+Features description is located in ./rules/features.rules

@@ -21,13 +21,17 @@ class CrudSensorRecord(CrudBase[SensorRecord, SensorRecordCreate, SensorRecordBa
         return db_obj
     
     async def get_by_sensor_id_and_date_range(
-        self, db: AsyncSession, sensor_id: str, start_date: datetime, end_date: datetime
+        self, db: AsyncSession, sensor_id: str, start_date: datetime, end_date: datetime | None = None
     ) -> list[SensorRecord]:
         stmt = select(SensorRecord).where(
             and_(
                 SensorRecord.sensor_id == sensor_id,
                 SensorRecord.tracked_at >= start_date,
                 SensorRecord.tracked_at <= end_date
+            ) if end_date is not None else
+            and_(
+                SensorRecord.sensor_id == sensor_id,
+                SensorRecord.tracked_at >= start_date
             )
         )
         result = await db.execute(stmt)

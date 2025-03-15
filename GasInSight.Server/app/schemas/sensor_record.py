@@ -1,9 +1,10 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import Optional
 
 
 class SensorRecordBase(BaseModel):
-    data: str
+    data: Optional[str] = None
 
 
 class SensorRecordCreate(SensorRecordBase):

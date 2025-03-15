@@ -1,0 +1,31 @@
+1. Application flow 
+
+User will start from main page, that will be a landing page, try to cook with this one.
+In the header on the right side there should be button "Login" if user not logged in or "Go to app" and "Logout" if user logged in.
+
+2. Authorization/Authentication
+
+If user is not logged in, he should be redirected to login page.
+When user is logged in, in local storage his token and refresh token should be stored as he will be redirected to the dashboard page.
+There should be interceptor that will add token to request headers.
+There should be interceptor that will refresh token if request fails with response corresponded to this:
+```python
+credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+```
+If refresh token also fails, access and refresh tokens should be erased from the local storage and user should be redirected to login page.
+User should see only things that are available for him. If it is admin, he will see everything, if not, he will see only available to him. 
+
+3. Layout 
+
+Layout is applicable only when user is in the dashboard.
+On the header there will be navigation, some icon with user info and logout button.
+
+On the navigation there will be these menu items:
+ - Facilities (same page as /dashboard)
+ - Users (applicable only to admins)
+
+4. Implement pages located in ./rules/pages.rules

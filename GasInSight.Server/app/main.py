@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets
+from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets, dashboard
 from app.listeners import facility_setup, sensor_activation, sensor_deactivation, sensor_data
 from app.services.servicebus import setup_queues
 
@@ -32,7 +32,7 @@ async def lifespan(app: FastAPI):
         listener.stop()
 
 
-app = FastAPI(title="GasInSight API", lifespan=lifespan)
+app = FastAPI(title="GasInSight API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -49,6 +49,7 @@ app.include_router(sensors.router)
 app.include_router(sensor_records.router)
 app.include_router(permissions.router)
 app.include_router(websockets.router)
+app.include_router(dashboard.router)
 
 
 @app.get("/")

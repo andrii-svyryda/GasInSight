@@ -22,7 +22,7 @@ async def websocket_endpoint(
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
         return
     
-    db_sensor = await sensor_crud.get_by_id(db, sensor_id)
+    db_sensor = await sensor_crud.get(db, sensor_id)
     if not db_sensor:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
         return

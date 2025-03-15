@@ -8,7 +8,10 @@ from app.services.auth import create_access_token, create_refresh_token, verify_
 from app.schemas.user import Token
 from app.config import settings
 
-router = APIRouter(tags=["authentication"])
+router = APIRouter(
+    prefix="/auth",
+    tags=["authentication"]
+)
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -43,6 +46,25 @@ async def login_for_access_token(
         "refresh_token": refresh_token,
         "token_type": "bearer"
     }
+
+
+@router.post("/logout")
+async def logout(
+    refresh_token: str,
+    db: AsyncSession = Depends(get_db)
+):
+    token_data = verify_token(refresh_token)
+    if not token_data:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid refresh token",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    await user_crud.update_refresh_token(db, token_data.id, None)
+    
+    return {"detail": "Successfully logged out"}
+
 
 
 @router.post("/refresh-token", response_model=Token)

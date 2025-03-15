@@ -21,7 +21,7 @@ async def read_facilities(
     current_user: UserModel = Depends(get_current_user)
 ):
     if current_user.role.value == "Admin":
-        facilities = await facility_crud.get_multi(db, skip=skip, limit=limit)
+        facilities = await facility_crud.get_with_location(db, skip=skip, limit=limit)
     else:
         facilities = await facility_crud.get_all_by_user_id(db, current_user.id, skip=skip, limit=limit)
     return facilities
@@ -33,7 +33,7 @@ async def read_facility(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_facility = await facility_crud.get_by_id(db, facility_id)
+    db_facility = await facility_crud.get(db, facility_id)
     if db_facility is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -52,7 +52,7 @@ async def update_facility(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
-    db_facility = await facility_crud.get_by_id(db, facility_id)
+    db_facility = await facility_crud.get(db, facility_id)
     if db_facility is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
