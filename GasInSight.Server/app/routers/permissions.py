@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from typing import list
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.cruds.user_facility_permission import user_facility_permission
 from app.cruds.user import user
@@ -18,7 +17,7 @@ router = APIRouter(
 @router.post("/", response_model=UserFacilityPermission)
 async def create_permission(
     permission_create: UserFacilityPermissionCreate,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
     db_user = user.get(db, permission_create.user_id)
@@ -50,9 +49,9 @@ async def create_permission(
 
 @router.get("/", response_model=list[UserFacilityPermission])
 async def read_permissions(
-    user_id: int = None,
-    facility_id: str = None,
-    db: Session = Depends(get_db),
+    user_id: int,
+    facility_id: str,
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
     if user_id:
@@ -68,7 +67,7 @@ async def read_permissions(
 @router.delete("/{permission_id}", response_model=UserFacilityPermission)
 async def delete_permission(
     permission_id: int,
-    db: Session = Depends(get_db),
+    db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
     db_permission = user_facility_permission.get(db, permission_id)
