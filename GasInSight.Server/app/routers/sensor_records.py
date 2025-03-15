@@ -56,7 +56,7 @@ async def read_sensor_records(
     date_range = pd.date_range(
         start=start_date.replace(microsecond=0),
         end=actual_end_date.replace(microsecond=0),
-        freq="15T"
+        freq="1H"
     )
 
     result_df = df.reindex(date_range, method="pad")
