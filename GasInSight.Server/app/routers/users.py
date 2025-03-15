@@ -18,13 +18,6 @@ async def create_user(
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
-    db_user = await user.get_by_username(db, user_create.username)
-    if db_user:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Username already registered"
-        )
-    
     db_user = await user.get_by_email(db, user_create.email)
     if db_user:
         raise HTTPException(
@@ -79,14 +72,6 @@ async def update_user(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User not found"
         )
-    
-    if user_update.username:
-        existing_user = await user.get_by_username(db, user_update.username)
-        if existing_user and existing_user.id != user_id:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Username already registered"
-            )
     
     if user_update.email:
         existing_user = await user.get_by_email(db, user_update.email)

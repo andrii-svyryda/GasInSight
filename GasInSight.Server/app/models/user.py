@@ -27,4 +27,4 @@ class User(Base):
     last_login: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     role: Mapped[UserRole] = mapped_column(Enum(UserRole))
 
-    permissions: Mapped[list["UserFacilityPermission"]] = relationship("UserFacilityPermission", back_populates="user")
+    permissions: Mapped[list["UserFacilityPermission"]] = relationship("UserFacilityPermission")

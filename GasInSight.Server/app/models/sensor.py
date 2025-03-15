@@ -48,4 +48,4 @@ class Sensor(Base):
     installed_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
     type: Mapped[SensorType] = mapped_column(Enum(SensorType))
 
-    location: Mapped["Location | None"] = relationship("Location", back_populates="sensors")
+    location: Mapped["Location | None"] = relationship("Location")

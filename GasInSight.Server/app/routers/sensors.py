@@ -15,9 +15,9 @@ router = APIRouter(
 
 @router.get("/", response_model=list[Sensor])
 async def read_sensors(
+    facility_id: str,
     skip: int = 0,
     limit: int = 100,
-    facility_id: str = None,
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):

@@ -31,5 +31,5 @@ class Facility(Base):
     status: Mapped[str] = mapped_column(String)
     type: Mapped[FacilityType] = mapped_column(Enum(FacilityType))
 
-    location: Mapped["Location"] = relationship("Location", back_populates="facilities")
-    sensors: Mapped[list["Sensor"]] = relationship("Sensor", back_populates="facility")
+    location: Mapped["Location"] = relationship("Location")
+    sensors: Mapped[list["Sensor"]] = relationship("Sensor")

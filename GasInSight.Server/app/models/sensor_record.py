@@ -15,4 +15,4 @@ class SensorRecord(Base):
     tracked_at: Mapped[datetime] = mapped_column(DateTime, primary_key=True)
     data: Mapped[str] = mapped_column(Text)
 
-    sensor: Mapped["Sensor"] = relationship("Sensor", back_populates="records")
+    sensor: Mapped["Sensor"] = relationship("Sensor")

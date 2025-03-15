@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, WebSocket, WebSocketDisconnect, HTTPException, status
+from sqlalchemy.ext.asyncio import AsyncSession
 from app.websockets.manager import manager
 from app.services.auth import verify_token
 from app.cruds.sensor import sensor
 from app.database import get_db
-from sqlalchemy.orm import Session
 from app.routers.dependencies import check_facility_permission
 from app.models.user_facility_permission import PermissionType
 from app.cruds.user import user
@@ -15,19 +15,19 @@ async def websocket_endpoint(
     websocket: WebSocket,
     sensor_id: str,
     token: str,
-    db: Session = Depends(get_db)
+    db: AsyncSession = Depends(get_db)
 ):
     token_data = verify_token(token)
     if not token_data:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
         return
     
-    db_sensor = sensor.get_by_id(db, sensor_id)
+    db_sensor = await sensor.get_by_id(db, sensor_id)
     if not db_sensor:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
         return
     
-    current_user = user.get_by_username(db, token_data.username)
+    current_user = await user.get(db, token_data.id)
     if not current_user:
         await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
         return

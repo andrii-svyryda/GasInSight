@@ -10,11 +10,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
-    async def get_by_username(self, db: AsyncSession, username: str) -> User | None:
-        stmt = select(User).where(User.username == username)
-        result = await db.execute(stmt)
-        return result.scalars().first()
-    
     async def get_by_email(self, db: AsyncSession, email: str) -> User | None:
         stmt = select(User).where(User.email == email)
         result = await db.execute(stmt)
@@ -43,8 +38,8 @@ class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
             update_data["password_hash"] = hashed_password
         return await super().update(db, db_obj, UserUpdate(**update_data))
     
-    async def authenticate(self, db: AsyncSession, username: str, password: str) -> User | None:
-        user = await self.get_by_username(db, username)
+    async def authenticate(self, db: AsyncSession, email: str, password: str) -> User | None:
+        user = await self.get_by_email(db, email)
         if not user:
             return None
         if not pwd_context.verify(password, user.password_hash):
