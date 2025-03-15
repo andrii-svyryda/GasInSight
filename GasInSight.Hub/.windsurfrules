@@ -1,3 +1,47 @@
-Console application
+Python console application.
+The application should use the azure service bus to send messages.
+The application should be wrapped in the docker image.
 
-    
+Use pydantic for every model.
+Everything should be typed, but don't use deprecated typing module. Use list, dict instead of list, dict.
+Use a separate file for each model or service.
+
+Project files should follow following structure:
+    ./main.py - root of the application.
+    ./bus/messages/ - for service bus message models.
+    ./bus/senders/ - for service bus senders.
+    ./services/ - to emulate the facility and sensor work.
+    ./constants/ - constants should be here.
+    ./models/ - general models.
+
+Service buss messages models:
+FacilitySetup (the queue name should be facility-setup-queue)
+    - facility_id (guid)
+    - facility_name
+    - address
+    - longitude
+    - latitude
+    - facility_type (reference to FacilityTypes constant)
+    - tracked_at (utc datetime)
+SensorActivation (the queue name should be sensor-activation-queue)
+    - sensor_id (guid)
+    - facility_id (guid)
+    - address
+    - longitude
+    - latitude
+    - sensor_type (reference to SensorTypes constant)
+    - tracked_at (utc datetime)
+SensorData (the queue name should be sensor-data-queue)
+    - sensor_id (guid)
+    - facility_id (guid)
+    - tracked_at (utc datetime)
+    - data
+SensorDeactivation (the queue name should be sensor-deactivation-queue)
+    - sensor_id (guid)
+    - facility_id (guid)
+    - tracked_at (utc datetime)
+
+
+Constants:
+FacilityTypes (enum) - DrillingRig, Pipelines, TankFarm, UndergroundStorage, ProcessingPlant, Import Terminal, ExportTerminal.
+SensorTypes (enum) - Temperature, Humidity, Pressure, Flow, Volume, GasComposition, LiquidComposition, Vibration, Noise, Corrosion, GasDetection, FlameDetection, LevelIndicator, ValveStatus, PumpStatus, CompressorStatus, PowerConsumption, WaterContent, OxygenContent, HydrogenSulfideContent, CarbonDioxideContent, ParticulateMatter, LeakDetection.
