@@ -1,8 +1,14 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy import String, Integer, ForeignKey, DateTime, Enum
+from sqlalchemy.orm import relationship, mapped_column, Mapped
 from sqlalchemy.sql import func
+from datetime import datetime
 import enum
+from typing import TYPE_CHECKING
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.location import Location
+    from app.models.sensor import Sensor
 
 
 class FacilityType(enum.Enum):
@@ -16,15 +22,14 @@ class FacilityType(enum.Enum):
 
 
 class Facility(Base):
-    __tablename__ = "facilities"
+    __tablename__: str = "facilities"
 
-    id = Column(String, primary_key=True, index=True)
-    name = Column(String)
-    location_id = Column(Integer, ForeignKey("locations.id"))
-    created_at = Column(DateTime, default=func.now())
-    status = Column(String)
-    type = Column(Enum(FacilityType))
+    id: Mapped[str] = mapped_column(String, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String)
+    location_id: Mapped[int] = mapped_column(Integer, ForeignKey("locations.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    status: Mapped[str] = mapped_column(String)
+    type: Mapped[FacilityType] = mapped_column(Enum(FacilityType))
 
-    location = relationship("Location", back_populates="facilities")
-    sensors = relationship("Sensor", back_populates="facility")
-    permissions = relationship("UserFacilityPermission", back_populates="facility")
+    location: Mapped["Location"] = relationship("Location", back_populates="facilities")
+    sensors: Mapped[list["Sensor"]] = relationship("Sensor", back_populates="facility")

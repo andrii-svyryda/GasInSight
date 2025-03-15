@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy import Integer, String, ForeignKey, DateTime, Enum
+from sqlalchemy.orm import mapped_column, Mapped
 from sqlalchemy.sql import func
+from datetime import datetime
 import enum
 from app.database import Base
 
@@ -11,13 +12,10 @@ class PermissionType(enum.Enum):
 
 
 class UserFacilityPermission(Base):
-    __tablename__ = "user_facility_permissions"
+    __tablename__: str = "user_facility_permissions"
 
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"))
-    facility_id = Column(String, ForeignKey("facilities.id"))
-    permission_type = Column(Enum(PermissionType))
-    granted_at = Column(DateTime, default=func.now())
-
-    user = relationship("User", back_populates="permissions")
-    facility = relationship("Facility", back_populates="permissions")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey("users.id"))
+    facility_id: Mapped[str] = mapped_column(String, ForeignKey("facilities.id"))
+    permission_type: Mapped[PermissionType] = mapped_column(Enum(PermissionType))
+    granted_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())

@@ -1,15 +1,16 @@
-from sqlalchemy import Column, Integer, String, Float
-from sqlalchemy.orm import relationship
+from sqlalchemy import Integer, String, Float
+from sqlalchemy.orm import mapped_column, Mapped
+from typing import TYPE_CHECKING
 from app.database import Base
+
+if TYPE_CHECKING:
+    pass
 
 
 class Location(Base):
-    __tablename__ = "locations"
+    __tablename__: str = "locations"
 
-    id = Column(Integer, primary_key=True, index=True)
-    address = Column(String, nullable=True)
-    longitude = Column(Float)
-    latitude = Column(Float)
-
-    facilities = relationship("Facility", back_populates="location")
-    sensors = relationship("Sensor", back_populates="location")
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, index=True)
+    address: Mapped[str | None] = mapped_column(String, nullable=True)
+    longitude: Mapped[float] = mapped_column(Float)
+    latitude: Mapped[float] = mapped_column(Float)

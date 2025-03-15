@@ -1,52 +1,51 @@
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime, Enum
-from sqlalchemy.orm import relationship
+from sqlalchemy import String, Integer, ForeignKey, DateTime, Enum
+from sqlalchemy.orm import relationship, mapped_column, Mapped
+from sqlalchemy.sql import func
+from datetime import datetime
+from typing import TYPE_CHECKING
 import enum
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.location import Location
 
 
 class SensorType(enum.Enum):
     Temperature = "Temperature"
-    Humidity = "Humidity"
     Pressure = "Pressure"
     Flow = "Flow"
-    Volume = "Volume"
-    GasComposition = "GasComposition"
-    LiquidComposition = "LiquidComposition"
+    Level = "Level"
+    Humidity = "Humidity"
+    Gas = "Gas"
+    Smoke = "Smoke"
+    Fire = "Fire"
+    Motion = "Motion"
+    Proximity = "Proximity"
+    Light = "Light"
+    Sound = "Sound"
     Vibration = "Vibration"
-    Noise = "Noise"
-    Corrosion = "Corrosion"
-    GasDetection = "GasDetection"
-    FlameDetection = "FlameDetection"
-    LevelIndicator = "LevelIndicator"
-    ValveStatus = "ValveStatus"
-    PumpStatus = "PumpStatus"
-    CompressorStatus = "CompressorStatus"
-    PowerConsumption = "PowerConsumption"
-    WaterContent = "WaterContent"
-    OxygenContent = "OxygenContent"
-    HydrogenSulfideContent = "HydrogenSulfideContent"
-    CarbonDioxideContent = "CarbonDioxideContent"
-    ParticulateMatter = "ParticulateMatter"
-    LeakDetection = "LeakDetection"
+    Acceleration = "Acceleration"
+    Gyroscope = "Gyroscope"
+    Magnetometer = "Magnetometer"
+    Other = "Other"
 
 
 class SensorStatus(enum.Enum):
-    Enabled = "Enabled"
-    Disabled = "Disabled"
-    Removed = "Removed"
+    Active = "Active"
+    Inactive = "Inactive"
+    Maintenance = "Maintenance"
+    Fault = "Fault"
 
 
 class Sensor(Base):
-    __tablename__ = "sensors"
+    __tablename__: str = "sensors"
 
-    id = Column(String, primary_key=True, index=True)
-    name = Column(String)
-    facility_id = Column(String, ForeignKey("facilities.id"))
-    location_id = Column(Integer, ForeignKey("locations.id"))
-    status = Column(Enum(SensorStatus))
-    installed_at = Column(DateTime)
-    type = Column(Enum(SensorType))
+    id: Mapped[str] = mapped_column(String, primary_key=True, index=True)
+    name: Mapped[str] = mapped_column(String)
+    facility_id: Mapped[str] = mapped_column(String, ForeignKey("facilities.id"))
+    location_id: Mapped[int | None] = mapped_column(Integer, ForeignKey("locations.id"), nullable=True)
+    status: Mapped[SensorStatus] = mapped_column(Enum(SensorStatus))
+    installed_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
+    type: Mapped[SensorType] = mapped_column(Enum(SensorType))
 
-    facility = relationship("Facility", back_populates="sensors")
-    location = relationship("Location", back_populates="sensors")
-    records = relationship("SensorRecord", back_populates="sensor")
+    location: Mapped["Location | None"] = relationship("Location", back_populates="sensors")
