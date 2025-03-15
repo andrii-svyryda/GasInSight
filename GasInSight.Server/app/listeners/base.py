@@ -27,7 +27,7 @@ class ServiceBusListener:
             queue_name=self.queue_name
         )
         
-        await self._receive_messages()
+        asyncio.create_task(self._receive_messages())
 
     async def _receive_messages(self):
         if not self.receiver:
