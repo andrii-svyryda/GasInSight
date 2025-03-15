@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import list
 from app.database import get_db
 from app.cruds.sensor import sensor
 from app.schemas.sensor import Sensor, SensorUpdate

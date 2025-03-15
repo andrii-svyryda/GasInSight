@@ -1,11 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from app.database import engine, Base
 from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets
 from app.listeners import facility_setup, sensor_activation, sensor_deactivation, sensor_data
-
-Base.metadata.create_all(bind=engine) 
 
 
 @asynccontextmanager

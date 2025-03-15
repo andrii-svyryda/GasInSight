@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from typing import list
 from app.database import get_db
 from app.cruds.user_facility_permission import user_facility_permission
 from app.cruds.user import user
