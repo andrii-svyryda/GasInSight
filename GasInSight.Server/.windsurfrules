@@ -12,10 +12,11 @@ Project files should follow following structure:
     ./app/models/ - all db models. all columns should be defined using mapped_column and be typed
     ./app/cruds/ - all db operations should be here, for each model represented in separate Crud class. There should be CrudBase class that contains basic logic, and all specific Crud classes should be inherited from it.
     ./app/schemas/ - all pydantic schemas that are used by Cruds or endpoints should be here
-    ./app/services/ - all business logic should be there, Such as calculations, data aggregations, queue listener integration
+    ./app/services/ - all business logic should be there, such as calculations, data aggregations
+    ./app/websockets/ - all websocket logic should be here
+    ./app/listeners/ - all Azure service bus listeners should be here
     ./app/routers/ - all routers, separate route for each model
 
 Domain models definition is located in ./rules/models.rules
 Features description is located in ./rules/features.rules
-Servicebus messages description is located in /GlobalRules/servicebus.rules
     

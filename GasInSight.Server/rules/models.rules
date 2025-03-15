@@ -30,7 +30,7 @@ UserFacilityPermission
 - granted_at
 
 Sensor
-- id
+- id (string, comes from outside)
 - name
 - facility_id (references Facility)
 - location_id (references Location)
