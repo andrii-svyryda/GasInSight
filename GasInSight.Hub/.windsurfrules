@@ -1,3 +1,19 @@
-Console application
+Python console application.
+The application should use the azure service bus to send messages. (the rules are in /GlobalRules/servicebus.rules).
+The application should be wrapped in the docker image.
 
-    
+Use pydantic for every model.
+Everything should be typed, but don't use deprecated typing module. Use list, dict instead of list, dict.
+
+Project files should follow following structure:
+    ./main.py - root of the application.
+    ./config.py - all configs from env should be here in pydantic class, exported as settings
+    ./services/ - all business logic should be there, such as calculations, data aggregations
+    ./sensors/ - the classes for sensors to emulate their work.
+    ./senders/ - all Azure service bus senders should be here. 
+
+Dockerfile requirements:
+    Use the latest ubuntu image as a base one.
+    Install python3.12 and pip3.12
+    Install all dependencies from requirements.txt
+    Run the main.py script.
