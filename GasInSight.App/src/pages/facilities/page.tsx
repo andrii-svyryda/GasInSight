@@ -38,7 +38,7 @@ export const FacilitiesPage = () => {
   }
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box>
       <Typography variant="h4" sx={{ mb: 3 }}>
         Facilities
       </Typography>

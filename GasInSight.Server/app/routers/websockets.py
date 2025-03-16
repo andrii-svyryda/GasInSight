@@ -44,3 +44,5 @@ async def websocket_endpoint(
             await websocket.receive()
     except WebSocketDisconnect:
         manager.disconnect(websocket, sensor_id)
+    except Exception:
+        await websocket.close(code=status.WS_1008_POLICY_VIOLATION) 

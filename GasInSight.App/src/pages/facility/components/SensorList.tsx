@@ -10,8 +10,8 @@ import {
 import { SensorStatus } from "../../../types/sensor";
 import { useNavigate } from "react-router-dom";
 import { sensorApi } from "../../../store/api/sensorApi";
-import { useState } from "react";
-import { SensorCardChart } from "./SensorCardChart";
+import { memo, useMemo, useState } from "react";
+import SensorCardChart from "./SensorCardChart";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 import { getSensorValidLabel } from "../../../constants/sensorType";
 
@@ -19,7 +19,7 @@ interface SensorListProps {
   facilityId: string;
 }
 
-export const SensorList = ({ facilityId }: SensorListProps) => {
+const SensorList = ({ facilityId }: SensorListProps) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const sensorsPerPage = 6;
@@ -77,7 +77,20 @@ export const SensorList = ({ facilityId }: SensorListProps) => {
     }
   };
 
-  if (!sensors || isSensorsLoading) {
+  const pageCount = useMemo(
+    () => Math.ceil((sensors?.length ?? 0) / sensorsPerPage),
+    [sensors, sensorsPerPage]
+  );
+
+  const displayedSensors = useMemo(() => {
+    if (!sensors) return [];
+
+    const startIndex = (page - 1) * sensorsPerPage;
+
+    return sensors.slice(startIndex, startIndex + sensorsPerPage);
+  }, [sensors, page]);
+
+  if (!displayedSensors || isSensorsLoading) {
     return (
       <Box
         sx={{
@@ -91,13 +104,6 @@ export const SensorList = ({ facilityId }: SensorListProps) => {
       </Box>
     );
   }
-
-  const pageCount = Math.ceil(sensors.length / sensorsPerPage);
-  const startIndex = (page - 1) * sensorsPerPage;
-  const displayedSensors = sensors.slice(
-    startIndex,
-    startIndex + sensorsPerPage
-  );
 
   return (
     <Box sx={{ overflow: "auto", pr: 2 }}>
@@ -166,3 +172,5 @@ export const SensorList = ({ facilityId }: SensorListProps) => {
     </Box>
   );
 };
+
+export default memo(SensorList);

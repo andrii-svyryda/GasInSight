@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { SensorRecord, SensorType } from "../../../types/sensor";
 import moment from "moment";
-import { useMemo } from "react";
+import { memo, useEffect, useMemo } from "react";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 import {
   getSensorDisplayRange,
@@ -29,7 +29,7 @@ interface SensorChartProps {
   height?: number;
 }
 
-export const SensorChart = ({
+const SensorChart = ({
   records,
   isLoading,
   sensorType = SensorType.Temperature,
@@ -186,3 +186,5 @@ export const SensorChart = ({
     </Box>
   );
 };
+
+export default memo(SensorChart);

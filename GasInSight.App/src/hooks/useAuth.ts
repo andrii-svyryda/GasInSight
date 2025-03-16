@@ -13,7 +13,10 @@ export const useAuth = () => {
     });
 
   useEffect(() => {
-    if (currentUser && !user) {
+    if (
+      (currentUser && !user) ||
+      (currentUser && currentUser?.id !== user?.id)
+    ) {
       dispatch(setUser(currentUser));
     }
   }, [currentUser, dispatch, user]);

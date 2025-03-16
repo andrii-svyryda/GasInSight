@@ -34,5 +34,12 @@ export const authApi = baseApi.injectEndpoints({
         method: "POST",
       }),
     }),
+
+    impersonateUser: builder.mutation<TokenResponse, number>({
+      query: (userId) => ({
+        url: `/auth/impersonate/${userId}`,
+        method: "POST",
+      }),
+    }),
   }),
 });

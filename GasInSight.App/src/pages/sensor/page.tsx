@@ -3,11 +3,11 @@ import { Box, Button, CircularProgress, Typography } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import { sensorApi } from "../../store/api/sensorApi";
 import { ChartConfiguration } from "./components/ChartConfiguration";
-import { SensorChart } from "./components/SensorChart";
 import { SensorDetails } from "./components/SensorDetails";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import moment from "moment";
 import { getSensorValidLabel } from "../../constants/sensorType";
+import SensorChart from "./components/SensorChart";
 
 export const SensorPage = () => {
   const { facilityId, sensorId } = useParams<{

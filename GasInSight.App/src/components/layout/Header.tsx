@@ -20,7 +20,7 @@ export const Header = ({ children }: HeaderProps) => {
     try {
       await logoutMutation().unwrap();
       dispatch(logout());
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }

@@ -7,6 +7,8 @@ from app.cruds.user import user_crud
 from app.services.auth import create_access_token, create_refresh_token, verify_token
 from app.schemas.user import Token
 from app.config import settings
+from app.models.user import User
+from app.routers.dependencies import get_current_active_admin, get_current_user
 
 router = APIRouter(
     prefix="/auth",
@@ -50,18 +52,10 @@ async def login_for_access_token(
 
 @router.post("/logout")
 async def logout(
-    refresh_token: str,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    token_data = verify_token(refresh_token)
-    if not token_data:
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid refresh token",
-            headers={"WWW-Authenticate": "Bearer"},
-        )
-    
-    await user_crud.update_refresh_token(db, token_data.id, None)
+    await user_crud.update_refresh_token(db, current_user.id, None)
     
     return {"detail": "Successfully logged out"}
 
@@ -103,5 +97,43 @@ async def refresh_access_token(
     return {
         "access_token": access_token,
         "refresh_token": new_refresh_token,
+        "token_type": "bearer"
+    }
+
+
+@router.post("/impersonate/{user_id}", response_model=Token)
+async def impersonate_user(
+    user_id: int,
+    current_user: User = Depends(get_current_active_admin),
+    db: AsyncSession = Depends(get_db)
+):
+    target_user = await user_crud.get(db, user_id)
+    if not target_user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found",
+        )
+    
+    access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={
+            "sub": target_user.username, 
+            "id": target_user.id,
+            "impersonated_by": current_user.id
+        },
+        expires_delta=access_token_expires
+    )
+    
+    refresh_token = create_refresh_token(
+        data={
+            "sub": target_user.username, 
+            "id": target_user.id,
+            "impersonated_by": current_user.id
+        }
+    )
+    
+    return {
+        "access_token": access_token,
+        "refresh_token": refresh_token,
         "token_type": "bearer"
     }

@@ -18,6 +18,7 @@ export interface User {
 }
 
 export interface UserFacilityPermission {
+  id: number;
   userId: number;
   facilityId: string;
   permissionType: PermissionType;

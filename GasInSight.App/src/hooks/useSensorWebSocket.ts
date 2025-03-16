@@ -32,6 +32,8 @@ export const useSensorWebSocket = ({
     const token = localStorage.getItem("accessToken");
     if (!token) return;
 
+    console.log("Starting connection");
+
     if (webSocketRef.current) {
       webSocketRef.current.close();
     }
@@ -62,10 +64,6 @@ export const useSensorWebSocket = ({
 
     ws.onerror = (error) => {
       console.error("WebSocket error:", error);
-    };
-
-    ws.onclose = (event) => {
-      console.log(`WebSocket connection closed: ${event.code} ${event.reason}`);
 
       if (reconnectAttemptsRef.current < maxReconnectAttempts) {
         const delay =
@@ -88,7 +86,15 @@ export const useSensorWebSocket = ({
         console.log("Maximum reconnection attempts reached");
       }
     };
+
+    ws.onclose = (event) => {
+      console.log(`WebSocket connection closed: ${event.code} ${event.reason}`);
+    };
   }, [isLiveMode, sensorId, isLoading]);
+
+  useEffect(() => {
+    console.log("useEffect");
+  }, []);
 
   useEffect(() => {
     if (isLiveMode && sensorId && !isLoading) {

@@ -3,27 +3,28 @@ import { ResponsiveContainer } from "recharts";
 import moment from "moment";
 import { sensorApi } from "../../../store/api/sensorApi";
 import { Sensor } from "../../../types/sensor";
-import { SensorChart } from "../../sensor/components/SensorChart";
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
+import SensorChart from "../../sensor/components/SensorChart";
 
 interface SensorCardChartProps {
   sensor: Sensor;
 }
 
-export const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
-  const queryParams = useMemo(() => ({
-    sensorId: sensor.id,
-    startDate: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
-    freq: sensor.expectedFreq,
-    aggregation: "mean" as const,
-  }), [sensor.id, sensor.expectedFreq]);
-
-  const { data: records, isLoading } = sensorApi.useGetSensorRecordsQuery(
-    queryParams,
-    { skip: !sensor.id }
+const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
+  const queryParams = useMemo(
+    () => ({
+      sensorId: sensor.id,
+      startDate: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+      freq: sensor.expectedFreq,
+      aggregation: "mean" as const,
+    }),
+    [sensor.id, sensor.expectedFreq]
   );
 
-  const loadingContent = useMemo(() => (
+  const { data: records, isFetching: isLoading } =
+    sensorApi.useGetSensorRecordsQuery(queryParams, { skip: !sensor.id });
+
+  return isLoading || !sensor.id ? (
     <Box
       sx={{
         display: "flex",
@@ -34,14 +35,12 @@ export const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
     >
       <CircularProgress />
     </Box>
-  ), []);
-
-  const chartContent = useMemo(() => (
+  ) : (
     <Box sx={{ width: "100%", mt: 1 }}>
       <ResponsiveContainer height={200} width="100%">
         <SensorChart
           records={records ?? []}
-          isLoading={isLoading}
+          isLoading={false}
           sensorType={sensor.type}
           isLiveMode={true}
           sensorId={sensor.id}
@@ -49,7 +48,7 @@ export const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
         />
       </ResponsiveContainer>
     </Box>
-  ), [records, isLoading, sensor.type, sensor.id]);
+  );
+};
 
-  return isLoading ? loadingContent : chartContent;
-}
+export default memo(SensorCardChart);

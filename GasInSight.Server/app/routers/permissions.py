@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.cruds.user_facility_permission import user_facility_permission_crud
@@ -18,7 +18,7 @@ router = APIRouter(
 async def create_permission(
     permission_create: UserFacilityPermissionCreate,
     db: AsyncSession = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_admin)
+    _: UserModel = Depends(get_current_active_admin)
 ):
     db_user = await user_crud.get(db, permission_create.user_id)
     if db_user is None:
@@ -39,27 +39,24 @@ async def create_permission(
     )
     
     if existing_permission:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Permission already exists"
-        )
+        await user_facility_permission_crud.remove(db, existing_permission.id)
     
-    return user_facility_permission_crud.create(db, permission_create)
+    return await user_facility_permission_crud.create(db, permission_create)
 
 
 @router.get("", response_model=list[UserFacilityPermission])
 async def read_permissions(
-    user_id: int,
-    facility_id: str,
+    user_id: int | None = Query(None),
+    facility_id: str | None = Query(None),
     db: AsyncSession = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_admin)
+    _: UserModel = Depends(get_current_active_admin)
 ):
     if user_id:
         permissions = await user_facility_permission_crud.get_by_user_id(db, user_id)
     elif facility_id:
         permissions = await user_facility_permission_crud.get_by_facility_id(db, facility_id)
     else:
-        permissions = await user_facility_permission_crud.get_multi(db)
+        permissions = []
     
     return permissions
 
@@ -68,7 +65,7 @@ async def read_permissions(
 async def delete_permission(
     permission_id: int,
     db: AsyncSession = Depends(get_db),
-    current_user: UserModel = Depends(get_current_active_admin)
+    _: UserModel = Depends(get_current_active_admin)
 ):
     db_permission = await user_facility_permission_crud.get(db, permission_id)
     if db_permission is None:

@@ -6,8 +6,6 @@ import {
   Paper,
   TextField,
   Typography,
-  useTheme,
-  alpha,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { authApi } from "../../store/api/authApi";
@@ -18,7 +16,6 @@ export const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const theme = useTheme();
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

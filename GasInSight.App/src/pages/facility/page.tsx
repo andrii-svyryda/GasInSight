@@ -14,7 +14,7 @@ import { SensorMetrics } from "../dashboard/components/SensorMetrics";
 import { SensorCharts } from "../dashboard/components/SensorCharts";
 import { FacilityMap } from "../map/components/FacilityMap";
 import React from "react";
-import { SensorList } from "./components/SensorList";
+import SensorList from "./components/SensorList";
 
 export const FacilityPage = () => {
   const { facilityId } = useParams<{ facilityId: string }>();
