@@ -91,47 +91,49 @@ const UsersTable: FC<UsersTableProps> = ({
                     : "Never"}
                 </TableCell>
                 <TableCell>
-                  <Tooltip title="Edit user">
-                    <IconButton
-                      size="small"
-                      onClick={() => onEditClick(user)}
-                      aria-label="edit"
-                    >
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
                   {user.id !== currentUser?.id && (
-                    <Tooltip title="Impersonate user">
-                      <IconButton
-                        size="small"
-                        onClick={() => handleImpersonateClick(user)}
-                        aria-label="impersonate"
-                      >
-                        <PersonIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
+                    <>
+                      <Tooltip title="Edit user">
+                        <IconButton
+                          size="small"
+                          onClick={() => onEditClick(user)}
+                          aria-label="edit"
+                        >
+                          <EditIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="Impersonate user">
+                        <IconButton
+                          size="small"
+                          onClick={() => handleImpersonateClick(user)}
+                          aria-label="impersonate"
+                        >
+                          <PersonIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                      {user.role === UserRole.User && (
+                        <Tooltip title="Manage permissions">
+                          <IconButton
+                            size="small"
+                            onClick={() => onPermissionsClick(user)}
+                            aria-label="permissions"
+                          >
+                            <SecurityIcon fontSize="small" />
+                          </IconButton>
+                        </Tooltip>
+                      )}
+                      <Tooltip title="Delete user">
+                        <IconButton
+                          size="small"
+                          onClick={() => onDeleteClick(user)}
+                          aria-label="delete"
+                          color="secondary"
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Tooltip>
+                    </>
                   )}
-                  {user.role === UserRole.User && (
-                    <Tooltip title="Manage permissions">
-                      <IconButton
-                        size="small"
-                        onClick={() => onPermissionsClick(user)}
-                        aria-label="permissions"
-                      >
-                        <SecurityIcon fontSize="small" />
-                      </IconButton>
-                    </Tooltip>
-                  )}
-                  <Tooltip title="Delete user">
-                    <IconButton
-                      size="small"
-                      onClick={() => onDeleteClick(user)}
-                      aria-label="delete"
-                      color="secondary"
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}

@@ -1,5 +1,9 @@
 import { baseApi } from "./baseApi";
-import { Sensor, SensorRecord } from "../../types/sensor";
+import {
+  Sensor,
+  SensorRecord,
+  SensorRecordsResponse,
+} from "../../types/sensor";
 import moment from "moment";
 
 interface GetSensorRecordsParams {
@@ -34,7 +38,10 @@ export const sensorApi = baseApi.injectEndpoints({
       providesTags: (_, __, { sensorId }) => [{ type: "Sensor", id: sensorId }],
     }),
 
-    getSensorRecords: builder.query<SensorRecord[], GetSensorRecordsParams>({
+    getSensorRecords: builder.query<
+      SensorRecordsResponse,
+      GetSensorRecordsParams
+    >({
       query: ({ sensorId, startDate, endDate, freq, aggregation }) => ({
         url: `/sensor-records/${sensorId}`,
         params: {

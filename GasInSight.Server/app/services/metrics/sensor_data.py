@@ -1,7 +1,7 @@
 from datetime import UTC, datetime
 
 from pandas._libs import NaTType
-from app.schemas.sensor_record import SensorRecord
+from app.schemas.sensor_record import SensorAnalytics, SensorRecord
 from app.cruds.sensor_record import sensor_record_crud
 from sqlalchemy.ext.asyncio import AsyncSession
 import pandas as pd
@@ -15,7 +15,7 @@ async def get_sensor_records_with_interpolation(
     expected_freq: str,
     end_date: datetime | None = None,
     aggregation: str = "mean"
-) -> list[SensorRecord]:
+) -> tuple[list[SensorRecord], SensorAnalytics]:
     records = await sensor_record_crud.get_by_sensor_id_and_date_range(
         db, sensor_id, start_date, end_date
     )
@@ -39,11 +39,15 @@ async def get_sensor_records_with_interpolation(
     pd_expected_freq = pd.Timedelta(expected_freq)
 
     if isinstance(pd_request_freq, NaTType) or isinstance(pd_expected_freq, NaTType):
-        return []
+        return [], SensorAnalytics()
 
     df = pd.DataFrame(records_data)
     df["tracked_at"] = pd.to_datetime(df["tracked_at"])
     df = df.set_index("tracked_at")
+
+    dataset_mean = float(df["data"].mean()) if not df.empty else None
+    dataset_min = float(df["data"].min()) if not df.empty else None
+    dataset_max = float(df["data"].max()) if not df.empty else None
 
     actual_response_freq = pd_request_freq if pd_request_freq > pd_expected_freq else pd_expected_freq
 
@@ -100,4 +104,8 @@ async def get_sensor_records_with_interpolation(
             data=data
         ))
     
-    return result
+    return result, SensorAnalytics(
+        mean=dataset_mean,
+        min=dataset_min,
+        max=dataset_max
+    )

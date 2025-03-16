@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from app.database import get_db
 from app.cruds.sensor import sensor_crud
-from app.schemas.sensor_record import SensorRecord
+from app.schemas.sensor_record import SensorRecordsResponse
 from app.routers.dependencies import get_current_user, check_facility_permission
 from app.models.user import User as UserModel
 from app.models.user_facility_permission import PermissionType
@@ -14,7 +14,7 @@ router = APIRouter(
     tags=["sensor-records"],
 )
 
-@router.get("/{sensor_id}", response_model=list[SensorRecord])
+@router.get("/{sensor_id}", response_model=SensorRecordsResponse)
 async def read_sensor_records(
     sensor_id: str,
     start_date: datetime,
@@ -33,7 +33,7 @@ async def read_sensor_records(
     
     await check_facility_permission(db_sensor.facility_id, PermissionType.View, current_user, db)
     
-    return await get_sensor_records_with_interpolation(
+    records, analytics = await get_sensor_records_with_interpolation(
         db, 
         sensor_id=sensor_id,
         start_date=start_date, 
@@ -41,4 +41,9 @@ async def read_sensor_records(
         request_freq=freq,
         expected_freq=db_sensor.expected_freq,
         aggregation=aggregation
+    )
+
+    return SensorRecordsResponse(
+        records=records,
+        analytics=analytics
     )

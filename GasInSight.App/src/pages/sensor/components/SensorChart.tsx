@@ -180,6 +180,9 @@ const SensorChart = ({
             strokeWidth={2}
             dot={false}
             isAnimationActive={false}
+            connectNulls={true}
+            name={sensorType}
+            fill={`url(#color${sensorType})`}
           />
         </LineChart>
       </ResponsiveContainer>

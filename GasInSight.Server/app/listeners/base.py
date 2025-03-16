@@ -6,10 +6,12 @@ from app.config import settings
 import json
 import asyncio
 from typing import Callable, Any
+from sqlalchemy.ext.asyncio import AsyncSession
+from app.database import SessionLocal
 
 
 class ServiceBusListener:
-    def __init__(self, queue_name: str, message_handler: Callable[[dict[str, Any]], Awaitable[None]]):
+    def __init__(self, queue_name: str, message_handler: Callable[[dict[str, Any], AsyncSession], Awaitable[None]]):
         self.queue_name = queue_name
         self.message_handler = message_handler
         self.servicebus_client = None
@@ -36,14 +38,15 @@ class ServiceBusListener:
         while self.is_running:
             try:
                 messages = await self.receiver.receive_messages(max_message_count=10, max_wait_time=5)
-                for message in messages:
-                    try:
-                        message_body: dict[str, Any] = json.loads(str(message))
-                        await self.message_handler(message_body)
-                        await self.receiver.complete_message(message)
-                    except Exception as e:
-                        logging.exception(f"Error processing message: {e}")
-                        await self.receiver.abandon_message(message)
+                async with SessionLocal() as db:
+                    for message in messages:
+                        try:
+                            message_body: dict[str, Any] = json.loads(str(message))
+                            await self.message_handler(message_body, db)
+                            await self.receiver.complete_message(message)
+                        except Exception as e:
+                            logging.exception(f"Error processing message: {e}")
+                            await self.receiver.abandon_message(message)
             except ServiceBusError:
                 await asyncio.sleep(5)
             except Exception:

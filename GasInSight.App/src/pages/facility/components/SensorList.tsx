@@ -22,7 +22,7 @@ interface SensorListProps {
 const SensorList = ({ facilityId }: SensorListProps) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
-  const sensorsPerPage = 6;
+  const sensorsPerPage = 4;
   const { data: colors } = useGetColorsQuery();
 
   const { data: sensors, isLoading: isSensorsLoading } =
@@ -109,7 +109,7 @@ const SensorList = ({ facilityId }: SensorListProps) => {
     <Box sx={{ overflow: "auto", pr: 2 }}>
       <Grid container spacing={2}>
         {displayedSensors.map((sensor) => (
-          <Grid item xs={12} sm={6} md={4} key={sensor.id}>
+          <Grid item xs={12} sm={6} md={6} key={sensor.id}>
             <Card
               sx={{
                 cursor: "pointer",

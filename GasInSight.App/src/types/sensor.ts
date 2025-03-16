@@ -21,14 +21,14 @@ export enum SensorType {
   HydrogenSulfideContent = "HydrogenSulfideContent",
   CarbonDioxideContent = "CarbonDioxideContent",
   ParticulateMatter = "ParticulateMatter",
-  LeakDetection = "LeakDetection"
+  LeakDetection = "LeakDetection",
 }
 
 export enum SensorStatus {
   Active = "Active",
   Inactive = "Inactive",
   Maintenance = "Maintenance",
-  Fault = "Fault"
+  Fault = "Fault",
 }
 
 export interface Sensor {
@@ -52,4 +52,15 @@ export interface SensorRecord {
   sensorId: string;
   trackedAt: string;
   data: string;
+}
+
+export interface SensorAnalytics {
+  mean: number | null;
+  min: number | null;
+  max: number | null;
+}
+
+export interface SensorRecordsResponse {
+  records: SensorRecord[];
+  analytics: SensorAnalytics;
 }

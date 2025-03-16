@@ -41,7 +41,7 @@ export const SensorPage = () => {
     }
   }, [sensor]);
 
-  const { data: records, isFetching: isRecordsLoading } =
+  const { data: recordsData, isFetching: isRecordsLoading } =
     sensorApi.useGetSensorRecordsQuery(
       {
         sensorId: sensorId as string,
@@ -121,8 +121,32 @@ export const SensorPage = () => {
         expectedFreq={sensor?.expectedFreq}
       />
 
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          height: "20px",
+        }}
+      >
+        {recordsData?.analytics.min && (
+          <Typography variant="h6">
+            Min: {recordsData.analytics.min.toFixed(2)}
+          </Typography>
+        )}
+        {recordsData?.analytics.max && (
+          <Typography variant="h6">
+            Max: {recordsData.analytics.max.toFixed(2)}
+          </Typography>
+        )}
+        {recordsData?.analytics.mean && (
+          <Typography variant="h6">
+            Mean: {recordsData.analytics.mean.toFixed(2)}
+          </Typography>
+        )}
+      </Box>
       <SensorChart
-        records={records || []}
+        records={recordsData?.records || []}
         isLoading={isRecordsLoading}
         sensorType={sensor?.type || ""}
         isLiveMode={!endDate}

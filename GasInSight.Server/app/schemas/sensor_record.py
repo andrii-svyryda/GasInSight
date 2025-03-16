@@ -11,6 +11,11 @@ class SensorRecordCreate(SensorRecordBase):
     sensor_id: str
     tracked_at: datetime
 
+class SensorAnalytics(BaseModel):
+    mean: float | None = None
+    min: float | None = None
+    max: float | None = None
+
 
 class SensorRecord(SensorRecordBase):
     sensor_id: str
@@ -18,3 +23,9 @@ class SensorRecord(SensorRecordBase):
 
     class Config:
         from_attributes: bool = True
+
+
+class SensorRecordsResponse(BaseModel):
+    records: list[SensorRecord]
+    analytics: SensorAnalytics
+

@@ -1,4 +1,4 @@
-import { Box, CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import { ResponsiveContainer } from "recharts";
 import moment from "moment";
 import { sensorApi } from "../../../store/api/sensorApi";
@@ -21,7 +21,7 @@ const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
     [sensor.id, sensor.expectedFreq]
   );
 
-  const { data: records, isFetching: isLoading } =
+  const { data: recordsData, isFetching: isLoading } =
     sensorApi.useGetSensorRecordsQuery(queryParams, { skip: !sensor.id });
 
   return isLoading || !sensor.id ? (
@@ -30,16 +30,41 @@ const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "200px",
+        height: "220px",
       }}
     >
       <CircularProgress />
     </Box>
   ) : (
     <Box sx={{ width: "100%", mt: 1 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          height: "20px",
+          gap: 1,
+        }}
+      >
+        {recordsData?.analytics.min && (
+          <Typography variant="body2">
+            Min: {recordsData.analytics.min.toFixed(2)}
+          </Typography>
+        )}
+        {recordsData?.analytics.max && (
+          <Typography variant="body2">
+            Max: {recordsData.analytics.max.toFixed(2)}
+          </Typography>
+        )}
+        {recordsData?.analytics.mean && (
+          <Typography variant="body2">
+            Mean: {recordsData.analytics.mean.toFixed(2)}
+          </Typography>
+        )}
+      </Box>
       <ResponsiveContainer height={200} width="100%">
         <SensorChart
-          records={records ?? []}
+          records={recordsData?.records ?? []}
           isLoading={false}
           sensorType={sensor.type}
           isLiveMode={true}
