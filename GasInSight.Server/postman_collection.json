@@ -53,11 +53,12 @@
 							]
 						},
 						"url": {
-							"raw": "{{baseUrl}}/token",
+							"raw": "{{baseUrl}}/auth/token",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"auth",
 								"token"
 							]
 						},
@@ -80,15 +81,65 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/refresh-token",
+							"raw": "{{baseUrl}}/auth/refresh-token",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
+								"auth",
 								"refresh-token"
 							]
 						},
 						"description": "Get a new access token using refresh token"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout and invalidate refresh token"
+					},
+					"response": []
+				},
+				{
+					"name": "Impersonate User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/impersonate/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"impersonate",
+								"{{userId}}"
+							]
+						},
+						"description": "Admin only: Impersonate another user"
 					},
 					"response": []
 				}
@@ -198,13 +249,12 @@
 							"raw": "{\n    \"username\": \"newuser\",\n    \"email\": \"newuser@example.com\",\n    \"password\": \"password123\",\n    \"role\": \"User\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/",
+							"raw": "{{baseUrl}}/users",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"users",
-								""
+								"users"
 							]
 						},
 						"description": "Create a new user (admin only)"
@@ -227,7 +277,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"updateduser\",\n    \"email\": \"updated@example.com\",\n    \"password\": \"newpassword123\",\n    \"role\": \"User\"\n}"
+							"raw": "{\n    \"email\": \"updated@example.com\",\n    \"role\": \"User\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/users/{{userId}}",
@@ -239,7 +289,7 @@
 								"{{userId}}"
 							]
 						},
-						"description": "Update user information (admin only)"
+						"description": "Update a user (admin only)"
 					},
 					"response": []
 				},
@@ -263,7 +313,7 @@
 								"{{userId}}"
 							]
 						},
-						"description": "Delete a user (admin only, cannot delete self)"
+						"description": "Delete a user (admin only)"
 					},
 					"response": []
 				}
@@ -302,7 +352,7 @@
 								}
 							]
 						},
-						"description": "Get all facilities (admin gets all, users get only those they have permission for)"
+						"description": "Get all facilities accessible to the current user"
 					},
 					"response": []
 				},
@@ -326,7 +376,7 @@
 								"{{facilityId}}"
 							]
 						},
-						"description": "Get facility by ID (requires view permission)"
+						"description": "Get facility by ID"
 					},
 					"response": []
 				},
@@ -346,7 +396,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated Facility Name\",\n    \"location\": \"Updated Location\",\n    \"description\": \"Updated facility description\"\n}"
+							"raw": "{\n    \"name\": \"Updated Facility Name\",\n    \"description\": \"Updated facility description\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/facilities/{{facilityId}}",
@@ -358,7 +408,7 @@
 								"{{facilityId}}"
 							]
 						},
-						"description": "Update facility information (requires edit permission)"
+						"description": "Update a facility"
 					},
 					"response": []
 				}
@@ -369,7 +419,7 @@
 			"name": "Sensors",
 			"item": [
 				{
-					"name": "Get Sensors by Facility",
+					"name": "Get Facility Sensors",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -401,7 +451,7 @@
 								}
 							]
 						},
-						"description": "Get sensors by facility ID (requires view permission for the facility)"
+						"description": "Get all sensors for a facility"
 					},
 					"response": []
 				},
@@ -425,7 +475,7 @@
 								"{{sensorId}}"
 							]
 						},
-						"description": "Get sensor by ID (requires view permission for the facility)"
+						"description": "Get sensor by ID"
 					},
 					"response": []
 				},
@@ -445,7 +495,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Updated Sensor Name\",\n    \"description\": \"Updated sensor description\",\n    \"location\": \"Updated Location\",\n    \"type\": \"GAS\",\n    \"status\": \"ACTIVE\"\n}"
+							"raw": "{\n    \"name\": \"Updated Sensor Name\",\n    \"description\": \"Updated sensor description\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/sensors/{{sensorId}}",
@@ -457,7 +507,7 @@
 								"{{sensorId}}"
 							]
 						},
-						"description": "Update sensor information (requires edit permission for the facility)"
+						"description": "Update a sensor"
 					},
 					"response": []
 				}
@@ -478,7 +528,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/sensor-records/{{sensorId}}?start_date={{startDate}}&end_date={{endDate}}",
+							"raw": "{{baseUrl}}/sensor-records/{{sensorId}}?start_date={{startDate}}&end_date={{endDate}}&freq=15T&aggregation=mean",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -494,15 +544,23 @@
 								{
 									"key": "end_date",
 									"value": "{{endDate}}"
+								},
+								{
+									"key": "freq",
+									"value": "15T"
+								},
+								{
+									"key": "aggregation",
+									"value": "mean"
 								}
 							]
 						},
-						"description": "Get sensor records by sensor ID and date range (requires view permission for the facility)"
+						"description": "Get sensor records with interpolation"
 					},
 					"response": []
 				}
 			],
-			"description": "Sensor records endpoints"
+			"description": "Sensor data endpoints"
 		},
 		{
 			"name": "Permissions",
@@ -538,7 +596,7 @@
 								}
 							]
 						},
-						"description": "Get permissions (admin only)"
+						"description": "Get permissions by user ID or facility ID (admin only)"
 					},
 					"response": []
 				},
@@ -561,13 +619,12 @@
 							"raw": "{\n    \"user_id\": {{userId}},\n    \"facility_id\": \"{{facilityId}}\",\n    \"permission_type\": \"View\"\n}"
 						},
 						"url": {
-							"raw": "{{baseUrl}}/permissions/",
+							"raw": "{{baseUrl}}/permissions",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"permissions",
-								""
+								"permissions"
 							]
 						},
 						"description": "Create a new permission (admin only)"
@@ -599,23 +656,163 @@
 					"response": []
 				}
 			],
-			"description": "Permission management endpoints"
+			"description": "User-facility permission management endpoints"
+		},
+		{
+			"name": "Dashboard",
+			"item": [
+				{
+					"name": "Get Dashboard Colors",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/colors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard",
+								"colors"
+							]
+						},
+						"description": "Get color schemes for dashboard elements"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Dashboard Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard"
+							]
+						},
+						"description": "Get dashboard data for all accessible facilities"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Facility Dashboard Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/dashboard/facility/{{facilityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"dashboard",
+								"facility",
+								"{{facilityId}}"
+							]
+						},
+						"description": "Get dashboard data for a specific facility"
+					},
+					"response": []
+				}
+			],
+			"description": "Dashboard data endpoints"
+		},
+		{
+			"name": "Alerts",
+			"item": [
+				{
+					"name": "Get Facility Alerts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/alerts/facility/{{facilityId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alerts",
+								"facility",
+								"{{facilityId}}"
+							]
+						},
+						"description": "Get alerts for a specific facility"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Recent Alerts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/alerts/recent?limit=20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"alerts",
+								"recent"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get recent alerts for accessible facilities"
+					},
+					"response": []
+				}
+			],
+			"description": "Alert management endpoints"
 		},
 		{
 			"name": "WebSockets",
 			"item": [
 				{
-					"name": "Connect to Sensor WebSocket",
+					"name": "Sensor Data WebSocket",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/ws/{{sensorId}}?token={{accessToken}}",
+							"raw": "{{wsBaseUrl}}/ws/sensor-data/{{sensorId}}?token={{accessToken}}",
 							"host": [
-								"{{baseUrl}}"
+								"{{wsBaseUrl}}"
 							],
 							"path": [
 								"ws",
+								"sensor-data",
 								"{{sensorId}}"
 							],
 							"query": [
@@ -625,7 +822,32 @@
 								}
 							]
 						},
-						"description": "Connect to WebSocket for real-time sensor data (requires view permission for the facility)"
+						"description": "WebSocket connection for real-time sensor data"
+					},
+					"response": []
+				},
+				{
+					"name": "Notifications WebSocket",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{wsBaseUrl}}/ws/notifications?token={{accessToken}}",
+							"host": [
+								"{{wsBaseUrl}}"
+							],
+							"path": [
+								"ws",
+								"notifications"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}"
+								}
+							]
+						},
+						"description": "WebSocket connection for real-time notifications"
 					},
 					"response": []
 				}
@@ -660,13 +882,18 @@
 			"type": "string"
 		},
 		{
+			"key": "wsBaseUrl",
+			"value": "ws://localhost:8000",
+			"type": "string"
+		},
+		{
 			"key": "username",
-			"value": "admin@example.com",
+			"value": "admin",
 			"type": "string"
 		},
 		{
 			"key": "password",
-			"value": "password123",
+			"value": "password",
 			"type": "string"
 		},
 		{
@@ -677,36 +904,6 @@
 		{
 			"key": "refreshToken",
 			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "userId",
-			"value": "1",
-			"type": "string"
-		},
-		{
-			"key": "facilityId",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "sensorId",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "permissionId",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "startDate",
-			"value": "2023-01-01T00:00:00Z",
-			"type": "string"
-		},
-		{
-			"key": "endDate",
-			"value": "2023-12-31T23:59:59Z",
 			"type": "string"
 		}
 	]
