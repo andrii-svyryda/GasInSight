@@ -10,3 +10,10 @@ class SensorDataSender(BaseSender):
     async def send(self, message) -> None:
         msg = ServiceBusMessage(message.model_dump_json())
         await super().send(msg)
+
+    async def send_batch(self, messages) -> None:
+        if not messages:
+            return
+            
+        service_bus_messages = [ServiceBusMessage(message.model_dump_json()) for message in messages]
+        await self.sender.send_messages(service_bus_messages)

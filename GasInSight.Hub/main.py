@@ -1,7 +1,7 @@
 import asyncio
 import json
 from uuid import UUID
-from bus.msg_helpers import send_facility_setup, send_sensor_data
+from bus.msg_helpers import send_facility_setup, send_sensor_data, send_sensor_data_batch
 from config import Config
 from bus.senders.facility_setup_sender import FacilitySetupSender
 from bus.senders.sensor_activation_sender import SensorActivationSender
@@ -11,6 +11,7 @@ from models.facility import Facility
 from models.sensor import Sensor
 from azure.servicebus.aio import ServiceBusClient
 from bus.msg_helpers import send_sensor_activation, send_sensor_deactivation
+from bus.messages.sensor_data import SensorDataMsg
 
 def load_facilities(file_path: str) -> list:
     with open(file_path, 'r') as f:
@@ -67,11 +68,25 @@ async def start_hub(config: Config) -> None:
     # Emulate sensors activity.
     while True:
         try:
+            # Collect all sensor data messages in a batch
+            sensor_data_messages = []
+            
             for facility in facilities:
                 for sensor in facility.get_sensors():
                     if sensor.is_signal_available():
                         data = sensor.get_signal()
-                        await send_sensor_data(sensor_data_sender, facility, sensor, data)
+                        # Create message but don't send individually
+                        msg = SensorDataMsg(
+                            sensor_id=sensor.sensor_id,
+                            facility_id=facility.facility_id,
+                            data=data
+                        )
+                        sensor_data_messages.append(msg)
+            
+            # Send all collected messages in a single batch
+            if sensor_data_messages:
+                print(f'Sending batch of {len(sensor_data_messages)} sensor data messages')
+                await send_sensor_data_batch(sensor_data_sender, sensor_data_messages)
         except Exception as e:
             print(f'Error in sensor data simulation: {str(e)}')
                     
