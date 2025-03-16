@@ -1,33 +1,28 @@
 import { FC } from "react";
-import { Box, Chip, Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import moment from "moment";
 import { Sensor } from "../../../types/sensor";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ErrorIcon from "@mui/icons-material/Error";
-import PauseCircleIcon from "@mui/icons-material/PauseCircle";
-import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 
 interface SensorDetailsProps {
   sensor: Sensor;
 }
 
 export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
-  const { data: colors } = useGetColorsQuery();
+  // const { data: colors } = useGetColorsQuery();
 
-  const getStatusIcon = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "active":
-        return <CheckCircleIcon sx={{ color: "success.main" }} />;
-      case "inactive":
-        return <PauseCircleIcon sx={{ color: "warning.main" }} />;
-      case "error":
-        return <ErrorIcon sx={{ color: "error.main" }} />;
-      default:
-        return undefined;
-    }
-  };
+  // const getStatusIcon = (status: string) => {
+  //   switch (status.toLowerCase()) {
+  //     case "active":
+  //       return <CheckCircleIcon sx={{ color: "success.main" }} />;
+  //     case "inactive":
+  //       return <PauseCircleIcon sx={{ color: "warning.main" }} />;
+  //     case "error":
+  //       return <ErrorIcon sx={{ color: "error.main" }} />;
+  //     default:
+  //       return undefined;
+  //   }
+  // };
 
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
@@ -44,17 +39,17 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
     }
   };
 
-  const getTypeColor = (type: string) => {
-    if (colors?.sensorTypes) {
-      const colorKey = Object.keys(colors.sensorTypes).find(
-        (key) => key.toLowerCase() === type.toLowerCase()
-      );
-      if (colorKey) {
-        return colors.sensorTypes[colorKey];
-      }
-    }
-    return "#8884d8";
-  };
+  // const getTypeColor = (type: string) => {
+  //   if (colors?.sensorTypes) {
+  //     const colorKey = Object.keys(colors.sensorTypes).find(
+  //       (key) => key.toLowerCase() === type.toLowerCase()
+  //     );
+  //     if (colorKey) {
+  //       return colors.sensorTypes[colorKey];
+  //     }
+  //   }
+  //   return "#8884d8";
+  // };
 
   return (
     <>

@@ -3,7 +3,6 @@ import {
   Typography,
   CircularProgress,
   Paper,
-  Chip,
   Button,
 } from "@mui/material";
 import { alertApi } from "../../../store/api/alertApi";

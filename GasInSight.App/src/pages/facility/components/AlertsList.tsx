@@ -1,10 +1,4 @@
-import {
-  Box,
-  Typography,
-  Paper,
-  CircularProgress,
-  Divider,
-} from "@mui/material";
+import { Box, Typography, Paper, CircularProgress } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { alertApi } from "../../../store/api/alertApi";
 import { sensorApi } from "../../../store/api/sensorApi";

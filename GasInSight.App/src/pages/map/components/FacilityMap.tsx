@@ -109,7 +109,7 @@ export const FacilityMap = ({
     });
   };
 
-  const getSensorIcon = (type: SensorType, status: SensorStatus) => {
+  const getSensorIcon = (_: SensorType, status: SensorStatus) => {
     let color = "blue";
 
     switch (status.toLowerCase()) {

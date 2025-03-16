@@ -11,7 +11,7 @@ import {
 } from "recharts";
 import { SensorRecord, SensorType } from "../../../types/sensor";
 import moment from "moment";
-import { memo, useEffect, useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 import {
   getSensorDisplayRange,
