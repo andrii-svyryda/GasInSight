@@ -5,6 +5,7 @@ import { FacilityCharts } from "./FacilityCharts";
 import { SensorCharts } from "./SensorCharts";
 import { FacilityMetrics } from "./FacilityMetrics";
 import { SensorMetrics } from "./SensorMetrics";
+import { AlertsTab } from "./AlertsTab";
 
 export const DashboardTabs = () => {
   const { data: dashboardData, isLoading, error } = useGetDashboardDataQuery();
@@ -42,6 +43,7 @@ export const DashboardTabs = () => {
         >
           <Tab label="Facilities" />
           <Tab label="Sensors" />
+          <Tab label="Alerts" />
         </Tabs>
       </Box>
 
@@ -56,6 +58,9 @@ export const DashboardTabs = () => {
           <SensorMetrics metrics={dashboardData.metrics} />
           <SensorCharts chartData={dashboardData.chartData} />
         </>
+      )}
+      {activeTab === 2 && (
+        <AlertsTab />
       )}
     </Box>
   );

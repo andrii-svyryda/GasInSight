@@ -22,8 +22,16 @@ interface DateRangePickerProps {
 
 const FREQUENCIES = [
   {
+    value: "15S",
+    label: "15 Seconds",
+  },
+  {
     value: "30S",
     label: "30 Seconds",
+  },
+  {
+    value: "45S",
+    label: "45 Seconds",
   },
   {
     value: "1T",

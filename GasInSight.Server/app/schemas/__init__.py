@@ -10,6 +10,7 @@ from app.schemas.service_bus_messages import (
     SensorDeactivationMessage,
     FacilitySetupMessage
 )
+from app.schemas.alert import AlertCreate, Alert, AlertType
 
 __all__ = [
     "User", "UserCreate", "UserUpdate", "Token", "TokenData",
@@ -18,5 +19,6 @@ __all__ = [
     "Sensor", "SensorCreate", "SensorUpdate",
     "SensorRecord", "SensorRecordCreate", "SensorRecordBase",
     "UserFacilityPermission", "UserFacilityPermissionCreate", "UserFacilityPermissionBase",
-    "SensorDataMessage", "SensorActivationMessage", "SensorDeactivationMessage", "FacilitySetupMessage"
+    "SensorDataMessage", "SensorActivationMessage", "SensorDeactivationMessage", "FacilitySetupMessage",
+    "AlertCreate", "Alert", "AlertType"
 ]

@@ -13,7 +13,7 @@ def get_frequency_from_seconds(seconds: int) -> str:
     if seconds < 60:
         return f"{seconds}S"
     else:
-        return f"{seconds / 60}T"
+        return f"{int(seconds / 60)}T"
 
 
 async def handle_sensor_activation(message_body: dict[str, Any], db: AsyncSession):

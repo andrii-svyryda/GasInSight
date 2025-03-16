@@ -13,6 +13,7 @@ import { MapPage } from "./pages/map/page";
 import { FacilitiesPage } from "./pages/facilities/page";
 import { useAuth } from "./hooks/useAuth";
 import { ReactNode } from "react";
+import { AlertsListener } from "./components/AlertsListener";
 
 const theme = createTheme({
   palette: {
@@ -103,6 +104,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <BrowserRouter>
+          <AlertsListener />
           <AppRoutes />
         </BrowserRouter>
       </ThemeProvider>

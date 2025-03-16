@@ -1,7 +1,6 @@
 import { baseApi } from "./baseApi";
 import {
   Sensor,
-  SensorRecord,
   SensorRecordsResponse,
 } from "../../types/sensor";
 import moment from "moment";
@@ -30,6 +29,19 @@ export const sensorApi = baseApi.injectEndpoints({
           : [{ type: "Sensor", id: "LIST" }],
     }),
 
+    getAllSensors: builder.query<Sensor[], void>({
+      query: () => ({
+        url: `/sensors`,
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ id }) => ({ type: "Sensor" as const, id })),
+              { type: "Sensor", id: "ALL" },
+            ]
+          : [{ type: "Sensor", id: "ALL" }],
+    }),
+
     getSensorById: builder.query<
       Sensor,
       { facilityId: string; sensorId: string }
@@ -54,7 +66,6 @@ export const sensorApi = baseApi.injectEndpoints({
       providesTags: (_, __, { sensorId }) => [
         { type: "SensorRecord", id: sensorId },
       ],
-      keepUnusedDataFor: 0,
     }),
   }),
 });

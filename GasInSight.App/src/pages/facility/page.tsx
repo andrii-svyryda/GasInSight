@@ -15,6 +15,7 @@ import { SensorCharts } from "../dashboard/components/SensorCharts";
 import { FacilityMap } from "../map/components/FacilityMap";
 import React from "react";
 import SensorList from "./components/SensorList";
+import AlertsList from "./components/AlertsList";
 
 export const FacilityPage = () => {
   const { facilityId } = useParams<{ facilityId: string }>();
@@ -125,6 +126,7 @@ export const FacilityPage = () => {
         >
           <Tab label="Dashboard" />
           <Tab label="Map" />
+          <Tab label="Alerts" />
         </Tabs>
       </Box>
 
@@ -160,6 +162,12 @@ export const FacilityPage = () => {
             selectedFacilityId={facility.id}
             fullscreen={true}
           />
+        </Box>
+      )}
+
+      {tabValue === 2 && facilityId && (
+        <Box sx={{ pt: 2 }}>
+          <AlertsList />
         </Box>
       )}
     </Box>

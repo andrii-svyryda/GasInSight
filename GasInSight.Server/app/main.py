@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
-from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets, dashboard
+from app.routers import auth, users, facilities, sensors, sensor_records, permissions, websockets, dashboard, notifications, alerts
 from app.listeners import facility_setup, sensor_activation, sensor_deactivation, sensor_data
 from app.services.servicebus import setup_queues
+from app.services.alerts.anomalies import start_anomaly_detection_service
 
 
 @asynccontextmanager
@@ -24,6 +25,8 @@ async def lifespan(app: FastAPI):
         "sensor_deactivation_listener": sensor_deactivation_listener,
         "sensor_data_listener": sensor_data_listener
     }
+
+    start_anomaly_detection_service()
     
     yield
     
@@ -48,7 +51,9 @@ app.include_router(sensors.router)
 app.include_router(sensor_records.router)
 app.include_router(permissions.router)
 app.include_router(websockets.router)
+app.include_router(notifications.router)
 app.include_router(dashboard.router)
+app.include_router(alerts.router)
 
 
 @app.get("/")

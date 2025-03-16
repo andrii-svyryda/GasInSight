@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import func, select
 from app.cruds.base import CrudBase
-from app.models.user import User
+from app.models.user import User, UserRole
 from app.schemas import UserCreate, UserUpdate
 from passlib.context import CryptContext
 from typing import override
@@ -14,6 +14,11 @@ class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
         stmt = select(User).where(User.email == email)
         result = await db.execute(stmt)
         return result.scalars().first()
+    
+    async def get_all_admins(self, db: AsyncSession) -> list[User]:
+        stmt = select(User).where(User.role == UserRole.Admin)
+        result = await db.execute(stmt)
+        return list(result.scalars().all())
     
     @override
     async def create(self, db: AsyncSession, obj_in: UserCreate) -> User:
