@@ -175,3 +175,56 @@ export const getSensorMeasurements = (sensorType: SensorType): string => {
       return "Unknown";
   }
 };
+
+export const getSensorDisplayName = (type: SensorType) => {
+  switch (type) {
+    case SensorType.Temperature:
+      return "Temperature";
+    case SensorType.Humidity:
+      return "Humidity";
+    case SensorType.Pressure:
+      return "Pressure";
+    case SensorType.Flow:
+      return "Flow";
+    case SensorType.Volume:
+      return "Volume";
+    case SensorType.GasComposition:
+      return "Gas Composition";
+    case SensorType.LiquidComposition:
+      return "Liquid Composition";
+    case SensorType.Vibration:
+      return "Vibration";
+    case SensorType.Noise:
+      return "Noise";
+    case SensorType.Corrosion:
+      return "Corrosion";
+    case SensorType.GasDetection:
+      return "Gas Detection";
+    case SensorType.FlameDetection:
+      return "Flame Detection";
+    case SensorType.LevelIndicator:
+      return "Level Indicator";
+    case SensorType.ValveStatus:
+      return "Valve Status";
+    case SensorType.PumpStatus:
+      return "Pump Status";
+    case SensorType.CompressorStatus:
+      return "Compressor Status";
+    case SensorType.PowerConsumption:
+      return "Power Consumption";
+    case SensorType.WaterContent:
+      return "Water Content";
+    case SensorType.OxygenContent:
+      return "Oxygen Content";
+    case SensorType.HydrogenSulfideContent:
+      return "Hydrogen Sulfide Content";
+    case SensorType.CarbonDioxideContent:
+      return "Carbon Dioxide Content";
+    case SensorType.ParticulateMatter:
+      return "Particulate Matter";
+    case SensorType.LeakDetection:
+      return "Leak Detection";
+    default:
+      return "Unknown Sensor";
+  }
+};

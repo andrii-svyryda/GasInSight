@@ -32,11 +32,13 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
   const getStatusColor = (status: string) => {
     switch (status.toLowerCase()) {
       case "active":
-        return "success";
+        return "#4caf50"; // Brighter green color
       case "inactive":
         return "warning";
-      case "error":
+      case "fault":
         return "error";
+      case "maintenance":
+        return "#ff9800"; // Orange color
       default:
         return "default";
     }
@@ -57,7 +59,7 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
   return (
     <>
       <Grid container spacing={3} sx={{ pb: 3 }}>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <Typography variant="subtitle1" color="text.secondary" gutterBottom>
             Type
           </Typography>
@@ -69,30 +71,32 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
               fontWeight: "bold",
             }}
           />
-        </Grid>
+        </Grid> */}
 
-        <Grid item xs={12} md={6}>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+        <Grid item xs={12} md={2}>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
             Status
           </Typography>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Chip
-              icon={getStatusIcon(sensor.status)}
-              label={sensor.status}
+            <Typography
+              variant="body1"
               color={getStatusColor(sensor.status)}
-              size="medium"
-            />
+              gutterBottom
+              sx={{ fontWeight: "bold" }}
+            >
+              {sensor.status}
+            </Typography>
           </Box>
         </Grid>
 
-        <Grid item xs={12} md={6}>
-          <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+        <Grid item xs={12} md={2}>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <CalendarTodayIcon sx={{ mr: 1, fontSize: "small" }} />
               Installed At
             </Box>
           </Typography>
-          <Typography variant="h6">
+          <Typography variant="body1">
             {moment(sensor.installedAt).format("YYYY-MM-DD")}
           </Typography>
         </Grid>
@@ -107,7 +111,7 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
           <Typography variant="h6">{sensor.expectedFreq}</Typography>
         </Grid> */}
 
-        {sensor.location && (
+        {/* {sensor.location && (
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle1" color="text.secondary" gutterBottom>
               <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -120,7 +124,7 @@ export const SensorDetails: FC<SensorDetailsProps> = ({ sensor }) => {
                 `${sensor.location.latitude}, ${sensor.location.longitude}`}
             </Typography>
           </Grid>
-        )}
+        )} */}
       </Grid>
     </>
   );

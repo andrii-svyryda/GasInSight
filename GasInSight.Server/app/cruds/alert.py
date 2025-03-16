@@ -75,7 +75,6 @@ class AlertCRUD(CrudBase[Alert, AlertCreate, AlertUpdate]):
                 "status": sensor_row.status,
                 "type": sensor_row.type,
                 "facility_id": sensor_row.facility_id,
-                "location_id": sensor_row.location_id,
                 "installed_at": sensor_row.installed_at,
                 "expected_freq": sensor_row.expected_freq,
             }
@@ -85,7 +84,6 @@ class AlertCRUD(CrudBase[Alert, AlertCreate, AlertUpdate]):
                 "name": facility_row.name,
                 "status": facility_row.status,
                 "type": facility_row.type,
-                "location_id": facility_row.location_id,
                 "created_at": facility_row.created_at,
             }
             
