@@ -13,47 +13,22 @@ import moment from "moment";
 import { getSensorDisplayName } from "../../../constants/sensorType";
 import { SensorType } from "../../../types/sensor";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
+import {
+  facilityApi,
+  useGetFacilityByIdQuery,
+} from "../../../store/api/facilityApi";
 
 const AlertItem = ({
   alert,
   sensorType,
+  facilityName,
   navigateToSensor,
 }: {
   alert: AlertType;
   sensorType?: SensorType;
+  facilityName: string;
   navigateToSensor: () => void;
 }) => {
-  const { data: colors } = useGetColorsQuery();
-
-  const getSensorTypeColor = (type?: SensorType) => {
-    if (!type) return "#8884d8"; // Default color when type is undefined
-
-    if (colors?.sensorTypes) {
-      const colorKey = Object.keys(colors.sensorTypes).find(
-        (key) => key.toLowerCase() === type.toLowerCase()
-      );
-      if (colorKey) {
-        return colors.sensorTypes[colorKey];
-      }
-    }
-
-    // Fallback colors if API doesn't return colors
-    switch (type.toLowerCase()) {
-      case "temperature":
-        return "#f44336";
-      case "pressure":
-        return "#2196f3";
-      case "flow":
-        return "#4caf50";
-      case "level":
-        return "#ff9800";
-      case "gas":
-        return "#9c27b0";
-      default:
-        return "#8884d8";
-    }
-  };
-
   return (
     <Paper
       elevation={1}
@@ -74,18 +49,14 @@ const AlertItem = ({
           mb: 1,
         }}
       >
-        {sensorType && (
-          <Typography
-            variant="body1"
-            sx={{
-              color: getSensorTypeColor(sensorType),
-              fontWeight: "medium",
-            }}
-          >
-            {getSensorDisplayName(sensorType)} sensor
-          </Typography>
-        )}
-        <Typography variant="body1" color="text.secondary">
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          {sensorType && (
+            <Typography variant="caption" color="text.secondary">
+              {getSensorDisplayName(sensorType)} sensor in {facilityName}
+            </Typography>
+          )}
+        </Box>
+        <Typography variant="caption" color="text.secondary">
           {moment.utc(alert.createdAt).local().format("MMM D, YYYY HH:mm")}
         </Typography>
       </Box>
@@ -114,6 +85,9 @@ const AlertItem = ({
 
 export const AlertsList = () => {
   const { facilityId } = useParams<{ facilityId: string }>();
+  const { data: facility } = useGetFacilityByIdQuery(facilityId as string, {
+    skip: !facilityId,
+  });
 
   const navigate = useNavigate();
 
@@ -152,7 +126,7 @@ export const AlertsList = () => {
     );
   }
 
-  if (!alerts || alerts.length === 0) {
+  if (!facility || !alerts || alerts.length === 0) {
     return (
       <Box sx={{ p: 3 }}>
         <Typography color="text.secondary">No alerts found.</Typography>
@@ -179,6 +153,7 @@ export const AlertsList = () => {
           key={alert.id}
           alert={alert}
           sensorType={getSensorType(alert.sensorId)}
+          facilityName={facility.name}
           navigateToSensor={() => navigateToSensor(alert.sensorId)}
         />
       ))}

@@ -83,7 +83,7 @@ export const FacilityPage = () => {
           Back
         </Button>
         <Box>
-          <Typography variant="h4">Facility: {facility.name}</Typography>
+          <Typography variant="h4">{facility.name}</Typography>
 
           {facility.location?.address && (
             <Typography variant="body1">
