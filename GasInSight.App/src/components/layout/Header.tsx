@@ -5,6 +5,7 @@ import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { logout } from "../../store/slices/authSlice";
 import { authApi } from "../../store/api/authApi";
 import { ReactNode } from "react";
+import gasLogo from "../../assets/icons/gas-logo.svg";
 
 interface HeaderProps {
   children?: ReactNode;
@@ -33,11 +34,21 @@ export const Header = ({ children }: HeaderProps) => {
     >
       <Toolbar sx={{ display: "flex", alignItems: "center" }}>
         {children}
+        <Box
+          component="img"
+          src={gasLogo}
+          alt="GasInSight Logo"
+          sx={{
+            width: "36px",
+            height: "36px",
+            marginRight: "12px",
+            filter: "brightness(0) invert(1)",
+          }}
+        />
         <Typography
-          variant="h6"
-          component={Link}
-          to="/"
-          sx={{ textDecoration: "none", color: "white", marginRight: 2 }}
+          variant="h5"
+          component="div"
+          sx={{ fontWeight: "bold", color: "white" }}
         >
           GasInSight
         </Typography>
