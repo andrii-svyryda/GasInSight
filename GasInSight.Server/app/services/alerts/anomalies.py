@@ -60,41 +60,45 @@ async def check_sensor_anomalies(db: AsyncSession, sensor_id: str, facility_id: 
     if recent_alerts:
         return
     
-    recent_records = await sensor_record_crud.get_recent_by_sensor_id(db, sensor_id, limit=1)
+    recent_records = await sensor_record_crud.get_recent_by_sensor_id(db, sensor_id)
     if not recent_records:
         return
     
-    latest_record = recent_records[0]
-    
     try:
-        current_value = float(latest_record.data) if latest_record.data else None
-        if current_value is None:
+        values = [float(record.data) for record in recent_records]
+
+        if not values:
+            return
+
+        if any(value < min_value for value in values):
+            alert_message = f"Problem detected: {sensor_type.value} is below minimum threshold ({min_value})"
+        elif any(value > max_value for value in values):
+            alert_message = f"Problem detected: {sensor_type.value} is above maximum threshold ({max_value})"
+        else:
             return
         
-        if current_value < min_value or current_value > max_value:
-            alert_message = f"Anomaly detected: {sensor_type.value} value {current_value} is outside valid range ({min_value} - {max_value})"
-            alert_create = AlertCreate(
-                sensor_id=sensor_id,
-                type=AlertType.Anomaly,
-                message=alert_message
-            )
-            
-            new_alert = await alert_crud.create(db, alert_create)
-            
-            await notification_manager.broadcast_facility_notification(
-                facility_id,
-                {
-                    "type": "alert",
-                    "alert_id": new_alert.id,
-                    "sensor_id": sensor_id,
-                    "facility_id": facility_id,
-                    "message": alert_message,
-                    "created_at": new_alert.created_at.isoformat(),
-                    "alert_type": AlertType.Anomaly.value
-                }
-            )
-            
-            logging.info(f"Created anomaly alert for sensor {sensor_id}: {alert_message}")
+        alert_create = AlertCreate(
+            sensor_id=sensor_id,
+            type=AlertType.Anomaly,
+            message=alert_message
+        )
+        
+        new_alert = await alert_crud.create(db, alert_create)
+        
+        await notification_manager.broadcast_facility_notification(
+            facility_id,
+            {
+                "type": "alert",
+                "alert_id": new_alert.id,
+                "sensor_id": sensor_id,
+                "facility_id": facility_id,
+                "message": alert_message,
+                "created_at": new_alert.created_at.isoformat(),
+                "alert_type": AlertType.Anomaly.value
+            }
+        )
+        
+        logging.info(f"Created anomaly alert for sensor {sensor_id}: {alert_message}")
     except (ValueError, TypeError) as e:
         logging.exception(e)
         logging.error(f"Error checking anomalies for sensor {sensor_id}: {str(e)}")

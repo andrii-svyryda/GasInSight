@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from datetime import datetime
 from app.models.alert import AlertType
+from app.schemas.sensor import Sensor
+from app.schemas.facility import Facility
 
 
 class AlertBase(BaseModel):
@@ -23,3 +25,12 @@ class Alert(AlertBase):
 
     class Config:
         from_attributes = True
+
+class AlertWithDetails(BaseModel):
+    id: int
+    sensor_id: str
+    type: AlertType
+    message: str
+    created_at: datetime
+    sensor: Sensor | None = None
+    facility: Facility | None = None

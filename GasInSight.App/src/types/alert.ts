@@ -1,3 +1,6 @@
+import { Facility } from "./facility";
+import { Sensor } from "./sensor";
+
 export interface Alert {
   id: number;
   sensorId: string;
@@ -5,6 +8,8 @@ export interface Alert {
   message: string;
   alertType: AlertType;
   createdAt: string;
+  sensor?: Sensor;
+  facility?: Facility;
 }
 
 export enum AlertType {

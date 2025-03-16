@@ -1,6 +1,5 @@
-import { Box, Typography, CircularProgress, Paper } from "@mui/material";
+import { Box, Typography, CircularProgress, Paper, Chip } from "@mui/material";
 import { alertApi } from "../../../store/api/alertApi";
-import { sensorApi } from "../../../store/api/sensorApi";
 import { Alert as AlertType } from "../../../types/alert";
 import moment from "moment";
 
@@ -21,7 +20,7 @@ const getAlertTypeColor = (type: string) => {
   }
 };
 
-const AlertItem = ({ alert, sensorName }: { alert: AlertType; sensorName?: string }) => {
+const AlertItem = ({ alert }: { alert: AlertType }) => {
   return (
     <Paper
       elevation={1}
@@ -42,14 +41,23 @@ const AlertItem = ({ alert, sensorName }: { alert: AlertType; sensorName?: strin
           mb: 1,
         }}
       >
-        {sensorName && (
-          <Typography
-            variant="caption"
-            color="text.secondary"
-          >
-            Alert in: {sensorName}
-          </Typography>
-        )}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          {alert.sensor && (
+            <Typography
+              variant="caption"
+              color="text.secondary"
+            >
+              Sensor: {alert.sensor.name}
+            </Typography>
+          )}
+          {alert.facility && (
+            <Chip 
+              size="small" 
+              label={alert.facility.name} 
+              sx={{ fontSize: "0.7rem" }}
+            />
+          )}
+        </Box>
         <Typography variant="caption" color="text.secondary">
           {moment(alert.createdAt).format("MMM D, YYYY HH:mm")}
         </Typography>
@@ -61,15 +69,9 @@ const AlertItem = ({ alert, sensorName }: { alert: AlertType; sensorName?: strin
 
 export const AlertsTab = () => {
   const { data: allAlerts, isLoading: alertsLoading, error: alertsError } = 
-    alertApi.useGetAllAlertsQuery(undefined);
-  
-  const { data: sensors, isLoading: sensorsLoading, error: sensorsError } = 
-    sensorApi.useGetAllSensorsQuery(undefined);
+    alertApi.useGetRecentAlertsQuery(undefined);
 
-  const isLoading = alertsLoading || sensorsLoading;
-  const error = alertsError || sensorsError;
-
-  if (isLoading) {
+  if (alertsLoading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
         <CircularProgress />
@@ -77,7 +79,7 @@ export const AlertsTab = () => {
     );
   }
 
-  if (error) {
+  if (alertsError) {
     return (
       <Box sx={{ p: 3 }}>
         <Typography color="error">Failed to load alerts.</Typography>
@@ -93,12 +95,6 @@ export const AlertsTab = () => {
     );
   }
 
-  const getSensorName = (sensorId: string) => {
-    if (!sensors) return undefined;
-    const sensor = sensors.find((s) => s.id === sensorId);
-    return sensor?.name;
-  };
-
   return (
     <Box sx={{ p: 2 }}>
       <Typography variant="h6" gutterBottom>
@@ -108,7 +104,6 @@ export const AlertsTab = () => {
         <AlertItem
           key={alert.id}
           alert={alert}
-          sensorName={getSensorName(alert.sensorId)}
         />
       ))}
     </Box>
