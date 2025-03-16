@@ -38,7 +38,11 @@ export const useSensorWebSocket = ({
       webSocketRef.current.close();
     }
 
-    const wsUrl = `ws://localhost:8000/ws/sensor-data/${sensorId}?token=${token}`;
+    const wsUrl = `${
+      import.meta.env.VITE_WS_URL ||
+      import.meta.env.VITE_API_URL?.replace("http", "ws") ||
+      "ws://localhost:8000"
+    }/ws/sensor-data/${sensorId}?token=${token}`;
     console.log(`Connecting to WebSocket: ${wsUrl}`);
     const ws = new WebSocket(wsUrl);
     webSocketRef.current = ws;

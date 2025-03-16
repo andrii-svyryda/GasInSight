@@ -5,7 +5,7 @@ import { logout, setTokens } from "../slices/authSlice";
 import { TokenResponse } from "../../types/auth";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://localhost:8000",
+  baseUrl: import.meta.env.VITE_API_URL || "http://localhost:8000",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.accessToken;
     if (token) {
