@@ -1,5 +1,5 @@
 General rules:
-    Don't write any comments
+    Don't write any comments automatically. Just write when we're asking about it.
 
 GasInSight.App (typescript)
     Use rules in GasInSight.App/.windsurfrules

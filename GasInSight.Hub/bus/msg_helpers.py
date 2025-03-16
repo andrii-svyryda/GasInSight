@@ -32,11 +32,11 @@ async def send_sensor_activation(sensor_activation_sender: SensorActivationSende
     )
     await sensor_activation_sender.send(msg)
 
-async def send_sensor_data(sensor_data_sender: SensorDataSender, facility: Facility, sensor: Sensor) -> None:
+async def send_sensor_data(sensor_data_sender: SensorDataSender, facility: Facility, sensor: Sensor, data: str) -> None:
     msg = SensorDataMsg(
         sensor_id=sensor.sensor_id,
         facility_id=facility.facility_id,
-        data=sensor.get_sensor_data()
+        data=data
     )
     await sensor_data_sender.send(msg)
 

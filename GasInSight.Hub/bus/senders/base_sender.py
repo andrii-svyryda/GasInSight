@@ -1,4 +1,4 @@
-from azure.servicebus import ServiceBusClient
+from azure.servicebus.aio import ServiceBusClient
 from config import Config
 
 class BaseSender:
@@ -15,4 +15,4 @@ class BaseSender:
 
     async def send(self, message) -> None:
         sender = self.service_bus_client.get_queue_sender(queue_name=self.queue_name)
-        await sender.send_message(message)
+        await sender.send_messages(message)
