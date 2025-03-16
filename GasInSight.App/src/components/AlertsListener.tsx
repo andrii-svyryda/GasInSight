@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { Alert as AlertType } from "../types/alert";
 import { transformSnakeToCamel } from "../utils/caseTransformers";
-import moment from "moment";
 
 interface Notification {
   id: string;

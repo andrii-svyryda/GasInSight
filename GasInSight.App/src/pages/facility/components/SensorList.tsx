@@ -13,10 +13,7 @@ import { sensorApi } from "../../../store/api/sensorApi";
 import { memo, useMemo, useState } from "react";
 import SensorCardChart from "./SensorCardChart";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
-import {
-  getSensorDisplayName,
-  getSensorValidLabel,
-} from "../../../constants/sensorType";
+import { getSensorDisplayName } from "../../../constants/sensorType";
 
 interface SensorListProps {
   facilityId: string;

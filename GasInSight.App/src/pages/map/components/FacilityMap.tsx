@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "react-leaflet";
 import { Icon } from "leaflet";
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { Facility } from "../../../types/facility";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
