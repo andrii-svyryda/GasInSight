@@ -11,23 +11,6 @@ import moment from "moment";
 import { getSensorDisplayName } from "../../../constants/sensorType";
 import { useNavigate } from "react-router-dom";
 
-const getAlertTypeColor = (type: string) => {
-  switch (type) {
-    case "GAS_LEAK":
-      return "#f44336";
-    case "HIGH_PRESSURE":
-    case "HIGH_TEMPERATURE":
-      return "#ff9800";
-    case "LOW_PRESSURE":
-    case "LOW_TEMPERATURE":
-      return "#2196f3";
-    case "SYSTEM":
-      return "#f44336";
-    default:
-      return "#f44336";
-  }
-};
-
 const AlertItem = ({ alert }: { alert: AlertType }) => {
   const navigate = useNavigate();
 
@@ -45,7 +28,7 @@ const AlertItem = ({ alert }: { alert: AlertType }) => {
       sx={{
         p: 2,
         mb: 2,
-        borderLeft: `4px solid ${getAlertTypeColor(alert.alertType)}`,
+        borderLeft: `4px solid #f44336`,
         "&:hover": {
           boxShadow: 3,
         },

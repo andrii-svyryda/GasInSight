@@ -9,7 +9,7 @@ from app.models.alert import AlertType
 from app.schemas.alert import AlertCreate
 from app.websockets.notification_manager import notification_manager
 import logging
-
+from app.cruds.facility import facility_crud
 
 def get_sensor_valid_range(sensor_type: SensorType) -> tuple[float, float]:
     match sensor_type:
@@ -70,10 +70,15 @@ async def check_sensor_anomalies(db: AsyncSession, sensor_id: str, facility_id: 
         if not values:
             return
 
+        facility = await facility_crud.get(db, facility_id)
+        
+        if not facility:
+            return
+
         if any(value < min_value for value in values):
-            alert_message = f"Problem detected: {sensor_type.value} is below minimum threshold ({min_value})"
+            alert_message = f"Problem detected: {sensor_type.value} Sensor value in {facility.name} is below minimum threshold ({min_value})"
         elif any(value > max_value for value in values):
-            alert_message = f"Problem detected: {sensor_type.value} is above maximum threshold ({max_value})"
+            alert_message = f"Problem detected: {sensor_type.value} Sensor value in {facility.name} is above maximum threshold ({max_value})"
         else:
             return
         

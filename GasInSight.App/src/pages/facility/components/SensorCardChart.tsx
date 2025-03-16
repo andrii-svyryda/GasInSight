@@ -5,6 +5,7 @@ import { sensorApi } from "../../../store/api/sensorApi";
 import { Sensor } from "../../../types/sensor";
 import { memo, useMemo } from "react";
 import SensorChart from "../../sensor/components/SensorChart";
+import { getSensorValidLabel } from "../../../constants/sensorType";
 
 interface SensorCardChartProps {
   sensor: Sensor;
@@ -44,8 +45,13 @@ const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
           alignItems: "center",
           height: "20px",
           gap: 1,
+          mb: 0.5,
         }}
       >
+        <Typography variant="body2" color="text.secondary">
+          {getSensorValidLabel(sensor.type)}
+        </Typography>
+        <div style={{ flexGrow: 1 }} />
         {recordsData?.analytics.min && (
           <Typography variant="body2">
             Min: {recordsData.analytics.min.toFixed(2)}

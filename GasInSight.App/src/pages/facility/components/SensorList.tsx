@@ -13,7 +13,10 @@ import { sensorApi } from "../../../store/api/sensorApi";
 import { memo, useMemo, useState } from "react";
 import SensorCardChart from "./SensorCardChart";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
-import { getSensorValidLabel } from "../../../constants/sensorType";
+import {
+  getSensorDisplayName,
+  getSensorValidLabel,
+} from "../../../constants/sensorType";
 
 interface SensorListProps {
   facilityId: string;
@@ -120,38 +123,34 @@ const SensorList = ({ facilityId }: SensorListProps) => {
               onClick={() => handleViewDetails(sensor.id)}
             >
               <CardContent>
-                <Typography variant="h6" component="div">
-                  {sensor.name}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ color: getTypeColor(sensor.type), fontWeight: "bold" }}
-                >
-                  Type: {sensor.type}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{
-                    color: getStatusColor(sensor.status),
-                    fontWeight: "bold",
-                  }}
-                >
-                  Status: {sensor.status}
-                </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  <Typography variant="body2" color="text.secondary">
-                    Installed:{" "}
-                    {new Date(sensor.installedAt).toLocaleDateString()}
+                <Box display="flex" alignItems="start" mb={1} gap={0.7}>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: getTypeColor(sensor.type),
+                    }}
+                  >
+                    {getSensorDisplayName(sensor.type)}
                   </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {getSensorValidLabel(sensor.type)}
+                  <Typography variant="body1" component="div">
+                    Sensor
                   </Typography>
+                  <div style={{ flexGrow: 1 }}></div>
+                  <Box>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: getStatusColor(sensor.status),
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Status: {sensor.status}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Installed:{" "}
+                      {new Date(sensor.installedAt).toLocaleDateString()}
+                    </Typography>
+                  </Box>
                 </Box>
                 <SensorCardChart sensor={sensor} />
               </CardContent>

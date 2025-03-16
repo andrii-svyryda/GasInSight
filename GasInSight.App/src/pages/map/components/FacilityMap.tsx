@@ -8,13 +8,14 @@ import {
   Tooltip,
 } from "react-leaflet";
 import { Icon } from "leaflet";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { Facility } from "../../../types/facility";
 import { useNavigate } from "react-router-dom";
 import "leaflet/dist/leaflet.css";
 import { sensorApi } from "../../../store/api/sensorApi";
 import { Sensor, SensorStatus, SensorType } from "../../../types/sensor";
 import moment from "moment";
+import { getSensorDisplayName } from "../../../constants/sensorType";
 
 interface FacilityMapProps {
   facilities: Facility[];
@@ -70,6 +71,25 @@ export const FacilityMap = ({
         return "#9e9e9e"; // gray
       default:
         return "#2196f3"; // blue
+    }
+  };
+
+  const getTypeColor = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "temperature":
+        return "#f44336"; // red
+      case "pressure":
+        return "#2196f3"; // blue
+      case "flow":
+        return "#4caf50"; // green
+      case "level":
+        return "#ff9800"; // orange
+      case "humidity":
+        return "#9c27b0"; // purple
+      case "gas":
+        return "#795548"; // brown
+      default:
+        return "#9e9e9e"; // gray
     }
   };
 
@@ -227,7 +247,7 @@ export const FacilityMap = ({
                 opacity={0.9}
                 permanent
               >
-                Facility: {facility.name}
+                {facility.name}
               </Tooltip>
               <Popup>
                 <div>
@@ -275,37 +295,45 @@ export const FacilityMap = ({
                       opacity={0.9}
                       permanent
                     >
-                      Sensor: {sensor.name}
+                      {getSensorDisplayName(sensor.type)} Sensor
                     </Tooltip>
                     <Popup>
-                      <div>
-                        <h3>{sensor.name}</h3>
-                        <p>Type: {sensor.type}</p>
-                        <p>
+                      <Box gap={0}>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: getTypeColor(sensor.type),
+                          }}
+                        >
+                          {getSensorDisplayName(sensor.type)} Sensor
+                        </Typography>
+                        <Typography variant="body2">
                           Status:{" "}
-                          <span
-                            style={{
+                          <Box
+                            component="span"
+                            sx={{
                               color: getStatusColor(sensor.status),
                               fontWeight: "bold",
                             }}
                           >
                             {sensor.status}
-                          </span>
-                        </p>
-                        <p>
+                          </Box>
+                        </Typography>
+                        <Typography variant="body2" sx={{ mb: 1 }}>
                           Installed:{" "}
                           {moment(sensor.installedAt).format("YYYY-MM-DD")}
-                        </p>
+                        </Typography>
                         <Button
                           size="small"
-                          variant="outlined"
+                          variant="contained"
+                          color="primary"
                           onClick={() =>
                             handleViewSensor(sensor.facilityId, sensor.id)
                           }
                         >
                           View Sensor
                         </Button>
-                      </div>
+                      </Box>
                     </Popup>
                   </Marker>
                 )

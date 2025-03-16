@@ -1,44 +1,66 @@
-import { Box, Typography, Paper, CircularProgress } from "@mui/material";
-import { useParams } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  Paper,
+  CircularProgress,
+  Button,
+} from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import { alertApi } from "../../../store/api/alertApi";
 import { sensorApi } from "../../../store/api/sensorApi";
-import {
-  Alert as AlertType,
-  AlertType as AlertTypeEnum,
-} from "../../../types/alert";
+import { Alert as AlertType } from "../../../types/alert";
 import moment from "moment";
-
-const getAlertTypeColor = (type: string) => {
-  switch (type) {
-    case AlertTypeEnum.GAS_LEAK:
-      return "#f44336";
-    case AlertTypeEnum.HIGH_PRESSURE:
-    case AlertTypeEnum.HIGH_TEMPERATURE:
-      return "#ff9800";
-    case AlertTypeEnum.LOW_PRESSURE:
-    case AlertTypeEnum.LOW_TEMPERATURE:
-      return "#2196f3";
-    case AlertTypeEnum.SYSTEM:
-      return "#9c27b0";
-    default:
-      return "#757575";
-  }
-};
+import { getSensorDisplayName } from "../../../constants/sensorType";
+import { SensorType } from "../../../types/sensor";
+import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 
 const AlertItem = ({
   alert,
-  sensorName,
+  sensorType,
+  navigateToSensor,
 }: {
   alert: AlertType;
-  sensorName?: string;
+  sensorType?: SensorType;
+  navigateToSensor: () => void;
 }) => {
+  const { data: colors } = useGetColorsQuery();
+
+  const getSensorTypeColor = (type?: SensorType) => {
+    if (!type) return "#8884d8"; // Default color when type is undefined
+
+    if (colors?.sensorTypes) {
+      const colorKey = Object.keys(colors.sensorTypes).find(
+        (key) => key.toLowerCase() === type.toLowerCase()
+      );
+      if (colorKey) {
+        return colors.sensorTypes[colorKey];
+      }
+    }
+
+    // Fallback colors if API doesn't return colors
+    switch (type.toLowerCase()) {
+      case "temperature":
+        return "#f44336";
+      case "pressure":
+        return "#2196f3";
+      case "flow":
+        return "#4caf50";
+      case "level":
+        return "#ff9800";
+      case "gas":
+        return "#9c27b0";
+      default:
+        return "#8884d8";
+    }
+  };
+
   return (
     <Paper
       elevation={1}
       sx={{
         p: 2,
         mb: 2,
-        borderLeft: `4px solid ${getAlertTypeColor(alert.alertType)}`,
+        borderLeft: `4px solid #f44336`,
         "&:hover": {
           boxShadow: 3,
         },
@@ -52,26 +74,48 @@ const AlertItem = ({
           mb: 1,
         }}
       >
-        {sensorName && (
+        {sensorType && (
           <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ display: "block", mt: 1 }}
+            variant="body1"
+            sx={{
+              color: getSensorTypeColor(sensorType),
+              fontWeight: "medium",
+            }}
           >
-            Alert in: {sensorName}
+            {getSensorDisplayName(sensorType)} sensor
           </Typography>
         )}
-        <Typography variant="caption" color="text.secondary">
-          {moment(alert.createdAt).format("MMM D, YYYY HH:mm")}
+        <Typography variant="body1" color="text.secondary">
+          {moment.utc(alert.createdAt).local().format("MMM D, YYYY HH:mm")}
         </Typography>
       </Box>
-      <Typography variant="body1">{alert.message}</Typography>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="body1">{alert.message}</Typography>
+        <Box sx={{ display: "flex", justifyContent: "flex-end", mt: 1 }}>
+          <Button
+            size="small"
+            variant="outlined"
+            color="primary"
+            onClick={navigateToSensor}
+          >
+            Diagnose Sensor
+          </Button>
+        </Box>
+      </Box>
     </Paper>
   );
 };
 
 export const AlertsList = () => {
   const { facilityId } = useParams<{ facilityId: string }>();
+
+  const navigate = useNavigate();
 
   const {
     data: alerts,
@@ -116,10 +160,16 @@ export const AlertsList = () => {
     );
   }
 
-  const getSensorName = (sensorId: string) => {
+  const getSensorType = (sensorId: string) => {
     if (!sensors) return undefined;
     const sensor = sensors.find((s) => s.id === sensorId);
-    return sensor?.name;
+    return sensor?.type;
+  };
+
+  const navigateToSensor = (sensorId: string) => {
+    if (facilityId && sensorId) {
+      navigate(`/dashboard/facilities/${facilityId}/sensors/${sensorId}`);
+    }
   };
 
   return (
@@ -128,7 +178,8 @@ export const AlertsList = () => {
         <AlertItem
           key={alert.id}
           alert={alert}
-          sensorName={getSensorName(alert.sensorId)}
+          sensorType={getSensorType(alert.sensorId)}
+          navigateToSensor={() => navigateToSensor(alert.sensorId)}
         />
       ))}
     </Box>

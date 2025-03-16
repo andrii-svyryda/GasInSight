@@ -12,7 +12,7 @@ from app.cruds.user_facility_permission import user_facility_permission_crud
 router = APIRouter(prefix="/alerts", tags=["alerts"])
 
 
-@router.get("/by-facility/{facility_id}", response_model=list[Alert])
+@router.get("/facility/{facility_id}", response_model=list[Alert])
 async def get_alerts_by_facility(
     facility_id: str,
     db: AsyncSession = Depends(get_db),

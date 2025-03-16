@@ -155,12 +155,19 @@ const SensorChart = ({
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="time" />
-          <YAxis domain={[chartMinMaxDisplay[0], chartMinMaxDisplay[1]]} />
+          <XAxis
+            dataKey="time"
+            tick={{ fontSize: 12 }}
+          />
+          <YAxis
+            domain={[chartMinMaxDisplay[0], chartMinMaxDisplay[1]]}
+            tick={{ fontSize: 12 }}
+          />
           <Tooltip
             formatter={(_, __, props) => {
               return props.payload.label;
             }}
+            contentStyle={{ fontSize: 12 }}
           />
           <ReferenceLine
             y={chartMinMaxValid[0]}

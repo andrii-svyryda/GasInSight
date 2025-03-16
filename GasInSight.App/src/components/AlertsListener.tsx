@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { Snackbar, Alert as MuiAlert, Stack, Button, Box } from "@mui/material";
+import { Alert as MuiAlert, Stack, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { Alert as AlertType } from "../types/alert";
+import { transformSnakeToCamel } from "../utils/caseTransformers";
+import moment from "moment";
 
 interface Notification {
   id: string;
@@ -46,11 +48,10 @@ export const AlertsListener: React.FC = () => {
     ws.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
-        console.log("WebSocket message received:", data);
 
         if (data) {
           if (data.type === "alert") {
-            const alert = data as AlertType;
+            const alert = transformSnakeToCamel(data) as AlertType;
 
             const newNotification: Notification = {
               id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -99,83 +100,67 @@ export const AlertsListener: React.FC = () => {
     }
   }, [connectWebSocket]);
 
-  const cleanupOldNotifications = useCallback(() => {
-    const now = Date.now();
-    const oneHourAgo = now - 60 * 60 * 1000;
-
-    setNotifications((prev) =>
-      prev.filter(
-        (notification) =>
-          notification.timestamp > oneHourAgo || notification.open
-      )
-    );
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(cleanupOldNotifications, 15 * 60 * 1000); // Clean up every 15 minutes
-    return () => clearInterval(interval);
-  }, [cleanupOldNotifications]);
-
-  const navigateToSensor = (facilityId?: string, sensorId?: string) => {
+  const navigateToSensor = (
+    notificationId: string,
+    facilityId?: string,
+    sensorId?: string
+  ) => {
     if (facilityId && sensorId) {
       navigate(`/dashboard/facilities/${facilityId}/sensors/${sensorId}`);
       // Close the notification after navigation
-      const notificationToClose = notifications.find(
-        (n) => n.facilityId === facilityId && n.sensorId === sensorId && n.open
-      );
-      if (notificationToClose) {
-        handleClose(notificationToClose.id);
-      }
+      handleClose(notificationId);
     }
   };
 
-  // Get active notifications (those that are open)
   const activeNotifications = notifications.filter((n) => n.open);
+
+  console.log(activeNotifications);
 
   return (
     <Stack
-      spacing={1}
+      spacing={2}
       sx={{ position: "fixed", bottom: 24, right: 24, zIndex: 2000 }}
     >
-      {activeNotifications.map((notification) => (
-        <Snackbar
-          key={notification.id}
-          open={notification.open}
-          autoHideDuration={null}
-          onClose={() => handleClose(notification.id)}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          sx={{ position: "relative", mt: 1 }}
-        >
+      {activeNotifications.map((notification, _) => (
+        <Box key={notification.id} sx={{ mb: 1 }}>
           <MuiAlert
             elevation={6}
             variant="filled"
             onClose={() => handleClose(notification.id)}
             severity={notification.severity}
+            sx={{ width: "100%" }}
           >
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
               {notification.message}
-              {notification.facilityId && notification.sensorId && (
-                <Button 
-                  variant="text" 
-                  color="inherit"
-                  size="small"
-                  sx={{ 
-                    alignSelf: 'flex-end', 
-                    mt: 1, 
-                    textTransform: 'none',
-                    color: 'inherit',
-                    '&:hover': {
-                      backgroundColor: 'rgba(255, 255, 255, 0.2)'
-                    }
-                  }}
-                  onClick={() => navigateToSensor(notification.facilityId, notification.sensorId)}
-                >
-                  View Sensor
-                </Button>
-              )}
+              <Button
+                variant="text"
+                color="inherit"
+                size="small"
+                sx={{
+                  alignSelf: "flex-end",
+                  mt: 1,
+                  textTransform: "none",
+                  color: "secondary",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  },
+                }}
+                onClick={() =>
+                  notification.facilityId && notification.sensorId
+                    ? navigateToSensor(
+                        notification.id,
+                        notification.facilityId,
+                        notification.sensorId
+                      )
+                    : null
+                }
+                disabled={!notification.facilityId || !notification.sensorId}
+              >
+                Diagnose Sensor
+              </Button>
             </Box>
           </MuiAlert>
-        </Snackbar>
+        </Box>
       ))}
     </Stack>
   );
