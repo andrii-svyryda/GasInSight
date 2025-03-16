@@ -12,11 +12,7 @@ import { Alert as AlertType } from "../../../types/alert";
 import moment from "moment";
 import { getSensorDisplayName } from "../../../constants/sensorType";
 import { SensorType } from "../../../types/sensor";
-import { useGetColorsQuery } from "../../../store/api/dashboardApi";
-import {
-  facilityApi,
-  useGetFacilityByIdQuery,
-} from "../../../store/api/facilityApi";
+import { useGetFacilityByIdQuery } from "../../../store/api/facilityApi";
 
 const AlertItem = ({
   alert,
