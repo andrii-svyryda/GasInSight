@@ -1,321 +1,321 @@
 [
   {
-    "facility_id": "9014ac5b-0a7a-4bc6-a638-ee2f3da9c49e",
-    "facility_name": "Zurich ImportTerminal",
-    "address": "Bahnhofstrasse 1, Zurich, Switzerland",
-    "longitude": 8.5417,
-    "latitude": 47.3769,
-    "facility_type": "UndergroundStorage",
+    "facility_id": "7fc27bfd-0aa7-45c7-8457-3af7a9856dca",
+    "facility_name": "Austin UndergroundStorage",
+    "address": "301 W 2nd St, Austin, USA",
+    "longitude": -97.7431,
+    "latitude": 30.2672,
+    "facility_type": "Pipelines",
     "sensors": [
       {
-        "sensor_id": "255bb990-5752-496b-be58-80b707e78743",
-        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
-        "longitude": 8.546859827489973,
-        "latitude": 47.3708738678579,
-        "sensor_type": "Volume",
-        "data": "496.15",
-        "last_signal_timestamp": null,
-        "signal_interval": 40
-      },
-      {
-        "sensor_id": "f0b23b92-fbd2-44d8-80d6-f8f3fe9f1419",
-        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
-        "longitude": 8.545488659812284,
-        "latitude": 47.37144375696128,
-        "sensor_type": "LiquidComposition",
-        "data": "95.84",
-        "last_signal_timestamp": null,
-        "signal_interval": 300
-      },
-      {
-        "sensor_id": "d581890a-376a-44ac-aa01-ae30061ba4b1",
-        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
-        "longitude": 8.535120739248224,
-        "latitude": 47.37899332941547,
-        "sensor_type": "Humidity",
-        "data": "56.27",
-        "last_signal_timestamp": null,
-        "signal_interval": 300
-      },
-      {
-        "sensor_id": "2e911875-d2f9-4c2d-b8cf-895948009634",
-        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
-        "longitude": 8.547871669086595,
-        "latitude": 47.37720681901099,
-        "sensor_type": "CarbonDioxideContent",
-        "data": "873.33",
+        "sensor_id": "49d195cc-86f0-4cbf-ad95-eda99c021d61",
+        "address": "301 W 2nd St, Austin, USA",
+        "longitude": -97.73943187175276,
+        "latitude": 30.271056589931213,
+        "sensor_type": "ParticulateMatter",
+        "data": "145.11",
         "last_signal_timestamp": null,
         "signal_interval": 60
-      }
-    ]
-  },
-  {
-    "facility_id": "a343db1e-3ce3-461c-92d9-d78950acff4f",
-    "facility_name": "Hamburg DrillingRig",
-    "address": "Rathausmarkt 1, Hamburg, Germany",
-    "longitude": 9.9937,
-    "latitude": 53.5511,
-    "facility_type": "TankFarm",
-    "sensors": [
-      {
-        "sensor_id": "a6f2d611-89ef-438f-9015-1e96a38e84b8",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.994858616641107,
-        "latitude": 53.55671797686722,
-        "sensor_type": "Temperature",
-        "data": "24.07",
-        "last_signal_timestamp": null,
-        "signal_interval": 15
       },
       {
-        "sensor_id": "0c74fff3-8d25-4d20-8f9e-9f23bdc3f926",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.987005388119853,
-        "latitude": 53.54749458582951,
+        "sensor_id": "3703b9f7-5f3a-4a54-bdc4-f34297aed99f",
+        "address": "301 W 2nd St, Austin, USA",
+        "longitude": -97.7437308341926,
+        "latitude": 30.26358912088238,
         "sensor_type": "LevelIndicator",
-        "data": "4.32",
-        "last_signal_timestamp": null,
-        "signal_interval": 300
-      },
-      {
-        "sensor_id": "b305692f-575e-4e12-b832-7cab233b0868",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.994673897540808,
-        "latitude": 53.5512023946072,
-        "sensor_type": "CarbonDioxideContent",
-        "data": "980.13",
-        "last_signal_timestamp": null,
-        "signal_interval": 60
-      },
-      {
-        "sensor_id": "c4ae3de3-e766-44b1-b5fc-099fa6995c7b",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.996280169986479,
-        "latitude": 53.54793746272407,
-        "sensor_type": "ParticulateMatter",
-        "data": "136.27",
-        "last_signal_timestamp": null,
-        "signal_interval": 700
-      },
-      {
-        "sensor_id": "cee72873-3725-49b3-8a0e-f1f0f8562b29",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 10.002407757590376,
-        "latitude": 53.55666708248476,
-        "sensor_type": "CarbonDioxideContent",
-        "data": "710.37",
-        "last_signal_timestamp": null,
-        "signal_interval": 60
-      },
-      {
-        "sensor_id": "ac38e425-9a3a-4bd1-92c6-7a4c77125e0c",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.98913192853263,
-        "latitude": 53.54539942000898,
-        "sensor_type": "GasDetection",
-        "data": "14.73",
-        "last_signal_timestamp": null,
-        "signal_interval": 15
-      },
-      {
-        "sensor_id": "3b9fbf39-85f7-41cd-b653-0c369da43913",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.987563364182892,
-        "latitude": 53.56042862099521,
-        "sensor_type": "Temperature",
-        "data": "22.39",
-        "last_signal_timestamp": null,
-        "signal_interval": 15
-      },
-      {
-        "sensor_id": "3b41605f-22bb-4b5f-99f0-4a5f57589309",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 10.001073162057448,
-        "latitude": 53.55467822346866,
-        "sensor_type": "ParticulateMatter",
-        "data": "107.59",
-        "last_signal_timestamp": null,
-        "signal_interval": 700
-      },
-      {
-        "sensor_id": "5cc3b9a8-3601-4f79-b4c2-112eb2b7c461",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.989017360091012,
-        "latitude": 53.54716097426306,
-        "sensor_type": "Humidity",
-        "data": "45.5",
-        "last_signal_timestamp": null,
-        "signal_interval": 300
-      },
-      {
-        "sensor_id": "1b2ee3ef-64a7-4f17-9459-257ca7ffdf0c",
-        "address": "Rathausmarkt 1, Hamburg, Germany",
-        "longitude": 9.994647240495837,
-        "latitude": 53.55179151014563,
-        "sensor_type": "Corrosion",
-        "data": "3.62",
-        "last_signal_timestamp": null,
-        "signal_interval": 40
-      }
-    ]
-  },
-  {
-    "facility_id": "6125f251-845c-4813-bf00-a6b3d1121a00",
-    "facility_name": "Chicago ImportTerminal",
-    "address": "121 N LaSalle St, Chicago, USA",
-    "longitude": -87.6298,
-    "latitude": 41.8781,
-    "facility_type": "TankFarm",
-    "sensors": [
-      {
-        "sensor_id": "9b74432a-00d7-4d38-a4f6-8945b44636e8",
-        "address": "121 N LaSalle St, Chicago, USA",
-        "longitude": -87.63224754401145,
-        "latitude": 41.87552636365557,
-        "sensor_type": "Humidity",
-        "data": "46.27",
-        "last_signal_timestamp": null,
-        "signal_interval": 300
-      },
-      {
-        "sensor_id": "ff2584f9-eb55-4c44-b69c-e8174fd73f30",
-        "address": "121 N LaSalle St, Chicago, USA",
-        "longitude": -87.63765111921781,
-        "latitude": 41.8859460386031,
-        "sensor_type": "Pressure",
-        "data": "1013.19",
-        "last_signal_timestamp": null,
-        "signal_interval": 20
-      },
-      {
-        "sensor_id": "55b0eb5e-1c5f-41bd-8f3b-476a1e3e3fa9",
-        "address": "121 N LaSalle St, Chicago, USA",
-        "longitude": -87.63684875046437,
-        "latitude": 41.872262705405646,
-        "sensor_type": "Volume",
-        "data": "587.95",
-        "last_signal_timestamp": null,
-        "signal_interval": 40
-      }
-    ]
-  },
-  {
-    "facility_id": "b0fc2f36-8d64-4c62-8ae0-6937095442ae",
-    "facility_name": "Addis Ababa Pipelines",
-    "address": "Churchill Avenue, Addis Ababa, Ethiopia",
-    "longitude": 38.7423,
-    "latitude": 9.032,
-    "facility_type": "UndergroundStorage",
-    "sensors": [
-      {
-        "sensor_id": "1941b228-84ca-4844-892b-8b6e0c9cd9a7",
-        "address": "Churchill Avenue, Addis Ababa, Ethiopia",
-        "longitude": 38.747369556193426,
-        "latitude": 9.039404662970437,
-        "sensor_type": "Volume",
-        "data": "569.79",
-        "last_signal_timestamp": null,
-        "signal_interval": 40
-      },
-      {
-        "sensor_id": "e0567b93-6abf-4f3a-9e03-b7588c07565f",
-        "address": "Churchill Avenue, Addis Ababa, Ethiopia",
-        "longitude": 38.74725981417934,
-        "latitude": 9.029127282800927,
-        "sensor_type": "GasDetection",
-        "data": "10.14",
-        "last_signal_timestamp": null,
-        "signal_interval": 15
-      }
-    ]
-  },
-  {
-    "facility_id": "6ea6b8e1-a70f-420e-9790-2785555ab4d8",
-    "facility_name": "Maputo DrillingRig",
-    "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-    "longitude": 32.5732,
-    "latitude": -25.9692,
-    "facility_type": "ProcessingPlant",
-    "sensors": [
-      {
-        "sensor_id": "34074f77-6011-4c4e-b32d-7fdaf4ee0955",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.58156412118495,
-        "latitude": -25.963979251098344,
-        "sensor_type": "Vibration",
-        "data": "4.01",
+        "data": "4.92",
         "last_signal_timestamp": null,
         "signal_interval": 45
       },
       {
-        "sensor_id": "32a0a8f1-0ac9-4e0f-9317-3772fd2a0e1b",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.571092958083895,
-        "latitude": -25.97428088235129,
-        "sensor_type": "Corrosion",
-        "data": "3.72",
+        "sensor_id": "2fd36d74-059f-4d28-a2d0-c852083ce009",
+        "address": "301 W 2nd St, Austin, USA",
+        "longitude": -97.74060307739776,
+        "latitude": 30.264411047812587,
+        "sensor_type": "GasDetection",
+        "data": "16.69",
         "last_signal_timestamp": null,
-        "signal_interval": 40
+        "signal_interval": 45
+      }
+    ]
+  },
+  {
+    "facility_id": "9a34200c-798c-4bff-8c0b-015b98ff38d4",
+    "facility_name": "Cairo TankFarm",
+    "address": "1 Al Ahram Street, Cairo, Egypt",
+    "longitude": 31.2357,
+    "latitude": 30.0444,
+    "facility_type": "DrillingRig",
+    "sensors": [
+      {
+        "sensor_id": "34094d06-704e-47b7-adba-70991e53e82e",
+        "address": "1 Al Ahram Street, Cairo, Egypt",
+        "longitude": 31.229013225074436,
+        "latitude": 30.040207389497606,
+        "sensor_type": "LevelIndicator",
+        "data": "4.36",
+        "last_signal_timestamp": null,
+        "signal_interval": 45
       },
       {
-        "sensor_id": "a7ad48b7-9126-4f43-8871-5ab77029401f",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.578266702854556,
-        "latitude": -25.963922129211102,
+        "sensor_id": "eea1172a-83df-4ee3-a145-ed88d55046cf",
+        "address": "1 Al Ahram Street, Cairo, Egypt",
+        "longitude": 31.226882353924367,
+        "latitude": 30.047287229446212,
         "sensor_type": "GasComposition",
-        "data": "95.06",
+        "data": "95.23",
         "last_signal_timestamp": null,
-        "signal_interval": 120
+        "signal_interval": 30
       },
       {
-        "sensor_id": "ae5358b4-2123-40c4-97f2-ad42ca7f288f",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.56387141844508,
-        "latitude": -25.968517674870753,
+        "sensor_id": "39a949e2-f365-4c0a-b004-1479da6cfe4e",
+        "address": "1 Al Ahram Street, Cairo, Egypt",
+        "longitude": 31.24458540464596,
+        "latitude": 30.046937007506525,
         "sensor_type": "WaterContent",
-        "data": "1.74",
+        "data": "0.84",
         "last_signal_timestamp": null,
-        "signal_interval": 25
+        "signal_interval": 60
       },
       {
-        "sensor_id": "80bef92b-62ed-465c-8163-a87037595b0a",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.576043189842906,
-        "latitude": -25.959741550959688,
-        "sensor_type": "OxygenContent",
-        "data": "20.36",
+        "sensor_id": "4c801230-9ee2-4e04-80eb-410e53349aff",
+        "address": "1 Al Ahram Street, Cairo, Egypt",
+        "longitude": 31.241149752421524,
+        "latitude": 30.041298469982966,
+        "sensor_type": "WaterContent",
+        "data": "0.84",
         "last_signal_timestamp": null,
-        "signal_interval": 35
+        "signal_interval": 60
       },
       {
-        "sensor_id": "369f2a5d-2cb0-4181-9ce0-f18795335e59",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.58110840543555,
-        "latitude": -25.976139139457597,
+        "sensor_id": "20eb29fd-a810-4b60-a8be-40cfed613e5e",
+        "address": "1 Al Ahram Street, Cairo, Egypt",
+        "longitude": 31.24150322635983,
+        "latitude": 30.039679843425468,
+        "sensor_type": "Volume",
+        "data": "582.76",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      }
+    ]
+  },
+  {
+    "facility_id": "69826536-5cf4-4164-9151-de60de70a9df",
+    "facility_name": "Harare DrillingRig",
+    "address": "Samora Machel Avenue, Harare, Zimbabwe",
+    "longitude": 31.0522,
+    "latitude": -17.8292,
+    "facility_type": "ExportTerminal",
+    "sensors": [
+      {
+        "sensor_id": "9741659e-d021-4288-85ec-6c3e93e55f72",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.060515311176633,
+        "latitude": -17.838139760007852,
+        "sensor_type": "Vibration",
+        "data": "3.17",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      },
+      {
+        "sensor_id": "57a99951-1a41-4005-84f8-c092e68b53f6",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.044789993918037,
+        "latitude": -17.837681231515848,
+        "sensor_type": "Flow",
+        "data": "238.42",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "d66fee37-a77b-4364-8c37-203ea4fe3332",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.054192984220848,
+        "latitude": -17.822118733732417,
+        "sensor_type": "Flow",
+        "data": "204.32",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "7fff446b-bf25-4c97-9c82-6ee10d8485a9",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.053637956715452,
+        "latitude": -17.835987670300277,
+        "sensor_type": "LiquidComposition",
+        "data": "95.57",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      },
+      {
+        "sensor_id": "69160d8d-4e19-432d-b3c7-4ac64d8abec3",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.05803577282724,
+        "latitude": -17.82289011679967,
+        "sensor_type": "HydrogenSulfideContent",
+        "data": "1.9",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
+      },
+      {
+        "sensor_id": "5913736f-c8e5-49a3-abc7-6a775e4c39a0",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.052898462704363,
+        "latitude": -17.8326568245596,
+        "sensor_type": "LiquidComposition",
+        "data": "95.94",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      },
+      {
+        "sensor_id": "9f07c195-b79f-489c-b521-77f5db3ff496",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.060871766240695,
+        "latitude": -17.838062708119033,
         "sensor_type": "Pressure",
-        "data": "1013.04",
+        "data": "1013.55",
         "last_signal_timestamp": null,
-        "signal_interval": 20
+        "signal_interval": 15
       },
       {
-        "sensor_id": "bb57aa91-9e15-4461-b034-62d1ec502ad8",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.56385812199119,
-        "latitude": -25.96247103593926,
+        "sensor_id": "b29766dc-88fd-4231-b1e1-a57579aa4324",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.05453033960602,
+        "latitude": -17.824640961124175,
+        "sensor_type": "ParticulateMatter",
+        "data": "54.56",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
+      },
+      {
+        "sensor_id": "2741e5ac-4e1d-4bfc-a6e1-55e63f0a7dbd",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.05508536114144,
+        "latitude": -17.821271390179223,
+        "sensor_type": "Flow",
+        "data": "288.47",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "58eb77f4-ac20-4914-8791-0f48a60f7823",
+        "address": "Samora Machel Avenue, Harare, Zimbabwe",
+        "longitude": 31.054189781080222,
+        "latitude": -17.832513277479936,
+        "sensor_type": "Temperature",
+        "data": "22.49",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      }
+    ]
+  },
+  {
+    "facility_id": "be9aaed4-f1b5-4fdd-8105-dfaa9e8205fc",
+    "facility_name": "Helsinki ExportTerminal",
+    "address": "Mannerheimintie 1, Helsinki, Finland",
+    "longitude": 24.9384,
+    "latitude": 60.1699,
+    "facility_type": "DrillingRig",
+    "sensors": [
+      {
+        "sensor_id": "9e53e627-4643-4321-9fd1-2665a454f9e8",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.931680394041685,
+        "latitude": 60.16054308378415,
         "sensor_type": "PowerConsumption",
-        "data": "460.45",
+        "data": "519.65",
         "last_signal_timestamp": null,
-        "signal_interval": 100
+        "signal_interval": 45
       },
       {
-        "sensor_id": "549bd483-757e-41e8-9ed7-5b21496da4f0",
-        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
-        "longitude": 32.56361697877661,
-        "latitude": -25.963662487529813,
-        "sensor_type": "GasComposition",
-        "data": "97.61",
+        "sensor_id": "cded3b95-4029-43bb-8f51-a7ddf8f3e903",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.93191311824419,
+        "latitude": 60.172765729175055,
+        "sensor_type": "Flow",
+        "data": "268.6",
         "last_signal_timestamp": null,
-        "signal_interval": 120
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "4e197c7c-74c4-4694-97db-d84f6308cf52",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.934082433603475,
+        "latitude": 60.16381721617356,
+        "sensor_type": "Humidity",
+        "data": "50.99",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "dd17e4c2-4416-49c9-80f7-09409392c78b",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.938127505583232,
+        "latitude": 60.17796026824416,
+        "sensor_type": "Volume",
+        "data": "438.78",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "67c18ab9-d6e4-49fe-9947-1c6adf0b8967",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.933289283945054,
+        "latitude": 60.17516952908145,
+        "sensor_type": "Noise",
+        "data": "60.8",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      },
+      {
+        "sensor_id": "8b661530-0f74-4433-bf30-276e28669d57",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.938222001521474,
+        "latitude": 60.164054312723316,
+        "sensor_type": "LiquidComposition",
+        "data": "97.7",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      },
+      {
+        "sensor_id": "4b8e3519-5901-4bcc-8e1d-a309bbd1267b",
+        "address": "Mannerheimintie 1, Helsinki, Finland",
+        "longitude": 24.934168459581212,
+        "latitude": 60.17710175438617,
+        "sensor_type": "GasComposition",
+        "data": "96.16",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
+      }
+    ]
+  },
+  {
+    "facility_id": "06c4834b-5870-47d2-be59-4282cc87d577",
+    "facility_name": "Lyon ImportTerminal",
+    "address": "Place Bellecour 1, Lyon, France",
+    "longitude": 4.8357,
+    "latitude": 45.764,
+    "facility_type": "UndergroundStorage",
+    "sensors": [
+      {
+        "sensor_id": "345ed102-51e0-47a7-a71b-7807f59026ef",
+        "address": "Place Bellecour 1, Lyon, France",
+        "longitude": 4.828549339956151,
+        "latitude": 45.773138730646494,
+        "sensor_type": "OxygenContent",
+        "data": "20.13",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
+      },
+      {
+        "sensor_id": "cc03cbe5-14e8-4f67-949f-56ca96065a8a",
+        "address": "Place Bellecour 1, Lyon, France",
+        "longitude": 4.826569321786687,
+        "latitude": 45.76306622824709,
+        "sensor_type": "LiquidComposition",
+        "data": "95.7",
+        "last_signal_timestamp": null,
+        "signal_interval": 30
       }
     ]
   }

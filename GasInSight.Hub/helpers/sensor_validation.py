@@ -133,38 +133,38 @@ def get_sensor_signal_interval(sensor_type: SensorTypes) -> int:
         case SensorTypes.Temperature:
             return 15
         case SensorTypes.Humidity:
-            return 300
-        case SensorTypes.Pressure:
-            return 20
-        case SensorTypes.Flow:
-            return 300
-        case SensorTypes.Volume:
-            return 40
-        case SensorTypes.GasComposition:
-            return 120
-        case SensorTypes.LiquidComposition:
-            return 300
-        case SensorTypes.Vibration:
-            return 45
-        case SensorTypes.Noise:
-            return 120
-        case SensorTypes.Corrosion:
-            return 40
-        case SensorTypes.GasDetection:
             return 15
+        case SensorTypes.Pressure:
+            return 15
+        case SensorTypes.Flow:
+            return 15
+        case SensorTypes.Volume:
+            return 15
+        case SensorTypes.GasComposition:
+            return 30
+        case SensorTypes.LiquidComposition:
+            return 30
+        case SensorTypes.Vibration:
+            return 30
+        case SensorTypes.Noise:
+            return 30
+        case SensorTypes.Corrosion:
+            return 30
+        case SensorTypes.GasDetection:
+            return 45
         case SensorTypes.LevelIndicator:
-            return 300
+            return 45
         case SensorTypes.PowerConsumption:
-            return 100
+            return 45
         case SensorTypes.WaterContent:
-            return 25
+            return 60
         case SensorTypes.OxygenContent:
-            return 35
+            return 60
         case SensorTypes.HydrogenSulfideContent:
-            return 300
+            return 60
         case SensorTypes.CarbonDioxideContent:
             return 60
         case SensorTypes.ParticulateMatter:
-            return 700
+            return 60
         case _:
-            return 1000
+            return 60
