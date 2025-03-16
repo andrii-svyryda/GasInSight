@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography, AppBar, Toolbar } from '@mui/material';
 import { Link } from 'react-router-dom';
 import gasLogo from '../../assets/icons/gas-logo.svg';
-import videoBackground from '../../assets/video/video-back.mp4';
+import videoBackground from '../../assets/video/video-back2.mp4';
 
 export const LandingPage = () => {
   return (
@@ -102,7 +102,7 @@ export const LandingPage = () => {
             variant="h2"
             sx={{ fontWeight: 'bold', my: 3, fontSize: '3.5rem' }}
           >
-            Advanced Gas Monitoring Solutions
+            Advanced Monitoring Solutions
           </Typography>
           <Typography variant="h6" sx={{ mb: 5, fontSize: '1.4rem' }}>
             Real-time insights for your critical infrastructure — monitor your facilities with precision and confidence
