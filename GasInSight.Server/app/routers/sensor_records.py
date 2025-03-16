@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from datetime import datetime
 from app.database import get_db
@@ -18,8 +18,9 @@ router = APIRouter(
 async def read_sensor_records(
     sensor_id: str,
     start_date: datetime,
-    end_date: datetime | None = Query(default=None),
-    freq: str = Query("15T"),
+    end_date: datetime | None = None,
+    freq: str = "15T",
+    aggregation: str = "mean",
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_user)
 ):
@@ -38,5 +39,6 @@ async def read_sensor_records(
         start_date=start_date, 
         end_date=end_date, 
         request_freq=freq,
-        expected_freq=db_sensor.expected_freq
+        expected_freq=db_sensor.expected_freq,
+        aggregation=aggregation
     )

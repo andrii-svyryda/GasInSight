@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from app.models.facility import FacilityType
-from app.schemas.location import Location, LocationCreate
+from app.schemas.location import Location
 
 
 class FacilityBase(BaseModel):
@@ -12,7 +12,7 @@ class FacilityBase(BaseModel):
 
 class FacilityCreate(FacilityBase):
     id: str
-    location: LocationCreate
+    location_id: int
 
 
 class FacilityUpdate(BaseModel):

@@ -4,6 +4,71 @@ from app.schemas.dashboard import DashboardMetrics, DashboardChartData, StatusMe
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.cruds.dashboard import dashboard_crud
 import re
+    
+    
+sensor_status_colors = {
+    SensorStatus.Active.value: "#4caf50",
+    SensorStatus.Inactive.value: "#f44336",
+    SensorStatus.Maintenance.value: "#ff9800",
+    SensorStatus.Fault.value: "#d32f2f"
+}
+
+
+sensor_type_colors = {
+    SensorType.Temperature.value: "#ff5722",
+    SensorType.Humidity.value: "#2196f3",
+    SensorType.Pressure.value: "#9c27b0",
+    SensorType.Flow.value: "#4caf50",
+    SensorType.Volume.value: "#00bcd4",
+    SensorType.GasComposition.value: "#ff9800",
+    SensorType.LiquidComposition.value: "#795548",
+    SensorType.Vibration.value: "#607d8b",
+    SensorType.Noise.value: "#9e9e9e",
+    SensorType.Corrosion.value: "#8bc34a",
+    SensorType.GasDetection.value: "#ffc107",
+    SensorType.FlameDetection.value: "#f44336",
+    SensorType.LevelIndicator.value: "#3f51b5",
+    SensorType.ValveStatus.value: "#009688",
+    SensorType.PumpStatus.value: "#673ab7",
+    SensorType.CompressorStatus.value: "#e91e63",
+    SensorType.PowerConsumption.value: "#cddc39",
+    SensorType.WaterContent.value: "#03a9f4",
+    SensorType.OxygenContent.value: "#ffeb3b",
+    SensorType.HydrogenSulfideContent.value: "#ff5722",
+    SensorType.CarbonDioxideContent.value: "#9c27b0",
+    SensorType.ParticulateMatter.value: "#4caf50",
+    SensorType.LeakDetection.value: "#f44336"
+}
+    
+
+status_colors = {
+    "Active": "#4caf50",
+    "Maintenance": "#ff9800",
+    "Offline": "#f44336"
+}
+
+
+type_colors = {
+    FacilityType.DrillingRig.value: "#1976d2",
+    FacilityType.Pipelines.value: "#9c27b0",
+    FacilityType.TankFarm.value: "#2196f3",
+    FacilityType.UndergroundStorage.value: "#00bcd4",
+    FacilityType.ProcessingPlant.value: "#009688",
+    FacilityType.ImportTerminal.value: "#8bc34a",
+    FacilityType.ExportTerminal.value: "#cddc39"
+}
+
+
+def get_sensor_type_colors():
+    return sensor_type_colors
+
+
+def get_sensor_status_colors():
+    return sensor_status_colors
+
+
+def get_facility_type_colors():
+    return type_colors
 
 
 async def get_facility_dashboard_data(db: AsyncSession, facility_id: str | None = None, user_id: int | None = None) -> DashboardData:
@@ -59,25 +124,9 @@ async def calculate_dashboard_chart_data(facilities: list[Facility], sensors: li
         facility_type = facility.type.value
         type_counts[facility_type] = type_counts.get(facility_type, 0) + 1
     
-    status_colors = {
-        "Active": "#4caf50",
-        "Maintenance": "#ff9800",
-        "Offline": "#f44336"
-    }
-    
-    type_colors = {
-        FacilityType.DrillingRig.value: "#1976d2",
-        FacilityType.Pipelines.value: "#9c27b0",
-        FacilityType.TankFarm.value: "#2196f3",
-        FacilityType.UndergroundStorage.value: "#00bcd4",
-        FacilityType.ProcessingPlant.value: "#009688",
-        FacilityType.ImportTerminal.value: "#8bc34a",
-        FacilityType.ExportTerminal.value: "#cddc39"
-    }
-    
     status_data = [
-        StatusMetric(name=status, value=count, color=status_colors.get(status, "#757575"))
-        for status, count in status_counts.items()
+        StatusMetric(name=status, value=count, color=status_colors.get(status, "#9e9e9e"))
+        for status, count in status_counts.items() if count > 0
     ]
     
     type_data = [
@@ -105,39 +154,6 @@ async def calculate_dashboard_chart_data(facilities: list[Facility], sensors: li
         
         sensor_type = sensor.type.value
         sensor_type_counts[sensor_type] = sensor_type_counts.get(sensor_type, 0) + 1
-    
-    sensor_status_colors = {
-        SensorStatus.Active.value: "#4caf50",
-        SensorStatus.Inactive.value: "#f44336",
-        SensorStatus.Maintenance.value: "#ff9800",
-        SensorStatus.Fault.value: "#d32f2f"
-    }
-    
-    sensor_type_colors = {
-        SensorType.Temperature.value: "#ff5722",
-        SensorType.Humidity.value: "#2196f3",
-        SensorType.Pressure.value: "#9c27b0",
-        SensorType.Flow.value: "#4caf50",
-        SensorType.Volume.value: "#00bcd4",
-        SensorType.GasComposition.value: "#ff9800",
-        SensorType.LiquidComposition.value: "#795548",
-        SensorType.Vibration.value: "#607d8b",
-        SensorType.Noise.value: "#9e9e9e",
-        SensorType.Corrosion.value: "#8bc34a",
-        SensorType.GasDetection.value: "#ffc107",
-        SensorType.FlameDetection.value: "#f44336",
-        SensorType.LevelIndicator.value: "#3f51b5",
-        SensorType.ValveStatus.value: "#009688",
-        SensorType.PumpStatus.value: "#673ab7",
-        SensorType.CompressorStatus.value: "#e91e63",
-        SensorType.PowerConsumption.value: "#cddc39",
-        SensorType.WaterContent.value: "#03a9f4",
-        SensorType.OxygenContent.value: "#ffeb3b",
-        SensorType.HydrogenSulfideContent.value: "#ff5722",
-        SensorType.CarbonDioxideContent.value: "#9c27b0",
-        SensorType.ParticulateMatter.value: "#4caf50",
-        SensorType.LeakDetection.value: "#f44336"
-    }
     
     sensor_status_data = [
         StatusMetric(name=status, value=count, color=sensor_status_colors.get(status, "#757575"))

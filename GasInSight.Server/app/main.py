@@ -15,8 +15,7 @@ async def lifespan(app: FastAPI):
     sensor_deactivation_listener = sensor_deactivation.create_sensor_deactivation_listener()
     sensor_data_listener = sensor_data.create_sensor_data_listener()
     
-    for listener in [facility_listener, sensor_activation_listener, 
-                    sensor_deactivation_listener, sensor_data_listener]:
+    for listener in [facility_listener, sensor_activation_listener, sensor_deactivation_listener, sensor_data_listener]:
         listener.start()
     
     app.state.listeners = {
@@ -29,10 +28,10 @@ async def lifespan(app: FastAPI):
     yield
     
     for listener in app.state.listeners.values():
-        listener.stop()
+        await listener.stop()
 
 
-app = FastAPI(title="GasInSight API")
+app = FastAPI(title="GasInSight API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,

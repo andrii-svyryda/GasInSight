@@ -8,9 +8,9 @@ from app.routers.dependencies import check_facility_permission
 from app.models.user_facility_permission import PermissionType
 from app.cruds.user import user_crud
 
-router = APIRouter(tags=["websockets"])
+router = APIRouter(prefix="/ws", tags=["websockets"])
 
-@router.websocket("/ws/{sensor_id}")
+@router.websocket("/sensor-data/{sensor_id}")
 async def websocket_endpoint(
     websocket: WebSocket,
     sensor_id: str,
@@ -41,6 +41,6 @@ async def websocket_endpoint(
     await manager.connect(websocket, sensor_id)
     try:
         while True:
-            await websocket.receive_text()
+            await websocket.receive()
     except WebSocketDisconnect:
         manager.disconnect(websocket, sensor_id)

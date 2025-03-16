@@ -1,78 +1,146 @@
-import { Box, Button, Card, CardActions, CardContent, Grid, Typography } from '@mui/material';
-import { Sensor, SensorStatus } from '../../../types/sensor';
-import { useNavigate } from 'react-router-dom';
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Grid,
+  Typography,
+  Pagination,
+} from "@mui/material";
+import { SensorStatus } from "../../../types/sensor";
+import { useNavigate } from "react-router-dom";
+import { sensorApi } from "../../../store/api/sensorApi";
+import { useState } from "react";
+import { SensorCardChart } from "./SensorCardChart";
+import { useGetColorsQuery } from "../../../store/api/dashboardApi";
 
 interface SensorListProps {
-  sensors: Sensor[];
   facilityId: string;
-  onSensorSelect: (sensor: Sensor) => void;
-  selectedSensorId?: string;
 }
 
-export const SensorList = ({ sensors, facilityId, onSensorSelect, selectedSensorId }: SensorListProps) => {
+export const SensorList = ({ facilityId }: SensorListProps) => {
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const sensorsPerPage = 6;
+  const { data: colors } = useGetColorsQuery();
+
+  const { data: sensors, isLoading: isSensorsLoading } =
+    sensorApi.useGetSensorsByFacilityIdQuery(facilityId, { skip: !facilityId });
 
   const handleViewDetails = (sensorId: string) => {
     navigate(`/dashboard/facilities/${facilityId}/sensors/${sensorId}`);
   };
 
+  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
   const getStatusColor = (status: SensorStatus) => {
     switch (status) {
       case SensorStatus.Active:
-        return '#4caf50';
+        return "#4caf50";
       case SensorStatus.Inactive:
-        return '#9e9e9e';
+        return "#9e9e9e";
       case SensorStatus.Maintenance:
-        return '#ff9800';
+        return "#ff9800";
       case SensorStatus.Fault:
-        return '#f44336';
+        return "#f44336";
       default:
-        return '#9e9e9e';
+        return "#9e9e9e";
     }
   };
 
+  const getTypeColor = (type: string) => {
+    if (colors?.sensorTypes) {
+      const colorKey = Object.keys(colors.sensorTypes).find(
+        key => key.toLowerCase() === type.toLowerCase()
+      );
+      if (colorKey) {
+        return colors.sensorTypes[colorKey];
+      }
+    }
+
+    switch (type.toLowerCase()) {
+      case "temperature":
+        return "#f44336";
+      case "pressure":
+        return "#2196f3";
+      case "flow":
+        return "#4caf50";
+      case "level":
+        return "#ff9800";
+      case "gas":
+        return "#9c27b0";
+      default:
+        return "#8884d8";
+    }
+  };
+
+  if (!sensors || isSensorsLoading) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  const pageCount = Math.ceil(sensors.length / sensorsPerPage);
+  const startIndex = (page - 1) * sensorsPerPage;
+  const displayedSensors = sensors.slice(
+    startIndex,
+    startIndex + sensorsPerPage
+  );
+
   return (
-    <Box sx={{ height: 'calc(100vh - 120px)', overflow: 'auto', pr: 2 }}>
+    <Box sx={{ overflow: "auto", pr: 2 }}>
       <Grid container spacing={2}>
-        {sensors.map((sensor) => (
-          <Grid item xs={12} key={sensor.id}>
-            <Card 
-              sx={{ 
-                cursor: 'pointer',
-                border: selectedSensorId === sensor.id ? '2px solid #1976d2' : 'none',
+        {displayedSensors.map((sensor) => (
+          <Grid item xs={12} sm={6} md={4} key={sensor.id}>
+            <Card
+              sx={{
+                cursor: "pointer",
+                border: "none",
                 borderLeft: `6px solid ${getStatusColor(sensor.status)}`,
+                height: "100%",
               }}
-              onClick={() => onSensorSelect(sensor)}
+              onClick={() => handleViewDetails(sensor.id)}
             >
               <CardContent>
                 <Typography variant="h6" component="div">
                   {sensor.name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{ color: getTypeColor(sensor.type), fontWeight: 'bold' }}>
                   Type: {sensor.type}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2" sx={{ color: getStatusColor(sensor.status), fontWeight: 'bold' }}>
                   Status: {sensor.status}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Installed: {new Date(sensor.installedAt).toLocaleDateString()}
                 </Typography>
+                <SensorCardChart sensor={sensor} />
               </CardContent>
-              <CardActions>
-                <Button 
-                  size="small" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleViewDetails(sensor.id);
-                  }}
-                >
-                  View Details
-                </Button>
-              </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
+      {pageCount > 1 && (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3, mb: 2 }}>
+          <Pagination
+            count={pageCount}
+            page={page}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Box>
+      )}
     </Box>
   );
-}
+};

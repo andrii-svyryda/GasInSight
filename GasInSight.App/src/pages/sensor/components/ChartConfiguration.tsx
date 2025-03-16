@@ -11,10 +11,12 @@ import { useMemo } from "react";
 interface DateRangePickerProps {
   startDate: string;
   endDate: string | null;
-  frequency: string;
+  frequency: string | undefined;
+  aggregation: "min" | "max" | "mean";
   onStartDateChange: (date: string) => void;
   onEndDateChange: (date: string | null) => void;
   onFrequencyChange: (freq: string) => void;
+  onAggregationChange: (aggregation: "min" | "max" | "mean") => void;
   expectedFreq?: string;
 }
 
@@ -57,13 +59,30 @@ const FREQUENCIES = [
   },
 ];
 
-export const DateRangePicker = ({
+const AGGREGATION_TYPES = [
+  {
+    value: "mean",
+    label: "Average",
+  },
+  {
+    value: "min",
+    label: "Minimum",
+  },
+  {
+    value: "max",
+    label: "Maximum",
+  },
+];
+
+export const ChartConfiguration = ({
   startDate,
   endDate,
   frequency,
+  aggregation,
   onStartDateChange,
   onEndDateChange,
   onFrequencyChange,
+  onAggregationChange,
   expectedFreq,
 }: DateRangePickerProps) => {
   const availableFrequencies = useMemo(() => {
@@ -85,7 +104,7 @@ export const DateRangePicker = ({
           shrink: true,
         }}
         fullWidth
-        sx={{ flexBasis: { xs: "100%", md: "30%" } }}
+        sx={{ flexBasis: { xs: "100%", md: "calc(30% - 16px)" } }}
       />
       <TextField
         label="End Date (leave empty for current)"
@@ -96,9 +115,12 @@ export const DateRangePicker = ({
           shrink: true,
         }}
         fullWidth
-        sx={{ flexBasis: { xs: "100%", md: "30%" } }}
+        sx={{ flexBasis: { xs: "100%", md: "calc(30% - 16px)" } }}
       />
-      <FormControl fullWidth sx={{ flexBasis: { xs: "100%", md: "30%" } }}>
+      <FormControl
+        fullWidth
+        sx={{ flexBasis: { xs: "100%", md: "calc(20% - 16px)" } }}
+      >
         <InputLabel id="frequency-select-label">Data Interval</InputLabel>
         <Select
           labelId="frequency-select-label"
@@ -110,6 +132,27 @@ export const DateRangePicker = ({
           {availableFrequencies.map((f) => (
             <MenuItem key={f.value} value={f.value}>
               {f.label}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl
+        fullWidth
+        sx={{ flexBasis: { xs: "100%", md: "calc(20% - 16px)" } }}
+      >
+        <InputLabel id="aggregation-select-label">Aggregation</InputLabel>
+        <Select
+          labelId="aggregation-select-label"
+          id="aggregation-select"
+          value={aggregation}
+          label="Aggregation"
+          onChange={(e) =>
+            onAggregationChange(e.target.value as "min" | "max" | "mean")
+          }
+        >
+          {AGGREGATION_TYPES.map((a) => (
+            <MenuItem key={a.value} value={a.value}>
+              {a.label}
             </MenuItem>
           ))}
         </Select>

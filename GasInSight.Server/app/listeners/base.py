@@ -1,4 +1,5 @@
 from collections.abc import Awaitable
+import logging
 from azure.servicebus.aio import ServiceBusClient
 from azure.servicebus.exceptions import ServiceBusError
 from app.config import settings
@@ -39,9 +40,10 @@ class ServiceBusListener:
                     try:
                         message_body: dict[str, Any] = json.loads(str(message))
                         await self.message_handler(message_body)
-                        await message.complete()
-                    except Exception:
-                        await message.abandon()
+                        await self.receiver.complete_message(message)
+                    except Exception as e:
+                        logging.exception(f"Error processing message: {e}")
+                        await self.receiver.abandon_message(message)
             except ServiceBusError:
                 await asyncio.sleep(5)
             except Exception:

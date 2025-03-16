@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { transformSnakeToCamel } from "../../utils/caseTransformers";
 import { RootState } from "../index";
 import { logout, setTokens } from "../slices/authSlice";
+import { TokenResponse } from "../../types/auth";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:8000",
@@ -27,9 +28,9 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
     const refreshResult = await baseQuery(
       {
-        url: "/auth/refresh",
+        url: "/auth/refresh-token",
         method: "POST",
-        body: { refresh_token: refreshToken },
+        params: { refresh_token: refreshToken },
       },
       api,
       extraOptions
@@ -38,7 +39,7 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
     if (refreshResult.data) {
       const data = transformSnakeToCamel(
         refreshResult.data as Record<string, unknown>
-      );
+      ) as unknown as TokenResponse;
       api.dispatch(setTokens(data));
       result = await baseQuery(args, api, extraOptions);
     } else {

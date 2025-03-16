@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from app.models.sensor import SensorType, SensorStatus
-from app.schemas.location import Location, LocationCreate
+from app.schemas.location import Location
 
 
 class SensorBase(BaseModel):
@@ -14,7 +14,7 @@ class SensorBase(BaseModel):
 class SensorCreate(SensorBase):
     id: str
     facility_id: str
-    location: LocationCreate
+    location_id: int
     installed_at: datetime
 
 

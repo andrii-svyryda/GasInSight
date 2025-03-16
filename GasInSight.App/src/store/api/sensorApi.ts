@@ -1,11 +1,13 @@
 import { baseApi } from "./baseApi";
 import { Sensor, SensorRecord } from "../../types/sensor";
+import moment from "moment";
 
 interface GetSensorRecordsParams {
   sensorId: string;
   startDate: string;
   endDate?: string | null;
   freq?: string;
+  aggregation?: "min" | "max" | "mean";
 }
 
 export const sensorApi = baseApi.injectEndpoints({
@@ -33,17 +35,19 @@ export const sensorApi = baseApi.injectEndpoints({
     }),
 
     getSensorRecords: builder.query<SensorRecord[], GetSensorRecordsParams>({
-      query: ({ sensorId, startDate, endDate, freq }) => ({
+      query: ({ sensorId, startDate, endDate, freq, aggregation }) => ({
         url: `/sensor-records/${sensorId}`,
         params: {
-          start_date: startDate,
+          start_date: moment(startDate).utc().format("YYYY-MM-DD HH:mm:ss"),
           ...(endDate && { end_date: endDate }),
           ...(freq && { freq }),
+          ...(aggregation && { aggregation }),
         },
       }),
       providesTags: (_, __, { sensorId }) => [
         { type: "SensorRecord", id: sensorId },
       ],
+      keepUnusedDataFor: 0,
     }),
   }),
 });

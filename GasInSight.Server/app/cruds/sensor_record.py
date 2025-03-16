@@ -33,7 +33,7 @@ class CrudSensorRecord(CrudBase[SensorRecord, SensorRecordCreate, SensorRecordBa
                 SensorRecord.sensor_id == sensor_id,
                 SensorRecord.tracked_at >= start_date
             )
-        )
+        ).order_by(SensorRecord.tracked_at.asc())
         result = await db.execute(stmt)
         return list(result.scalars().all())
 

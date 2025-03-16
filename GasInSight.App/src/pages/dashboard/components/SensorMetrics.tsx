@@ -22,18 +22,28 @@ export const SensorMetrics = ({ metrics }: SensorMetricsProps) => {
       value: metrics.inactiveSensors,
       color: "#f44336",
     },
-    {
-      title: "Avg Sensors/Facility",
-      value: metrics.avgSensorsPerFacility,
-      color: "#ff9800",
-    },
-  ];
+    ...(metrics.totalFacilities === 1
+      ? []
+      : [
+          {
+            title: "Avg Sensors/Facility",
+            value: metrics.avgSensorsPerFacility,
+            color: "#ff9800",
+          },
+        ]),
+  ].filter(Boolean);
 
   return (
     <Box sx={{ width: "100%", mb: 4 }}>
       <Grid container spacing={2}>
         {sensorMetricCards.map((metric, index) => (
-          <Grid item xs={6} sm={6} md={3} key={index}>
+          <Grid
+            item
+            xs={6}
+            sm={6}
+            md={metrics.totalFacilities === 1 ? 4 : 3}
+            key={index}
+          >
             <Card
               sx={{
                 height: "100%",

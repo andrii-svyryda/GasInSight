@@ -4,12 +4,21 @@ from app.database import get_db
 from app.schemas.dashboard import DashboardData
 from app.routers.dependencies import get_current_user
 from app.models.user import User as UserModel
-from app.services.metrics.dashboard import get_facility_dashboard_data
+from app.services.metrics.dashboard import get_facility_dashboard_data, get_sensor_type_colors, get_sensor_status_colors, get_facility_type_colors
 
 router = APIRouter(
     prefix="/dashboard",
     tags=["dashboard"]
 )
+
+
+@router.get("/colors", response_model=dict[str, dict[str, str]])
+async def get_colors():
+    return {
+        "sensorTypes": get_sensor_type_colors(),
+        "sensorStatus": get_sensor_status_colors(),
+        "facilityTypes": get_facility_type_colors()
+    }
 
 
 @router.get("", response_model=DashboardData)

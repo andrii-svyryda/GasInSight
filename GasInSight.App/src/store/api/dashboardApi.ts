@@ -36,6 +36,12 @@ export interface DashboardData {
   chartData: DashboardChartData;
 }
 
+type ColorsResponse = {
+  sensorTypes: Record<string, string>;
+  sensorStatus: Record<string, string>;
+  facilityTypes: Record<string, string>;
+};
+
 export const dashboardApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardData: builder.query<DashboardData, void>({
@@ -50,8 +56,14 @@ export const dashboardApi = baseApi.injectEndpoints({
         method: "GET",
       }),
     }),
+    getColors: builder.query<ColorsResponse, void>({
+      query: () => ({
+        url: "dashboard/colors",
+        method: "GET",
+      }),
+    }),
   }),
   overrideExisting: false,
 });
 
-export const { useGetDashboardDataQuery, useGetFacilityDashboardDataQuery } = dashboardApi;
+export const { useGetDashboardDataQuery, useGetFacilityDashboardDataQuery, useGetColorsQuery } = dashboardApi;

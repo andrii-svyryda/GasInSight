@@ -9,17 +9,14 @@ from typing import Any
 
 async def handle_sensor_deactivation(message_body: dict[str, Any]):
     async with SessionLocal() as db:
-        try:
-            sensor_message = SensorDeactivationMessage(**message_body)
-            
-            existing_sensor = await sensor_crud.get(db, sensor_message.sensor_id)
-            if not existing_sensor:
-                return
-            
-            sensor_update = SensorUpdate(status=SensorStatus.Inactive)
-            _ = await sensor_crud.update(db, existing_sensor, sensor_update)
-        except Exception:
-            pass
+        sensor_message = SensorDeactivationMessage(**message_body)
+        
+        existing_sensor = await sensor_crud.get(db, sensor_message.sensor_id)
+        if not existing_sensor:
+            return
+        
+        sensor_update = SensorUpdate(status=SensorStatus.Inactive)
+        _ = await sensor_crud.update(db, existing_sensor, sensor_update)
 
 
 def create_sensor_deactivation_listener():
