@@ -9,10 +9,10 @@ class BaseSender:
             logging_enable=False
         )
         self.queue_name = self._get_queue_name()
+        self.sender = self.service_bus_client.get_queue_sender(queue_name=self.queue_name)
 
     def _get_queue_name(self) -> str:
         return ""
 
     async def send(self, message) -> None:
-        sender = self.service_bus_client.get_queue_sender(queue_name=self.queue_name)
-        await sender.send_messages(message)
+        await self.sender.send_messages([message])

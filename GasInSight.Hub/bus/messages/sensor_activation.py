@@ -10,4 +10,5 @@ class SensorActivationMsg(BaseModel):
     longitude: float
     latitude: float
     sensor_type: SensorTypes
+    signal_interval: int
     tracked_at: datetime = Field(default_factory=datetime.utcnow)

@@ -28,7 +28,8 @@ async def send_sensor_activation(sensor_activation_sender: SensorActivationSende
         address=sensor.address,
         longitude=sensor.longitude,
         latitude=sensor.latitude,
-        sensor_type=sensor.sensor_type
+        sensor_type=sensor.sensor_type,
+        signal_interval=sensor.signal_interval
     )
     await sensor_activation_sender.send(msg)
 
@@ -39,6 +40,10 @@ async def send_sensor_data(sensor_data_sender: SensorDataSender, facility: Facil
         data=data
     )
     await sensor_data_sender.send(msg)
+
+async def send_sensor_data_batch(sensor_data_sender: SensorDataSender, messages: list[SensorDataMsg]) -> None:
+    if messages:
+        await sensor_data_sender.send_batch(messages)
 
 async def send_sensor_deactivation(sensor_deactivation_sender: SensorDeactivationSender, facility: Facility, sensor: Sensor) -> None:
     msg = SensorDeactivationMsg(
