@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { authApi } from "../../store/api/authApi";
 import { useAppDispatch } from "../../hooks/useAppDispatch";
 import { setTokens } from "../../store/slices/authSlice";
+import videoBackground from "../../assets/video/video-back2.mp4";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -42,16 +43,49 @@ export const LoginPage = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <Container maxWidth="xs">
+      {/* Video Background */}
+      <Box
+        component="video"
+        autoPlay
+        muted
+        loop
+        sx={{
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          zIndex: -2,
+        }}
+      >
+        <source src={videoBackground} type="video/mp4" />
+        Your browser does not support the video tag.
+      </Box>
+      
+      {/* Dark overlay */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: -1,
+        }}
+      />
+
+      <Container maxWidth="xs" sx={{ position: "relative", zIndex: 1 }}>
         <Paper
           elevation={12}
           sx={{
             p: { xs: 3, sm: 4 },
             borderRadius: 3,
             backdropFilter: "blur(12px)",
-            background: "rgba(255, 255, 255, 0.95)",
+            background: "rgba(255, 255, 255, 0.85)",
           }}
         >
           <Box sx={{ mb: 6, textAlign: "center" }}>
@@ -130,7 +164,7 @@ export const LoginPage = () => {
                 }}
                 disabled={!username || !password}
               >
-                {"Sign In"}
+                {"Login"}
               </Button>
             </Box>
           </Box>
