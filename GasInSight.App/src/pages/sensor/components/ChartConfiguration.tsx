@@ -108,6 +108,7 @@ export const ChartConfiguration = ({
   return (
     <Box sx={{ display: "flex", gap: 2, mb: 3, flexWrap: "wrap" }}>
       <TextField
+        size="small"
         label="Start Date"
         type="datetime-local"
         value={startDate}
@@ -119,6 +120,7 @@ export const ChartConfiguration = ({
         sx={{ flexBasis: { xs: "100%", md: "calc(30% - 16px)" } }}
       />
       <TextField
+        size="small"
         label="End Date (leave empty for current)"
         type="datetime-local"
         value={endDate || ""}
@@ -130,6 +132,7 @@ export const ChartConfiguration = ({
         sx={{ flexBasis: { xs: "100%", md: "calc(30% - 16px)" } }}
       />
       <FormControl
+        size="small"
         fullWidth
         sx={{ flexBasis: { xs: "100%", md: "calc(20% - 16px)" } }}
       >
@@ -149,6 +152,7 @@ export const ChartConfiguration = ({
         </Select>
       </FormControl>
       <FormControl
+        size="small"
         fullWidth
         sx={{ flexBasis: { xs: "100%", md: "calc(20% - 16px)" } }}
       >

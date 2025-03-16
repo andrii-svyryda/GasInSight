@@ -6,8 +6,12 @@ import { ChartConfiguration } from "./components/ChartConfiguration";
 import { SensorDetails } from "./components/SensorDetails";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import moment from "moment";
-import { getSensorValidLabel } from "../../constants/sensorType";
+import {
+  getSensorDisplayName,
+  getSensorValidLabel,
+} from "../../constants/sensorType";
 import SensorChart from "./components/SensorChart";
+import { useGetFacilityByIdQuery } from "../../store/api/facilityApi";
 
 export const SensorPage = () => {
   const { facilityId, sensorId } = useParams<{
@@ -24,6 +28,8 @@ export const SensorPage = () => {
   const [aggregation, setAggregation] = useState<"mean" | "min" | "max">(
     "mean"
   );
+
+  const { data: facility } = useGetFacilityByIdQuery(facilityId as string);
 
   const handleAggregationChange = (value: "mean" | "min" | "max") => {
     setAggregation(value);
@@ -94,14 +100,23 @@ export const SensorPage = () => {
       <Button startIcon={<ArrowBackIcon />} onClick={handleBack} sx={{ mb: 2 }}>
         Back to facility
       </Button>
-      <Typography variant="h4" sx={{ mb: 3 }}>
-        {sensor.name}
+      <Typography variant="h6" sx={{ mb: 3 }}>
+        {getSensorDisplayName(sensor.type)} sensor in {facility?.name} (
+        {sensor.location?.latitude?.toFixed(4)},
+        {sensor.location?.longitude.toFixed(4)})
       </Typography>
 
       <SensorDetails sensor={sensor} />
 
-      <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2 }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 2,
+        }}
+      >
+        <Typography variant="h6" sx={{ mb: 2 }}>
           Sensor Data
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
@@ -124,23 +139,24 @@ export const SensorPage = () => {
       <Box
         sx={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "flex-end",
+          gap: 3,
           alignItems: "center",
           height: "20px",
         }}
       >
         {recordsData?.analytics.min && (
-          <Typography variant="h6">
+          <Typography variant="body1">
             Min: {recordsData.analytics.min.toFixed(2)}
           </Typography>
         )}
         {recordsData?.analytics.max && (
-          <Typography variant="h6">
+          <Typography variant="body1">
             Max: {recordsData.analytics.max.toFixed(2)}
           </Typography>
         )}
         {recordsData?.analytics.mean && (
-          <Typography variant="h6">
+          <Typography variant="body1">
             Mean: {recordsData.analytics.mean.toFixed(2)}
           </Typography>
         )}

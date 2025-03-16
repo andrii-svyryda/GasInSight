@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useSelector } from "react-redux";
-import { Snackbar, Alert as MuiAlert, Stack } from "@mui/material";
+import { Snackbar, Alert as MuiAlert, Stack, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { RootState } from "../store";
 import { Alert as AlertType } from "../types/alert";
 
@@ -10,12 +11,15 @@ interface Notification {
   message: string;
   severity: "error" | "warning" | "info" | "success";
   timestamp: number;
+  facilityId?: string;
+  sensorId?: string;
 }
 
 export const AlertsListener: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const webSocketRef = useRef<WebSocket | null>(null);
   const token = useSelector((state: RootState) => state.auth.accessToken);
+  const navigate = useNavigate();
 
   const initializeStartedRef = useRef(false);
 
@@ -54,6 +58,8 @@ export const AlertsListener: React.FC = () => {
               message: alert.message,
               severity: "error",
               timestamp: Date.now(),
+              facilityId: alert.facilityId,
+              sensorId: alert.sensorId,
             };
 
             setNotifications((prev) => [...prev, newNotification]);
@@ -110,6 +116,19 @@ export const AlertsListener: React.FC = () => {
     return () => clearInterval(interval);
   }, [cleanupOldNotifications]);
 
+  const navigateToSensor = (facilityId?: string, sensorId?: string) => {
+    if (facilityId && sensorId) {
+      navigate(`/dashboard/facilities/${facilityId}/sensors/${sensorId}`);
+      // Close the notification after navigation
+      const notificationToClose = notifications.find(
+        (n) => n.facilityId === facilityId && n.sensorId === sensorId && n.open
+      );
+      if (notificationToClose) {
+        handleClose(notificationToClose.id);
+      }
+    }
+  };
+
   // Get active notifications (those that are open)
   const activeNotifications = notifications.filter((n) => n.open);
 
@@ -133,7 +152,28 @@ export const AlertsListener: React.FC = () => {
             onClose={() => handleClose(notification.id)}
             severity={notification.severity}
           >
-            {notification.message}
+            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+              {notification.message}
+              {notification.facilityId && notification.sensorId && (
+                <Button 
+                  variant="text" 
+                  color="inherit"
+                  size="small"
+                  sx={{ 
+                    alignSelf: 'flex-end', 
+                    mt: 1, 
+                    textTransform: 'none',
+                    color: 'inherit',
+                    '&:hover': {
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)'
+                    }
+                  }}
+                  onClick={() => navigateToSensor(notification.facilityId, notification.sensorId)}
+                >
+                  View Sensor
+                </Button>
+              )}
+            </Box>
           </MuiAlert>
         </Snackbar>
       ))}
