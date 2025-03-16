@@ -37,5 +37,15 @@ class CrudSensorRecord(CrudBase[SensorRecord, SensorRecordCreate, SensorRecordBa
         result = await db.execute(stmt)
         return list(result.scalars().all())
 
+    async def exists(self, db: AsyncSession, sensor_id: str, tracked_at: datetime) -> bool:
+        stmt = select(1).where(
+            and_(
+                SensorRecord.sensor_id == sensor_id,
+                SensorRecord.tracked_at == tracked_at
+            )
+        )
+        result = await db.execute(stmt)
+        return result.scalar() is not None
+
 
 sensor_record_crud = CrudSensorRecord(SensorRecord)

@@ -105,7 +105,7 @@ export const SensorPage = () => {
           Sensor Data
         </Typography>
         <Typography variant="body1" sx={{ mb: 2 }}>
-          Range: {getSensorValidLabel(sensor.type)}
+          {getSensorValidLabel(sensor.type)}
         </Typography>
       </Box>
 

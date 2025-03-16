@@ -97,7 +97,7 @@ export const getSensorDisplayRange = (
     case SensorType.Humidity:
       return [35.0, 65.0];
     case SensorType.Pressure:
-      return [1005.0, 1030.0];
+      return [1010.0, 1018.0];
     case SensorType.Flow:
       return [175.0, 325.0];
     case SensorType.Volume:

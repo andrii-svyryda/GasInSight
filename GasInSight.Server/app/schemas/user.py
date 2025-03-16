@@ -38,3 +38,8 @@ class User(UserBase):
 
     class Config:
         from_attributes: bool = True
+
+
+class SearchedUsers(BaseModel):
+    users: list[User]
+    total: int

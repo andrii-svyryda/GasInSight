@@ -74,7 +74,7 @@ async def get_sensor_records_with_interpolation(
         freq=actual_response_freq
     )
 
-    reindexed_df = df.reindex(existing_data_date_range, method="nearest", limit=1)
+    reindexed_df = df.reindex(existing_data_date_range, method="pad", limit=3)
 
     if pd_request_freq > pd_expected_freq:
         if aggregation == "min":

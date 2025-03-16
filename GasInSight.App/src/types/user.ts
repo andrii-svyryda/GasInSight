@@ -3,6 +3,11 @@ export enum UserRole {
   User = "User"
 }
 
+export enum PermissionType {
+  View = "View",
+  Edit = "Edit"
+}
+
 export interface User {
   id: number;
   username: string;
@@ -15,4 +20,5 @@ export interface User {
 export interface UserFacilityPermission {
   userId: number;
   facilityId: string;
+  permissionType: PermissionType;
 }

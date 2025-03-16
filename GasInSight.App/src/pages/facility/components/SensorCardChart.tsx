@@ -4,38 +4,39 @@ import moment from "moment";
 import { sensorApi } from "../../../store/api/sensorApi";
 import { Sensor } from "../../../types/sensor";
 import { SensorChart } from "../../sensor/components/SensorChart";
+import { useMemo } from "react";
 
 interface SensorCardChartProps {
   sensor: Sensor;
 }
 
 export const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
+  const queryParams = useMemo(() => ({
+    sensorId: sensor.id,
+    startDate: moment().subtract(1, "hour").format("YYYY-MM-DDTHH:mm:ss"),
+    freq: sensor.expectedFreq,
+    aggregation: "mean" as const,
+  }), [sensor.id, sensor.expectedFreq]);
+
   const { data: records, isLoading } = sensorApi.useGetSensorRecordsQuery(
-    {
-      sensorId: sensor.id,
-      startDate: moment().subtract(6, "hour").format("YYYY-MM-DDTHH:mm:ss"),
-      freq: sensor.expectedFreq,
-      aggregation: "mean",
-    },
+    queryParams,
     { skip: !sensor.id }
   );
 
-  if (isLoading) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "200px",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
-  }
+  const loadingContent = useMemo(() => (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "200px",
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  ), []);
 
-  return (
+  const chartContent = useMemo(() => (
     <Box sx={{ width: "100%", mt: 1 }}>
       <ResponsiveContainer height={200} width="100%">
         <SensorChart
@@ -48,5 +49,7 @@ export const SensorCardChart = ({ sensor }: SensorCardChartProps) => {
         />
       </ResponsiveContainer>
     </Box>
-  );
-};
+  ), [records, isLoading, sensor.type, sensor.id]);
+
+  return isLoading ? loadingContent : chartContent;
+}

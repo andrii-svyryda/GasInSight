@@ -13,6 +13,7 @@ import { sensorApi } from "../../../store/api/sensorApi";
 import { useState } from "react";
 import { SensorCardChart } from "./SensorCardChart";
 import { useGetColorsQuery } from "../../../store/api/dashboardApi";
+import { getSensorValidLabel } from "../../../constants/sensorType";
 
 interface SensorListProps {
   facilityId: string;
@@ -53,7 +54,7 @@ export const SensorList = ({ facilityId }: SensorListProps) => {
   const getTypeColor = (type: string) => {
     if (colors?.sensorTypes) {
       const colorKey = Object.keys(colors.sensorTypes).find(
-        key => key.toLowerCase() === type.toLowerCase()
+        (key) => key.toLowerCase() === type.toLowerCase()
       );
       if (colorKey) {
         return colors.sensorTypes[colorKey];
@@ -116,15 +117,36 @@ export const SensorList = ({ facilityId }: SensorListProps) => {
                 <Typography variant="h6" component="div">
                   {sensor.name}
                 </Typography>
-                <Typography variant="body2" sx={{ color: getTypeColor(sensor.type), fontWeight: 'bold' }}>
+                <Typography
+                  variant="body2"
+                  sx={{ color: getTypeColor(sensor.type), fontWeight: "bold" }}
+                >
                   Type: {sensor.type}
                 </Typography>
-                <Typography variant="body2" sx={{ color: getStatusColor(sensor.status), fontWeight: 'bold' }}>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: getStatusColor(sensor.status),
+                    fontWeight: "bold",
+                  }}
+                >
                   Status: {sensor.status}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Installed: {new Date(sensor.installedAt).toLocaleDateString()}
-                </Typography>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Typography variant="body2" color="text.secondary">
+                    Installed:{" "}
+                    {new Date(sensor.installedAt).toLocaleDateString()}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {getSensorValidLabel(sensor.type)}
+                  </Typography>
+                </Box>
                 <SensorCardChart sensor={sensor} />
               </CardContent>
             </Card>

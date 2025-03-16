@@ -1,3 +1,4 @@
+import asyncio
 from app.listeners.base import ServiceBusListener
 from app.schemas.service_bus_messages import SensorDataMessage
 from app.cruds.sensor_record import sensor_record_crud
@@ -17,16 +18,21 @@ async def handle_sensor_data(message_body: dict[str, Any]):
             data=sensor_message.data
         )
         
+        if await sensor_record_crud.exists(db, sensor_message.sensor_id, sensor_message.tracked_at):
+            return
+        
         _ = await sensor_record_crud.create(db, record_create)
         
-        await manager.broadcast(
-            sensor_message.sensor_id,
-            {
-                "sensor_id": sensor_message.sensor_id,
-                "facility_id": sensor_message.facility_id,
-                "tracked_at": sensor_message.tracked_at.isoformat(),
-                "data": sensor_message.data
-            }
+        asyncio.create_task(
+            manager.broadcast(
+                sensor_message.sensor_id,
+                {
+                    "sensor_id": sensor_message.sensor_id,
+                    "facility_id": sensor_message.facility_id,
+                    "tracked_at": sensor_message.tracked_at.isoformat(),
+                    "data": sensor_message.data
+                }
+            )
         )
 
 

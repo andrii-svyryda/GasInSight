@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.cruds.user import user_crud
-from app.schemas.user import User, UserCreate, UserUpdate
+from app.schemas.user import SearchedUsers, User, UserCreate, UserUpdate
 from app.routers.dependencies import get_current_active_admin, get_current_user
 from app.models.user import User as UserModel
 
@@ -28,15 +28,15 @@ async def create_user(
     return await user_crud.create(db, user_create)
 
 
-@router.get("", response_model=list[User])
+@router.get("", response_model=SearchedUsers)
 async def read_users(
     skip: int = 0,
     limit: int = 100,
     db: AsyncSession = Depends(get_db),
     current_user: UserModel = Depends(get_current_active_admin)
 ):
-    users = await user_crud.get_multi(db, skip=skip, limit=limit)
-    return users
+    users, total = await user_crud.search(db, None, skip, limit)
+    return {"users": users, "total": total}
 
 
 @router.get("/me", response_model=User)

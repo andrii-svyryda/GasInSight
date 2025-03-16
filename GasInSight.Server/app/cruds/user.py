@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import func, select
 from app.cruds.base import CrudBase
 from app.models.user import User
 from app.schemas import UserCreate, UserUpdate
@@ -55,6 +55,33 @@ class CrudUser(CrudBase[User, UserCreate, UserUpdate]):
             await db.refresh(user)
             return user
         return None
+
+    async def search(self, db: AsyncSession, search_term: str | None, skip: int = 0, limit: int = 100) -> tuple[list[User], int]:
+        stmt = select(User).offset(skip).limit(limit)
+        
+        search_pattern = f"%{search_term}%" if search_term else None
+
+        if search_term:
+            stmt = stmt.where(
+                (User.username.ilike(search_pattern)) | 
+                (User.email.ilike(search_pattern))
+            )
+        
+        count_stmt = select(func.count()).select_from(User)
+
+        if search_term:
+            count_stmt = count_stmt.where(
+                (User.username.ilike(search_pattern)) | 
+                (User.email.ilike(search_pattern))
+            )
+
+        count_result = await db.execute(count_stmt)
+        total_count = count_result.scalar() or 0
+        
+        result = await db.execute(stmt)
+        users = list(result.scalars().all())
+
+        return users, total_count
 
 
 user_crud = CrudUser(User)
