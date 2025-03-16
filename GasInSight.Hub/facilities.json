@@ -1,452 +1,321 @@
 [
   {
-    "facility_id": "c014a736-4aa4-4131-8a45-212f549251dd",
-    "facility_name": "New Orleans TankFarm",
-    "address": "1300 Perdido St, New Orleans, USA",
-    "longitude": -90.0715,
-    "latitude": 29.9511,
-    "facility_type": "TankFarm",
-    "sensors": [
-      {
-        "sensor_id": "17e90ec1-7d64-4568-adb9-2af7cac8fb0f",
-        "address": "1300 Perdido St, New Orleans, USA",
-        "longitude": -90.06803701568263,
-        "latitude": 29.952971101969606,
-        "sensor_type": "LevelIndicator",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "662cacf5-a81b-4424-8f9e-31ed4581b896",
-        "address": "1300 Perdido St, New Orleans, USA",
-        "longitude": -90.07970690776416,
-        "latitude": 29.95958811744882,
-        "sensor_type": "OxygenContent",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "39622b68-664e-4f59-9519-cc0710cf757a",
-        "address": "1300 Perdido St, New Orleans, USA",
-        "longitude": -90.06912274949836,
-        "latitude": 29.9516905610149,
-        "sensor_type": "LiquidComposition",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "8e837afe-63f3-477d-b192-2b9690852c2f",
-    "facility_name": "Philadelphia ImportTerminal",
-    "address": "1401 JFK Blvd, Philadelphia, USA",
-    "longitude": -75.1652,
-    "latitude": 39.9526,
-    "facility_type": "ImportTerminal",
-    "sensors": [
-      {
-        "sensor_id": "967a334e-f0d0-4ccd-be77-4d9d618f7b0e",
-        "address": "1401 JFK Blvd, Philadelphia, USA",
-        "longitude": -75.16230272402647,
-        "latitude": 39.94727396599434,
-        "sensor_type": "LevelIndicator",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "a868605b-e071-4e10-a7e5-38484793c07f",
-        "address": "1401 JFK Blvd, Philadelphia, USA",
-        "longitude": -75.16411281037985,
-        "latitude": 39.94447137755775,
-        "sensor_type": "ParticulateMatter",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "24eb83cc-94d4-4fe2-aea5-8ac85a5ca2d5",
-        "address": "1401 JFK Blvd, Philadelphia, USA",
-        "longitude": -75.16671054017654,
-        "latitude": 39.950225315962285,
-        "sensor_type": "ValveStatus",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "490be394-feff-410d-8563-f0e8417b9dcd",
-        "address": "1401 JFK Blvd, Philadelphia, USA",
-        "longitude": -75.17411751325426,
-        "latitude": 39.960837749256825,
-        "sensor_type": "LeakDetection",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "b16efc8f-88e3-4a8f-bbca-2cff3f011d6f",
-    "facility_name": "Budapest Pipelines",
-    "address": "Andr\u00e1ssy \u00fat 1, Budapest, Hungary",
-    "longitude": 19.0402,
-    "latitude": 47.4979,
-    "facility_type": "TankFarm",
-    "sensors": [
-      {
-        "sensor_id": "d47350f0-289b-4d31-b175-45daee69edd5",
-        "address": "Andr\u00e1ssy \u00fat 1, Budapest, Hungary",
-        "longitude": 19.035925879376613,
-        "latitude": 47.50684472211687,
-        "sensor_type": "Flow",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "b4e93951-fdea-410d-ab46-0f0ed60801c8",
-        "address": "Andr\u00e1ssy \u00fat 1, Budapest, Hungary",
-        "longitude": 19.0349674710616,
-        "latitude": 47.48917958568076,
-        "sensor_type": "PumpStatus",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "2428caed-d578-4228-9e4c-addb8afdff76",
-        "address": "Andr\u00e1ssy \u00fat 1, Budapest, Hungary",
-        "longitude": 19.0348835790066,
-        "latitude": 47.49887106494052,
-        "sensor_type": "WaterContent",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "46a3828d-e6c4-4f99-a696-a859e1675dc2",
-    "facility_name": "Oslo ImportTerminal",
-    "address": "Karl Johans gate 1, Oslo, Norway",
-    "longitude": 10.7522,
-    "latitude": 59.9139,
-    "facility_type": "ExportTerminal",
-    "sensors": [
-      {
-        "sensor_id": "027cf428-a5d9-40e7-8b38-fc9f2ec40f7c",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.745344090486364,
-        "latitude": 59.9237954526594,
-        "sensor_type": "WaterContent",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "edb3c271-c62f-4bce-837c-49758ad669e7",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.761087411882404,
-        "latitude": 59.912208457648795,
-        "sensor_type": "LevelIndicator",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "021d54b6-0e64-4582-82a0-b18b76c54535",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.747058717381524,
-        "latitude": 59.91526599417819,
-        "sensor_type": "PumpStatus",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "91352ce5-762a-43e6-99b7-886679b10910",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.751069921930323,
-        "latitude": 59.92127512725096,
-        "sensor_type": "Humidity",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "f213da4e-7711-43b7-b83d-cd942bf80792",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.748844526839035,
-        "latitude": 59.909334516390395,
-        "sensor_type": "Pressure",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "6f4b4852-fb1a-4356-a906-9af7079274de",
-        "address": "Karl Johans gate 1, Oslo, Norway",
-        "longitude": 10.758712374614083,
-        "latitude": 59.91973735682354,
-        "sensor_type": "Humidity",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "c84aa5bc-34ad-428f-9213-4d1a125148d8",
-    "facility_name": "Nairobi Pipelines",
-    "address": "City Hall Way, Nairobi, Kenya",
-    "longitude": 36.8219,
-    "latitude": -1.2921,
-    "facility_type": "ExportTerminal",
-    "sensors": [
-      {
-        "sensor_id": "51fcb2e9-d8fd-4ef4-a3e5-261442b6ca2e",
-        "address": "City Hall Way, Nairobi, Kenya",
-        "longitude": 36.82714002766987,
-        "latitude": -1.2895352211293498,
-        "sensor_type": "LiquidComposition",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "059bcab5-43bc-4c53-a6e8-d8f308c51df7",
-        "address": "City Hall Way, Nairobi, Kenya",
-        "longitude": 36.81545474802601,
-        "latitude": -1.2852372787295636,
-        "sensor_type": "GasDetection",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "9eda24bc-5eb3-4e26-ad0d-709f3143da60",
-        "address": "City Hall Way, Nairobi, Kenya",
-        "longitude": 36.8198014680199,
-        "latitude": -1.2873153052670412,
-        "sensor_type": "Flow",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "38a74fcf-5104-4836-b60f-13fa60479b06",
-    "facility_name": "Berlin DrillingRig",
-    "address": "Unter den Linden 77, Berlin, Germany",
-    "longitude": 13.405,
-    "latitude": 52.52,
+    "facility_id": "9014ac5b-0a7a-4bc6-a638-ee2f3da9c49e",
+    "facility_name": "Zurich ImportTerminal",
+    "address": "Bahnhofstrasse 1, Zurich, Switzerland",
+    "longitude": 8.5417,
+    "latitude": 47.3769,
     "facility_type": "UndergroundStorage",
     "sensors": [
       {
-        "sensor_id": "5599b317-3b74-4570-801a-8cc17477f7ce",
-        "address": "Unter den Linden 77, Berlin, Germany",
-        "longitude": 13.414256016896486,
-        "latitude": 52.5297101849682,
+        "sensor_id": "255bb990-5752-496b-be58-80b707e78743",
+        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
+        "longitude": 8.546859827489973,
+        "latitude": 47.3708738678579,
+        "sensor_type": "Volume",
+        "data": "496.15",
+        "last_signal_timestamp": null,
+        "signal_interval": 40
+      },
+      {
+        "sensor_id": "f0b23b92-fbd2-44d8-80d6-f8f3fe9f1419",
+        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
+        "longitude": 8.545488659812284,
+        "latitude": 47.37144375696128,
+        "sensor_type": "LiquidComposition",
+        "data": "95.84",
+        "last_signal_timestamp": null,
+        "signal_interval": 300
+      },
+      {
+        "sensor_id": "d581890a-376a-44ac-aa01-ae30061ba4b1",
+        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
+        "longitude": 8.535120739248224,
+        "latitude": 47.37899332941547,
+        "sensor_type": "Humidity",
+        "data": "56.27",
+        "last_signal_timestamp": null,
+        "signal_interval": 300
+      },
+      {
+        "sensor_id": "2e911875-d2f9-4c2d-b8cf-895948009634",
+        "address": "Bahnhofstrasse 1, Zurich, Switzerland",
+        "longitude": 8.547871669086595,
+        "latitude": 47.37720681901099,
         "sensor_type": "CarbonDioxideContent",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "a816a797-716b-47bb-ab8b-80aed7085341",
-        "address": "Unter den Linden 77, Berlin, Germany",
-        "longitude": 13.412557962279225,
-        "latitude": 52.52336676340691,
-        "sensor_type": "LiquidComposition",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "fee042c4-536d-482d-bb11-6b81be403fe7",
-        "address": "Unter den Linden 77, Berlin, Germany",
-        "longitude": 13.413781723454026,
-        "latitude": 52.51784736382737,
-        "sensor_type": "Pressure",
-        "data": null,
-        "last_updated": null
+        "data": "873.33",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
       }
     ]
   },
   {
-    "facility_id": "cff997a8-c5c7-43ba-9e91-2d5742e273c5",
-    "facility_name": "Minneapolis ExportTerminal",
-    "address": "350 S 5th St, Minneapolis, USA",
-    "longitude": -93.265,
-    "latitude": 44.9778,
-    "facility_type": "UndergroundStorage",
-    "sensors": [
-      {
-        "sensor_id": "a1ce90e2-33a7-4323-8cc5-49812dd9ad52",
-        "address": "350 S 5th St, Minneapolis, USA",
-        "longitude": -93.26646891316997,
-        "latitude": 44.984113008587066,
-        "sensor_type": "HydrogenSulfideContent",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "58b1573e-5448-43e6-a88e-163072fe5e6d",
-        "address": "350 S 5th St, Minneapolis, USA",
-        "longitude": -93.26663592611676,
-        "latitude": 44.976907016161405,
-        "sensor_type": "PumpStatus",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "4de9c7af-2ab8-437c-8023-2024f55e4346",
-        "address": "350 S 5th St, Minneapolis, USA",
-        "longitude": -93.27195210759145,
-        "latitude": 44.986772922983505,
-        "sensor_type": "ValveStatus",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "9d5308b1-edf4-449d-a138-4c798c82139f",
-        "address": "350 S 5th St, Minneapolis, USA",
-        "longitude": -93.27303693440726,
-        "latitude": 44.98133167854021,
-        "sensor_type": "PowerConsumption",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "02edbbf3-3ed2-4f09-a5b4-6e8c0bf1bb52",
-    "facility_name": "Lyon UndergroundStorage",
-    "address": "Place Bellecour 1, Lyon, France",
-    "longitude": 4.8357,
-    "latitude": 45.764,
-    "facility_type": "UndergroundStorage",
-    "sensors": [
-      {
-        "sensor_id": "3c6e8484-a668-4b83-96df-329a633aebeb",
-        "address": "Place Bellecour 1, Lyon, France",
-        "longitude": 4.836076019840419,
-        "latitude": 45.76483767484374,
-        "sensor_type": "Pressure",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "e4f0d8c7-e5c4-4b0e-afcf-7dfb529e3074",
-        "address": "Place Bellecour 1, Lyon, France",
-        "longitude": 4.845032672373857,
-        "latitude": 45.76660387705555,
-        "sensor_type": "HydrogenSulfideContent",
-        "data": null,
-        "last_updated": null
-      }
-    ]
-  },
-  {
-    "facility_id": "db4310f0-f063-41b9-9a4c-22f0d9f9eef6",
-    "facility_name": "Copenhagen DrillingRig",
-    "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-    "longitude": 12.5683,
-    "latitude": 55.6761,
+    "facility_id": "a343db1e-3ce3-461c-92d9-d78950acff4f",
+    "facility_name": "Hamburg DrillingRig",
+    "address": "Rathausmarkt 1, Hamburg, Germany",
+    "longitude": 9.9937,
+    "latitude": 53.5511,
     "facility_type": "TankFarm",
     "sensors": [
       {
-        "sensor_id": "89fc2182-2d0a-47bf-82dc-3c6f9892b265",
-        "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-        "longitude": 12.56279546741762,
-        "latitude": 55.672247636451296,
-        "sensor_type": "Vibration",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "14dad695-5aee-40bc-9e9f-7e26f2e6b5b4",
-        "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-        "longitude": 12.562291740043912,
-        "latitude": 55.681740810094226,
-        "sensor_type": "ParticulateMatter",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "351e1871-71d1-46d3-a1ce-a2fbffd280dc",
-        "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-        "longitude": 12.574387628931621,
-        "latitude": 55.67888241303157,
+        "sensor_id": "a6f2d611-89ef-438f-9015-1e96a38e84b8",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.994858616641107,
+        "latitude": 53.55671797686722,
         "sensor_type": "Temperature",
-        "data": null,
-        "last_updated": null
+        "data": "24.07",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
       },
       {
-        "sensor_id": "4b3472ff-81c2-4a1d-a65c-2b397e19deb3",
-        "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-        "longitude": 12.571796849065299,
-        "latitude": 55.67067117554245,
-        "sensor_type": "OxygenContent",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "0c74fff3-8d25-4d20-8f9e-9f23bdc3f926",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.987005388119853,
+        "latitude": 53.54749458582951,
+        "sensor_type": "LevelIndicator",
+        "data": "4.32",
+        "last_signal_timestamp": null,
+        "signal_interval": 300
       },
       {
-        "sensor_id": "0ccb5295-b53e-4007-92aa-61720293eed4",
-        "address": "R\u00e5dhuspladsen 1, Copenhagen, Denmark",
-        "longitude": 12.574482427885094,
-        "latitude": 55.66916728667179,
-        "sensor_type": "Noise",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "b305692f-575e-4e12-b832-7cab233b0868",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.994673897540808,
+        "latitude": 53.5512023946072,
+        "sensor_type": "CarbonDioxideContent",
+        "data": "980.13",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
+      },
+      {
+        "sensor_id": "c4ae3de3-e766-44b1-b5fc-099fa6995c7b",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.996280169986479,
+        "latitude": 53.54793746272407,
+        "sensor_type": "ParticulateMatter",
+        "data": "136.27",
+        "last_signal_timestamp": null,
+        "signal_interval": 700
+      },
+      {
+        "sensor_id": "cee72873-3725-49b3-8a0e-f1f0f8562b29",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 10.002407757590376,
+        "latitude": 53.55666708248476,
+        "sensor_type": "CarbonDioxideContent",
+        "data": "710.37",
+        "last_signal_timestamp": null,
+        "signal_interval": 60
+      },
+      {
+        "sensor_id": "ac38e425-9a3a-4bd1-92c6-7a4c77125e0c",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.98913192853263,
+        "latitude": 53.54539942000898,
+        "sensor_type": "GasDetection",
+        "data": "14.73",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "3b9fbf39-85f7-41cd-b653-0c369da43913",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.987563364182892,
+        "latitude": 53.56042862099521,
+        "sensor_type": "Temperature",
+        "data": "22.39",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      },
+      {
+        "sensor_id": "3b41605f-22bb-4b5f-99f0-4a5f57589309",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 10.001073162057448,
+        "latitude": 53.55467822346866,
+        "sensor_type": "ParticulateMatter",
+        "data": "107.59",
+        "last_signal_timestamp": null,
+        "signal_interval": 700
+      },
+      {
+        "sensor_id": "5cc3b9a8-3601-4f79-b4c2-112eb2b7c461",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.989017360091012,
+        "latitude": 53.54716097426306,
+        "sensor_type": "Humidity",
+        "data": "45.5",
+        "last_signal_timestamp": null,
+        "signal_interval": 300
+      },
+      {
+        "sensor_id": "1b2ee3ef-64a7-4f17-9459-257ca7ffdf0c",
+        "address": "Rathausmarkt 1, Hamburg, Germany",
+        "longitude": 9.994647240495837,
+        "latitude": 53.55179151014563,
+        "sensor_type": "Corrosion",
+        "data": "3.62",
+        "last_signal_timestamp": null,
+        "signal_interval": 40
       }
     ]
   },
   {
-    "facility_id": "ae8d4f20-88fb-42c9-a1a9-047f776f0228",
-    "facility_name": "Lusaka TankFarm",
-    "address": "Independence Avenue, Lusaka, Zambia",
-    "longitude": 28.3228,
-    "latitude": -15.3875,
+    "facility_id": "6125f251-845c-4813-bf00-a6b3d1121a00",
+    "facility_name": "Chicago ImportTerminal",
+    "address": "121 N LaSalle St, Chicago, USA",
+    "longitude": -87.6298,
+    "latitude": 41.8781,
+    "facility_type": "TankFarm",
+    "sensors": [
+      {
+        "sensor_id": "9b74432a-00d7-4d38-a4f6-8945b44636e8",
+        "address": "121 N LaSalle St, Chicago, USA",
+        "longitude": -87.63224754401145,
+        "latitude": 41.87552636365557,
+        "sensor_type": "Humidity",
+        "data": "46.27",
+        "last_signal_timestamp": null,
+        "signal_interval": 300
+      },
+      {
+        "sensor_id": "ff2584f9-eb55-4c44-b69c-e8174fd73f30",
+        "address": "121 N LaSalle St, Chicago, USA",
+        "longitude": -87.63765111921781,
+        "latitude": 41.8859460386031,
+        "sensor_type": "Pressure",
+        "data": "1013.19",
+        "last_signal_timestamp": null,
+        "signal_interval": 20
+      },
+      {
+        "sensor_id": "55b0eb5e-1c5f-41bd-8f3b-476a1e3e3fa9",
+        "address": "121 N LaSalle St, Chicago, USA",
+        "longitude": -87.63684875046437,
+        "latitude": 41.872262705405646,
+        "sensor_type": "Volume",
+        "data": "587.95",
+        "last_signal_timestamp": null,
+        "signal_interval": 40
+      }
+    ]
+  },
+  {
+    "facility_id": "b0fc2f36-8d64-4c62-8ae0-6937095442ae",
+    "facility_name": "Addis Ababa Pipelines",
+    "address": "Churchill Avenue, Addis Ababa, Ethiopia",
+    "longitude": 38.7423,
+    "latitude": 9.032,
+    "facility_type": "UndergroundStorage",
+    "sensors": [
+      {
+        "sensor_id": "1941b228-84ca-4844-892b-8b6e0c9cd9a7",
+        "address": "Churchill Avenue, Addis Ababa, Ethiopia",
+        "longitude": 38.747369556193426,
+        "latitude": 9.039404662970437,
+        "sensor_type": "Volume",
+        "data": "569.79",
+        "last_signal_timestamp": null,
+        "signal_interval": 40
+      },
+      {
+        "sensor_id": "e0567b93-6abf-4f3a-9e03-b7588c07565f",
+        "address": "Churchill Avenue, Addis Ababa, Ethiopia",
+        "longitude": 38.74725981417934,
+        "latitude": 9.029127282800927,
+        "sensor_type": "GasDetection",
+        "data": "10.14",
+        "last_signal_timestamp": null,
+        "signal_interval": 15
+      }
+    ]
+  },
+  {
+    "facility_id": "6ea6b8e1-a70f-420e-9790-2785555ab4d8",
+    "facility_name": "Maputo DrillingRig",
+    "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+    "longitude": 32.5732,
+    "latitude": -25.9692,
     "facility_type": "ProcessingPlant",
     "sensors": [
       {
-        "sensor_id": "25b5592d-ef11-4985-8d68-eb593dc1cf82",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.327511063409357,
-        "latitude": -15.394306566313833,
-        "sensor_type": "CarbonDioxideContent",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "34074f77-6011-4c4e-b32d-7fdaf4ee0955",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.58156412118495,
+        "latitude": -25.963979251098344,
+        "sensor_type": "Vibration",
+        "data": "4.01",
+        "last_signal_timestamp": null,
+        "signal_interval": 45
       },
       {
-        "sensor_id": "2db11cc8-3710-4bf6-a8a5-c050fd080001",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.32123354194359,
-        "latitude": -15.380059015190016,
-        "sensor_type": "LeakDetection",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "32a0a8f1-0ac9-4e0f-9317-3772fd2a0e1b",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.571092958083895,
+        "latitude": -25.97428088235129,
+        "sensor_type": "Corrosion",
+        "data": "3.72",
+        "last_signal_timestamp": null,
+        "signal_interval": 40
       },
       {
-        "sensor_id": "e2571d61-d3af-41c8-88bc-4ad1c8dd9152",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.33096688244714,
-        "latitude": -15.378763854558347,
-        "sensor_type": "Humidity",
-        "data": null,
-        "last_updated": null
-      },
-      {
-        "sensor_id": "abaf1e51-f8fe-40b3-b41d-f67f1a5e1c69",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.33009847085253,
-        "latitude": -15.395340273531938,
+        "sensor_id": "a7ad48b7-9126-4f43-8871-5ab77029401f",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.578266702854556,
+        "latitude": -25.963922129211102,
         "sensor_type": "GasComposition",
-        "data": null,
-        "last_updated": null
+        "data": "95.06",
+        "last_signal_timestamp": null,
+        "signal_interval": 120
       },
       {
-        "sensor_id": "9600b259-43ea-4735-8d15-c9452c049d72",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.31290436471754,
-        "latitude": -15.382423482367466,
-        "sensor_type": "CompressorStatus",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "ae5358b4-2123-40c4-97f2-ad42ca7f288f",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.56387141844508,
+        "latitude": -25.968517674870753,
+        "sensor_type": "WaterContent",
+        "data": "1.74",
+        "last_signal_timestamp": null,
+        "signal_interval": 25
       },
       {
-        "sensor_id": "68aa38e6-6168-4fe3-a3f0-d98359b5a4d5",
-        "address": "Independence Avenue, Lusaka, Zambia",
-        "longitude": 28.33132604507441,
-        "latitude": -15.389422838306569,
-        "sensor_type": "CarbonDioxideContent",
-        "data": null,
-        "last_updated": null
+        "sensor_id": "80bef92b-62ed-465c-8163-a87037595b0a",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.576043189842906,
+        "latitude": -25.959741550959688,
+        "sensor_type": "OxygenContent",
+        "data": "20.36",
+        "last_signal_timestamp": null,
+        "signal_interval": 35
+      },
+      {
+        "sensor_id": "369f2a5d-2cb0-4181-9ce0-f18795335e59",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.58110840543555,
+        "latitude": -25.976139139457597,
+        "sensor_type": "Pressure",
+        "data": "1013.04",
+        "last_signal_timestamp": null,
+        "signal_interval": 20
+      },
+      {
+        "sensor_id": "bb57aa91-9e15-4461-b034-62d1ec502ad8",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.56385812199119,
+        "latitude": -25.96247103593926,
+        "sensor_type": "PowerConsumption",
+        "data": "460.45",
+        "last_signal_timestamp": null,
+        "signal_interval": 100
+      },
+      {
+        "sensor_id": "549bd483-757e-41e8-9ed7-5b21496da4f0",
+        "address": "Avenida Julius Nyerere, Maputo, Mozambique",
+        "longitude": 32.56361697877661,
+        "latitude": -25.963662487529813,
+        "sensor_type": "GasComposition",
+        "data": "97.61",
+        "last_signal_timestamp": null,
+        "signal_interval": 120
       }
     ]
   }

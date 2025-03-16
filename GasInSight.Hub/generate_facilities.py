@@ -6,9 +6,11 @@ from models.facility import Facility
 from models.sensor import Sensor
 from constants.facility_types import FacilityTypes
 from constants.sensor_types import SensorTypes
+from helpers.sensor_validation import get_sensor_valid_range, get_sensor_signal_interval
+from datetime import datetime
 
 fake = Faker()
-facilities_count = 10
+facilities_count = 5
 
 cities = [
     # Europe
@@ -115,12 +117,15 @@ def generate_coordinates(base_lat: float, base_lon: float) -> tuple:
 
 def generate_sensor(address: str, lat: float, lon: float) -> Sensor:
     sensor_type = random.choice(list(SensorTypes))
+    min_value, max_value = get_sensor_valid_range(sensor_type)
     return Sensor(
         sensor_id=uuid4(),
         address=address,
         longitude=lon,
         latitude=lat,
-        sensor_type=sensor_type
+        sensor_type=sensor_type,
+        data=str(round(random.uniform(min_value, max_value), 2)),
+        signal_interval=get_sensor_signal_interval(sensor_type)
     )
 
 def generate_facility() -> Facility:
@@ -135,7 +140,7 @@ def generate_facility() -> Facility:
         facility_type=random.choice(list(FacilityTypes))
     )
     
-    num_sensors = random.randint(2, 6)
+    num_sensors = random.randint(2, 10)
     for _ in range(num_sensors):
         lat, lon = generate_coordinates(base_lat, base_lon)
         sensor = generate_sensor(facility.address, lat, lon)
@@ -147,6 +152,8 @@ class UUIDEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, UUID):
             return str(obj)
+        if isinstance(obj, datetime):
+            return obj.isoformat()
         return super().default(obj)
 
 facilities = [generate_facility() for _ in range(facilities_count)]
